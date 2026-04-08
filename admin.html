@@ -43,23 +43,38 @@
     let currentSha = '';
 
 async function verileriYukle() {
-        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data.json`, {
-            headers: { 'Cache-Control': 'no-cache' }
-        });
-        const fileData = await res.json();
-        currentSha = fileData.sha;
-        // Base64 decode işlemi (Türkçe karakter sorunu olmaması için)
-        const content = decodeURIComponent(escape(atob(fileData.content)));
-        teams = JSON.parse(content);
+        const status = document.getElementById('status');
+        try {
+            // Cache engellemek için sonuna rastgele sayı ekliyoruz
+            const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data.json?v=${Math.random()}`);
+            
+            if (!res.ok) {
+                status.innerText = "Veri çekilemedi! Repo ismini veya dosya adını kontrol et.";
+                return;
+            }
 
-        const homeSelect = document.getElementById('homeTeam');
-        const awaySelect = document.getElementById('awayTeam');
-        
-        const options = teams.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
-        homeSelect.innerHTML = options;
-        awaySelect.innerHTML = options;
+            const fileData = await res.json();
+            currentSha = fileData.sha;
+            
+            // GitHub içeriği Base64 olarak gönderir, bunu çözüyoruz
+            const content = decodeURIComponent(escape(atob(fileData.content)));
+            teams = JSON.parse(content);
+
+            const homeSelect = document.getElementById('homeTeam');
+            const awaySelect = document.getElementById('awayTeam');
+            
+            const options = teams.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
+            homeSelect.innerHTML = options;
+            awaySelect.innerHTML = options;
+            
+            status.innerText = "Takımlar başarıyla yüklendi.";
+            status.style.color = "#00ff00";
+        } catch (error) {
+            console.error(error);
+            status.innerText = "Bağlantı hatası: " + error.message;
+            status.style.color = "#ff0000";
+        }
     }
-
     async function maciIsle() {
         const homeName = document.getElementById('homeTeam').value;
         const awayName = document.getElementById('awayTeam').value;
