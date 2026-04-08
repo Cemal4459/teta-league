@@ -5,8 +5,8 @@
     <title>TETA LEAGUE S4</title>
     <style>
         body { background: #050a30; color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding-top: 50px; }
-        .league-card { width: 800px; background: rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; border: 1px solid #ffffff22; position: relative; overflow: hidden; }
-        .vertical-title { position: absolute; right: -70px; top: 50%; transform: rotate(90deg) translateY(-50%); font-size: 4rem; font-weight: 900; color: #00d4ff; opacity: 0.2; }
+        .league-card { width: 850px; background: rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; border: 1px solid #ffffff22; position: relative; }
+        .vertical-title { position: absolute; right: -70px; top: 50%; transform: rotate(90deg) translateY(-50%); font-size: 4rem; font-weight: 900; color: #00d4ff; opacity: 0.2; white-space: nowrap; }
         table { width: 100%; border-collapse: collapse; }
         th { border-bottom: 2px solid white; padding: 10px; font-size: 0.8rem; letter-spacing: 2px; }
         td { padding: 12px; text-align: center; border-bottom: 1px solid #ffffff11; }
@@ -15,7 +15,6 @@
     </style>
 </head>
 <body>
-
 <div class="league-card">
     <h1 style="text-align: center; letter-spacing: 5px;">TETA LEAGUE <span style="color:#00d4ff">S4</span></h1>
     <div class="vertical-title">GROUP DELTA</div>
@@ -30,25 +29,22 @@
         <tbody id="table-content"></tbody>
     </table>
 </div>
-
 <script>
     async function loadTable() {
-        // GitHub'daki data.json dosyasını çekiyoruz
-        const response = await fetch('data.json?v=' + Date.now()); // Cache engellemek için v ekledik
-        const teams = await response.json();
-        
-        // Puana göre sırala
-        teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
-
-        const tbody = document.getElementById('table-content');
-        tbody.innerHTML = teams.map((team, i) => `
-            <tr>
-                <td>${i + 1}</td>
-                <td class="team-name">${team.name}</td>
-                <td>${team.p}</td><td>${team.w}</td><td>${team.d}</td><td>${team.l}</td><td>${team.gd}</td>
-                <td class="pts">${team.pts}</td>
-            </tr>
-        `).join('');
+        try {
+            const response = await fetch('data.json?v=' + Date.now());
+            let teams = await response.json();
+            teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
+            const tbody = document.getElementById('table-content');
+            tbody.innerHTML = teams.map((team, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td class="team-name">${team.name}</td>
+                    <td>${team.p}</td><td>${team.w}</td><td>${team.d}</td><td>${team.l}</td><td>${team.gd}</td>
+                    <td class="pts">${team.pts}</td>
+                </tr>
+            `).join('');
+        } catch (e) { console.error("Veri yüklenemedi", e); }
     }
     loadTable();
 </script>
