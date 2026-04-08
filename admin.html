@@ -42,11 +42,15 @@
     let teams = [];
     let currentSha = '';
 
-    async function verileriYukle() {
-        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data.json?v=${Date.now()}`);
+async function verileriYukle() {
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data.json`, {
+            headers: { 'Cache-Control': 'no-cache' }
+        });
         const fileData = await res.json();
         currentSha = fileData.sha;
-        teams = JSON.parse(atob(fileData.content));
+        // Base64 decode işlemi (Türkçe karakter sorunu olmaması için)
+        const content = decodeURIComponent(escape(atob(fileData.content)));
+        teams = JSON.parse(content);
 
         const homeSelect = document.getElementById('homeTeam');
         const awaySelect = document.getElementById('awayTeam');
