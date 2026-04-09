@@ -4,176 +4,192 @@
     <meta charset="UTF-8">
     <title>TETA LEAGUE S4 - LIVE</title>
     <style>
-        /* Tasarımın Ana Renkleri ve Fontu */
+        /* Tasarım Renkleri ve Değişkenler */
         :root {
-            --bg-dark: #02051a; /* En koyu arka plan */
-            --card-bg: rgba(11, 17, 49, 0.8); /* Saydam koyu lacivert */
-            --cyan: #00d4ff; /* Neon mavi */
-            --border-color: rgba(255, 255, 255, 0.2);
+            --bg-dark: #02051a; 
+            --card-bg: rgba(5, 10, 48, 0.82); /* Saydam koyu lacivert */
+            --cyan: #00d4ff; 
+            --border-color: rgba(255, 255, 255, 0.9); /* Ana beyaz çerçeve */
+            --row-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at center, #0b1a4a 0%, #02051a 100%);
+            /* Arka plana yüklediğin resmi buraya bağlıyoruz */
+            background-image: linear-gradient(rgba(2, 5, 26, 0.4), rgba(2, 5, 26, 0.4)), url('arka-plan.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
-        /* Ana Kart */
+        /* Ana Puan Tablosu Kartı */
         .league-container {
-            width: 900px;
+            width: 850px;
             background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 30px;
+            border: 3px solid white; /* Tasarımdaki kalın beyaz çerçeve */
+            border-radius: 25px;
             padding: 40px;
             position: relative;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px); /* Arka planı bulanıklaştırır */
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
         }
 
-        /* Başlık */
+        /* Başlık (TETA LEAGUE S4) */
         .header {
             text-align: center;
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 900;
-            letter-spacing: 8px;
-            margin-bottom: 30px;
+            letter-spacing: 6px;
+            margin-bottom: 20px;
             text-transform: uppercase;
+            position: absolute;
+            top: -100px;
+            left: 0;
+            right: 0;
         }
 
         .header span {
             color: var(--cyan);
         }
 
-        /* Dikey Yazı (GROUP DELTA) */
+        /* Dikey GROUP DELTA Yazısı */
         .vertical-text {
             position: absolute;
-            right: -130px;
+            right: -180px;
             top: 50%;
             transform: rotate(90deg) translateY(-50%);
-            font-size: 6rem;
+            font-size: 7.5rem;
             font-weight: 900;
             color: var(--cyan);
-            opacity: 0.4;
-            letter-spacing: 15px;
+            opacity: 0.6;
+            letter-spacing: 12px;
             white-space: nowrap;
-            pointer-events: none;
+            text-transform: uppercase;
         }
 
-        /* Tablo Tasarımı */
         table {
             width: 100%;
             border-collapse: collapse;
         }
 
+        /* Başlık Satırı (TEAMS P W D L GD PTS) */
         thead tr {
             border-bottom: 2px solid white;
         }
 
         th {
-            padding: 15px;
+            padding: 12px;
             font-size: 0.9rem;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
         }
 
         td {
             padding: 15px 10px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 1.1rem;
+            border-bottom: 1px solid var(--row-border);
+            font-size: 1.15rem;
         }
 
-        /* Takım Hücresi */
+        /* Takım Hücresi (Sıra ve İsim) */
         .team-cell {
             text-align: left;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             font-weight: 600;
         }
 
-        .rank-box {
-            width: 35px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 5px;
-            font-size: 0.9rem;
+        .rank-number {
+            font-size: 1.3rem;
+            font-weight: 900;
+            width: 30px;
         }
 
-        /* Puan (PTS) Sütunu Neon Efekti */
+        /* PTS Sütunu Neon */
         .pts-column {
             color: var(--cyan);
             font-weight: 900;
-            font-size: 1.3rem;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            font-size: 1.4rem;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
         }
 
-        /* Satır Hover (Üzerine gelince parlama) */
+        /* Sağ Üst Küçük Logo (Opsiyonel) */
+        .corner-logo {
+            position: absolute;
+            top: -110px;
+            right: 0;
+            width: 80px;
+        }
+
+        /* Hover Efekti */
         tr:hover td {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
         }
     </style>
 </head>
 <body>
 
-<div class="league-container">
     <div class="header">TETA LEAGUE <span>S4</span></div>
-    <div class="vertical-text">GROUP DELTA</div>
     
-    <table>
-        <thead>
-            <tr>
-                <th>SIRA</th>
-                <th style="text-align: left;">TEAMS</th>
-                <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
-            </tr>
-        </thead>
-        <tbody id="league-body">
-            </tbody>
-    </table>
-</div>
-
-<script>
-    async function loadTable() {
-        try {
-            // data.json dosyasını çek
-            const res = await fetch('data.json?v=' + Date.now());
-            const teams = await res.json();
-
-            // Puana ve sonra averaja göre sırala
-            teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
-
-            const tbody = document.getElementById('league-body');
-            tbody.innerHTML = teams.map((t, i) => `
+    <div class="league-container">
+        <div class="vertical-text">GROUP DELTA</div>
+        
+        <table>
+            <thead>
                 <tr>
-                    <td><div class="rank-box">${i + 1}</div></td>
-                    <td class="team-cell">${t.name}</td>
-                    <td>${t.p}</td>
-                    <td>${t.w}</td>
-                    <td>${t.d}</td>
-                    <td>${t.l}</td>
-                    <td>${t.gd}</td>
-                    <td class="pts-column">${t.pts}</td>
+                    <th style="text-align: left; padding-left: 50px;">TEAMS</th>
+                    <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
                 </tr>
-            `).join('');
-        } catch (error) {
-            console.error("Hata:", error);
-        }
-    }
+            </thead>
+            <tbody id="league-body">
+                </tbody>
+        </table>
+    </div>
 
-    loadTable();
-    // Her 30 saniyede bir tabloyu yenile (Admin bir şey girerse otomatik güncellensin)
-    setInterval(loadTable, 30000);
-</script>
+    <script>
+        async function loadTable() {
+            try {
+                // data.json dosyasını çekiyoruz
+                const res = await fetch('data.json?v=' + Date.now());
+                const teams = await res.json();
+
+                // Puana, sonra averaja (GD) göre sıralama
+                teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
+
+                const tbody = document.getElementById('league-body');
+                tbody.innerHTML = teams.map((t, i) => `
+                    <tr>
+                        <td class="team-cell">
+                            <span class="rank-number">${i + 1}</span>
+                            ${t.name}
+                        </td>
+                        <td>${t.p}</td>
+                        <td>${t.w}</td>
+                        <td>${t.d}</td>
+                        <td>${t.l}</td>
+                        <td>${t.gd}</td>
+                        <td class="pts-column">${t.pts}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error("Tablo güncellenirken hata:", error);
+            }
+        }
+
+        // Sayfa açıldığında yükle
+        loadTable();
+        // Her 30 saniyede bir otomatik tazele (Sayfayı yenilemeye gerek kalmasın)
+        setInterval(loadTable, 30000);
+    </script>
 
 </body>
 </html>
