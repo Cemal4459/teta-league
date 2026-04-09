@@ -231,19 +231,39 @@
             box-shadow: 0 0 18px rgba(125, 239, 255, 0.24);
         }
 
-        .winner-badge {
+        .draw .team-name {
+            color: #ffd36e;
+            text-shadow: 0 0 10px rgba(255, 211, 110, 0.22);
+            font-weight: 800;
+        }
+
+        .draw .team-logo {
+            box-shadow: 0 0 14px rgba(255, 211, 110, 0.18);
+        }
+
+        .winner-badge,
+        .draw-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             margin-top: 6px;
             padding: 4px 8px;
             border-radius: 999px;
-            background: rgba(125, 239, 255, 0.12);
-            border: 1px solid rgba(125, 239, 255, 0.22);
-            color: #9df5ff;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.3px;
+        }
+
+        .winner-badge {
+            background: rgba(125, 239, 255, 0.12);
+            border: 1px solid rgba(125, 239, 255, 0.22);
+            color: #9df5ff;
+        }
+
+        .draw-badge {
+            background: rgba(255, 211, 110, 0.12);
+            border: 1px solid rgba(255, 211, 110, 0.22);
+            color: #ffd36e;
         }
 
         .meta {
@@ -412,11 +432,18 @@
                 .map(([week, list]) => ({ week, matches: sortMatches(list) }));
         }
 
+        function isDraw(match) {
+            const home = Number(match.homeScore);
+            const away = Number(match.awayScore);
+            return !Number.isNaN(home) && !Number.isNaN(away) && home === away;
+        }
+
         function getWinnerClass(side, match) {
             const home = Number(match.homeScore);
             const away = Number(match.awayScore);
 
-            if (Number.isNaN(home) || Number.isNaN(away) || home === away) return "";
+            if (Number.isNaN(home) || Number.isNaN(away)) return "";
+            if (home === away) return "draw";
             if (side === "home" && home > away) return "winner";
             if (side === "away" && away > home) return "winner";
             return "";
@@ -552,6 +579,7 @@
                         ${group.matches.map(match => {
                             const homeTeam = teamMap.get(match.home) || { name: match.home, logo: "logos/default.png" };
                             const awayTeam = teamMap.get(match.away) || { name: match.away, logo: "logos/default.png" };
+                            const draw = isDraw(match);
 
                             return `
                                 <article class="match-card">
@@ -564,7 +592,13 @@
                                         >
                                         <div>
                                             <div class="team-name" title="${homeTeam.name}">${homeTeam.name}</div>
-                                            ${isWinner("home", match) ? `<div class="winner-badge">WINNER</div>` : `<div class="meta">Ev sahibi</div>`}
+                                            ${
+                                                isWinner("home", match)
+                                                    ? `<div class="winner-badge">WINNER</div>`
+                                                    : draw
+                                                        ? `<div class="draw-badge">DRAW</div>`
+                                                        : `<div class="meta">Ev sahibi</div>`
+                                            }
                                         </div>
                                     </div>
 
@@ -577,7 +611,13 @@
                                     <div class="team right ${getWinnerClass("away", match)}">
                                         <div>
                                             <div class="team-name" title="${awayTeam.name}">${awayTeam.name}</div>
-                                            ${isWinner("away", match) ? `<div class="winner-badge">WINNER</div>` : `<div class="meta">Deplasman</div>`}
+                                            ${
+                                                isWinner("away", match)
+                                                    ? `<div class="winner-badge">WINNER</div>`
+                                                    : draw
+                                                        ? `<div class="draw-badge">DRAW</div>`
+                                                        : `<div class="meta">Deplasman</div>`
+                                            }
                                         </div>
                                         <img
                                             class="team-logo"
