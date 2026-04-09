@@ -4,156 +4,168 @@
     <meta charset="UTF-8">
     <title>TETA LEAGUE S4 - LIVE</title>
     <style>
+        /* Tasarımın Fontu */
         :root {
-            --bg-page: #02051a; 
-            --cyan: #00d4ff; 
-            /* Çizgilerin rengini tasarımdaki gibi parlak beyaz yapıyoruz */
-            --row-border: rgba(255, 255, 255, 0.8); 
+            --cyan: #00d4ff; /* Neon mavi */
+            --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
 
         body {
-            background-color: var(--bg-page);
+            /* --- ARKA PLAN OLARAK SENİN GÖRSELİNİ KULLANIYORUZ --- */
+            background-image: url('teta-tablo.png'); 
+            
+            background-size: cover; /* Resmi tüm ekrana yay */
+            background-position: center; /* Resmi ortala */
+            background-attachment: fixed; /* Sayfa kaydığında resim sabit kalsın */
+            
             color: white;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: var(--font-family);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            overflow: hidden; /* Dikey yazının taşmasını engeller */
         }
 
-        /* Ana Kart (Yuvarlak içine aldığın yer) */
+        /* Ana Puan Tablosu Kartı (Artık transparan, sadece yazıları tutuyor) */
         .league-container {
             width: 850px;
-            /* Arka plan sadece kartın içinde */
-            background-image: linear-gradient(rgba(5, 10, 48, 0.9), rgba(5, 10, 48, 0.9)), url('arka-plan.jpg');
-            background-size: cover;
-            background-position: center;
-            
-            border: 3px solid white; 
-            border-radius: 25px;
+            background: transparent; /* Arka planı tamamen şeffaf yaptık */
+            border: none; /* Çerçeveyi kaldırdık (Görselde zaten var) */
+            border-radius: 0; /* Yuvarlak köşeleri kaldırdık (Görselde zaten var) */
             padding: 40px;
             position: relative;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
-            overflow: hidden; /* Dikey yazının karttan taşmasını engeller */
+            box-shadow: none; /* Gölgeyi kaldırdık (Görselde zaten var) */
         }
 
-        /* Dikey GROUP DELTA Yazısı (Katmanlama burası çok önemli) */
-        .vertical-text {
-            position: absolute;
-            right: 20px; /* Kartın en sağ iç kısmına çektik */
-            top: 50%;
-            transform: rotate(90deg) translateY(-50%);
-            transform-origin: right center; /* Sağa yaslı dönmesini sağlar */
-            font-size: 5.5rem;
-            font-weight: 900;
-            color: var(--cyan);
-            opacity: 0.35; /* Arka planda kalması için şeffaflık */
-            letter-spacing: 10px;
-            white-space: nowrap;
-            text-transform: uppercase;
-            
-            /* --- KATMANLAMA --- */
-            z-index: 1; /* En altta dikey yazı */
-            pointer-events: none;
-        }
-
+        /* Başlık (Görselde zaten var, o yüzden şeffaf yapıp yer kaplamasını sağlıyoruz) */
         .header {
             text-align: center;
             font-size: 3rem;
             font-weight: 900;
-            letter-spacing: 6px;
+            letter-spacing: 10px;
             margin-bottom: 30px;
             text-transform: uppercase;
-            position: relative;
-            z-index: 3; /* Başlık en üstte */
+            visibility: hidden; /* Görünmez ama yer kaplamaya devam eder */
         }
-        .header span { color: var(--cyan); }
 
+        /* Dikey Yazı (Görselde zaten var, o yüzden sildik) */
+
+        /* Tablo Genel Ayarları */
         table {
             width: 100%;
             border-collapse: collapse;
-            position: relative;
-            z-index: 2; /* Tablo yazıları dikey yazının üstünde kalsın */
         }
 
-        thead tr { 
-            border-bottom: 2px solid white; 
-        }
-        
-        th { 
-            padding: 12px; 
-            font-size: 0.8rem; 
-            letter-spacing: 3px; 
-            text-transform: uppercase; 
-        }
-        
-        /* Takımların arasındaki yatay beyaz çizgiler */
-        td { 
-            padding: 15px 10px; 
-            text-align: center; 
-            border-bottom: 1px solid var(--row-border); /* Belirgin beyaz çizgiler */
-            font-size: 1.1rem; 
+        /* Başlık Satırı (Görselde zaten var, o yüzden şeffaf yapıp yer kaplamasını sağlıyoruz) */
+        thead tr {
+            border-bottom: 2px solid transparent; /* Çizgiyi kaldırdık */
         }
 
-        .team-cell { text-align: left; display: flex; align-items: center; gap: 20px; font-weight: 600; }
-        .rank-number { font-size: 1.2rem; font-weight: 900; width: 25px; }
+        th {
+            padding: 15px 10px;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+            visibility: hidden; /* Görünmez ama yer kaplamaya devam eder */
+        }
 
+        /* Veri Satırları (Sadece burası görünecek) */
+        td {
+            padding: 15px 10px;
+            text-align: center;
+            border-bottom: 1px solid transparent; /* Çizgiyi kaldırdık (Görselde zaten var) */
+            font-size: 1.1rem;
+        }
+
+        /* Takım Hücresi (Sıra, İsim) */
+        .team-cell {
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+        }
+
+        /* Sıra Numarası Kutusu (Görselde zaten var, o yüzden şeffaf yapıp yer kaplamasını sağlıyoruz) */
+        .rank-box {
+            width: 35px;
+            height: 35px;
+            background: transparent; /* Şeffaf */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Puan (PTS) Sütunu Neon Efekti */
         .pts-column {
             color: var(--cyan);
             font-weight: 900;
-            font-size: 1.3rem;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
+            font-size: 1.35rem;
+            text-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
+        }
+
+        /* Satır Hover (Opsiyonel: Üzerine gelince hafif parlama) */
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
         }
     </style>
 </head>
 <body>
 
-    <div class="league-container">
-        <div class="header">TETA LEAGUE <span>S4</span></div>
-        <div class="vertical-text">GROUP DELTA</div>
-        
-        <table>
-            <thead>
+<div class="league-container">
+    <div class="header">TETA LEAGUE <span>S4</span></div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 50px;">SIRA</th>
+                <th style="text-align: left;">TEAMS</th>
+                <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
+            </tr>
+        </thead>
+        <tbody id="league-body">
+            </tbody>
+    </table>
+</div>
+
+<script>
+    async function loadTable() {
+        try {
+            // data.json dosyasını çek (Cache engellemek için v=Date.now ekledik)
+            const res = await fetch('data.json?v=' + Date.now());
+            const teams = await res.json();
+
+            // Puana ve sonra averaja (GD) göre sırala
+            teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
+
+            const tbody = document.getElementById('league-body');
+            tbody.innerHTML = teams.map((t, i) => `
                 <tr>
-                    <th style="text-align: left; padding-left: 45px;">TEAMS</th>
-                    <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
+                    <td><div class="rank-box">${i + 1}</div></td>
+                    <td class="team-cell">${t.name}</td>
+                    <td>${t.p}</td>
+                    <td>${t.w}</td>
+                    <td>${t.d}</td>
+                    <td>${t.l}</td>
+                    <td>${t.gd}</td>
+                    <td class="pts-column">${t.pts}</td>
                 </tr>
-            </thead>
-            <tbody id="league-body">
-                </tbody>
-        </table>
-    </div>
-
-    <script>
-        async function loadTable() {
-            try {
-                // data.json dosyasını çekiyoruz
-                const res = await fetch('data.json?v=' + Date.now());
-                const teams = await res.json();
-
-                // Puana, sonra averaja (GD) göre sıralama
-                teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
-
-                const tbody = document.getElementById('league-body');
-                tbody.innerHTML = teams.map((t, i) => `
-                    <tr>
-                        <td class="team-cell">
-                            <span class="rank-number">${i + 1}</span>
-                            ${t.name}
-                        </td>
-                        <td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gd}</td>
-                        <td class="pts-column">${t.pts}</td>
-                    </tr>
-                `).join('');
-            } catch (error) { console.error("Hata:", error); }
+            `).join('');
+        } catch (error) {
+            console.error("Tablo yüklenirken hata oluştu:", error);
         }
+    }
 
-        // Sayfa açıldığında yükle
-        loadTable();
-        // Her 30 saniyede bir otomatik tazele (Sayfayı yenilemeye gerek kalmasın)
-        setInterval(loadTable, 30000);
-    </script>
+    loadTable();
+    // Her 30 saniyede bir tabloyu otomatik yenile (Admin bir şey girerse anında yansır)
+    setInterval(loadTable, 30000);
+</script>
 
 </body>
 </html>
