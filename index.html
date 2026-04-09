@@ -4,166 +4,105 @@
     <meta charset="UTF-8">
     <title>TETA LEAGUE S4 - LIVE</title>
     <style>
-        /* Tasarımın Fontu */
-        :root {
-            --cyan: #00d4ff; /* Neon mavi */
-            --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-        }
-
         body {
-            /* --- ARKA PLAN OLARAK SENİN GÖRSELİNİ KULLANIYORUZ --- */
-            background-image: url('teta-tablo.png'); 
-            
-            background-size: cover; /* Resmi tüm ekrana yay */
-            background-position: center; /* Resmi ortala */
-            background-attachment: fixed; /* Sayfa kaydığında resim sabit kalsın */
-            
-            color: white;
-            font-family: var(--font-family);
+            background-color: #02051a;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            overflow: hidden; /* Dikey yazının taşmasını engeller */
+            font-family: sans-serif;
         }
 
-        /* Ana Puan Tablosu Kartı (Artık transparan, sadece yazıları tutuyor) */
-        .league-container {
-            width: 850px;
-            background: transparent; /* Arka planı tamamen şeffaf yaptık */
-            border: none; /* Çerçeveyi kaldırdık (Görselde zaten var) */
-            border-radius: 0; /* Yuvarlak köşeleri kaldırdık (Görselde zaten var) */
-            padding: 40px;
+        /* Ana Çerçeve: Arka plana senin boş görselini koyuyoruz */
+        .wrapper {
+            width: 900px;
+            height: 900px;
+            background-image: url('teta-tablo.png'); /* Görsel adını kontrol et */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             position: relative;
-            box-shadow: none; /* Gölgeyi kaldırdık (Görselde zaten var) */
         }
 
-        /* Başlık (Görselde zaten var, o yüzden şeffaf yapıp yer kaplamasını sağlıyoruz) */
-        .header {
-            text-align: center;
-            font-size: 3rem;
-            font-weight: 900;
-            letter-spacing: 10px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            visibility: hidden; /* Görünmez ama yer kaplamaya devam eder */
+        /* Tabloyu resmin içindeki beyaz kutuya tam oturtmak için */
+        .table-container {
+            position: absolute;
+            top: 195px;    /* Üstten boşluk (Resme göre ayarlandı) */
+            left: 108px;   /* Soldan boşluk */
+            width: 580px;  /* Tablonun genişliği */
+            height: 565px; /* Tablonun toplam yüksekliği */
         }
 
-        /* Dikey Yazı (Görselde zaten var, o yüzden sildik) */
-
-        /* Tablo Genel Ayarları */
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed; /* Hücre boyutlarını sabitler */
         }
 
-        /* Başlık Satırı (Görselde zaten var, o yüzden şeffaf yapıp yer kaplamasını sağlıyoruz) */
-        thead tr {
-            border-bottom: 2px solid transparent; /* Çizgiyi kaldırdık */
-        }
-
-        th {
-            padding: 15px 10px;
-            font-size: 0.85rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            font-weight: 700;
-            visibility: hidden; /* Görünmez ama yer kaplamaya devam eder */
-        }
-
-        /* Veri Satırları (Sadece burası görünecek) */
         td {
-            padding: 15px 10px;
+            height: 43.5px; /* Satır yüksekliği (Resmindeki çizgiler arası mesafe) */
+            color: white;
             text-align: center;
-            border-bottom: 1px solid transparent; /* Çizgiyi kaldırdık (Görselde zaten var) */
-            font-size: 1.1rem;
-        }
-
-        /* Takım Hücresi (Sıra, İsim) */
-        .team-cell {
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 600;
-        }
-
-        /* Sıra Numarası Kutusu (Görselde zaten var, o yüzden şeffaf yapıp yer kaplamasını sağlıyoruz) */
-        .rank-box {
-            width: 35px;
-            height: 35px;
-            background: transparent; /* Şeffaf */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            font-size: 14px;
             font-weight: bold;
+            padding: 0;
+            vertical-align: middle;
         }
 
-        /* Puan (PTS) Sütunu Neon Efekti */
-        .pts-column {
-            color: var(--cyan);
-            font-weight: 900;
-            font-size: 1.35rem;
-            text-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
-        }
+        /* Sütun Genişlik Ayarları */
+        .col-rank { width: 40px; text-align: right; padding-right: 15px; }
+        .col-name { width: 220px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .col-stats { width: 45px; }
+        .col-pts { width: 50px; color: #00d4ff; font-size: 18px; text-shadow: 0 0 10px rgba(0, 212, 255, 0.5); }
 
-        /* Satır Hover (Opsiyonel: Üzerine gelince hafif parlama) */
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.03);
-        }
+        /* Başlıkları gizliyoruz çünkü resimde zaten yazıyor */
+        .hidden-header { height: 40px; visibility: hidden; }
     </style>
 </head>
 <body>
 
-<div class="league-container">
-    <div class="header">TETA LEAGUE <span>S4</span></div>
-    
-    <table>
-        <thead>
-            <tr>
-                <th style="width: 50px;">SIRA</th>
-                <th style="text-align: left;">TEAMS</th>
-                <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
-            </tr>
-        </thead>
-        <tbody id="league-body">
-            </tbody>
-    </table>
+<div class="wrapper">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr class="hidden-header">
+                    <th class="col-rank"></th>
+                    <th class="col-name"></th>
+                    <th class="col-stats"></th><th class="col-stats"></th>
+                    <th class="col-stats"></th><th class="col-stats"></th>
+                    <th class="col-stats"></th><th class="col-pts"></th>
+                </tr>
+            </thead>
+            <tbody id="league-body">
+                </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
     async function loadTable() {
         try {
-            // data.json dosyasını çek (Cache engellemek için v=Date.now ekledik)
             const res = await fetch('data.json?v=' + Date.now());
             const teams = await res.json();
-
-            // Puana ve sonra averaja (GD) göre sırala
             teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
 
             const tbody = document.getElementById('league-body');
             tbody.innerHTML = teams.map((t, i) => `
                 <tr>
-                    <td><div class="rank-box">${i + 1}</div></td>
-                    <td class="team-cell">${t.name}</td>
-                    <td>${t.p}</td>
-                    <td>${t.w}</td>
-                    <td>${t.d}</td>
-                    <td>${t.l}</td>
-                    <td>${t.gd}</td>
-                    <td class="pts-column">${t.pts}</td>
+                    <td class="col-rank">${i + 1}</td>
+                    <td class="col-name">${t.name}</td>
+                    <td class="col-stats">${t.p}</td>
+                    <td class="col-stats">${t.w}</td>
+                    <td class="col-stats">${t.d}</td>
+                    <td class="col-stats">${t.l}</td>
+                    <td class="col-stats">${t.gd}</td>
+                    <td class="col-pts">${t.pts}</td>
                 </tr>
             `).join('');
-        } catch (error) {
-            console.error("Tablo yüklenirken hata oluştu:", error);
-        }
+        } catch (e) { console.error("Hata:", e); }
     }
-
     loadTable();
-    // Her 30 saniyede bir tabloyu otomatik yenile (Admin bir şey girerse anında yansır)
     setInterval(loadTable, 30000);
 </script>
 
