@@ -56,10 +56,11 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(2, 8, 23, 0.66);
+            background: rgba(2, 8, 23, 0.82);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid rgba(95, 223, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
         }
 
         .nav-inner {
@@ -74,6 +75,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            flex-shrink: 0;
         }
 
         .brand-logo-wrap {
@@ -101,7 +103,7 @@
         }
 
         .brand-title {
-            font-size: 19px;
+            font-size: 20px;
             font-weight: 900;
             letter-spacing: 0.5px;
         }
@@ -118,6 +120,7 @@
         .nav-links {
             display: flex;
             align-items: center;
+            justify-content: flex-end;
             gap: 10px;
             flex-wrap: wrap;
         }
@@ -129,11 +132,19 @@
             font-size: 14px;
             font-weight: 800;
             transition: 0.2s ease;
+            border: 1px solid transparent;
         }
 
         .nav-link:hover {
             color: white;
             background: rgba(255,255,255,0.05);
+            border-color: rgba(95, 223, 255, 0.10);
+        }
+
+        .nav-link.active {
+            color: var(--blue-1);
+            background: rgba(0, 207, 255, 0.08);
+            border-color: rgba(95, 223, 255, 0.14);
         }
 
         .hero {
@@ -498,6 +509,11 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+
+            .nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
         }
 
         @media (max-width: 640px) {
@@ -553,17 +569,17 @@
                     <img class="brand-logo" src="logos/default.png" alt="League logo" onerror="this.style.display='none'">
                 </div>
                 <div class="brand-text">
-                    <div class="brand-title">TETA LEAGUE S4</div>
+                    <div class="brand-title">TETA LEAGUE</div>
                     <div class="brand-sub">PRO CLUBS LEAGUE</div>
                 </div>
             </a>
 
             <nav class="nav-links">
-                <a class="nav-link" href="#home">Ana Sayfa</a>
-                <a class="nav-link" href="#pages">Sayfalar</a>
-                <a class="nav-link" href="#about">Hakkında</a>
-                <a class="nav-link" href="index.html">Lig Tablosu</a>
-                <a class="nav-link" href="results.html">Sonuçlar</a>
+                <a class="nav-link" href="#">📰 Haberler</a>
+                <a class="nav-link" href="#">Lig Alpha</a>
+                <a class="nav-link active" href="index.html">Lig Delta</a>
+                <a class="nav-link" href="#about">İletişim</a>
+                <a class="nav-link" href="#about">Destek</a>
             </nav>
         </div>
     </header>
