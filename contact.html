@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TETA LEAGUE S4 - İletişim</title>
+
+<style>
+*{box-sizing:border-box;}
+
+:root{
+--bg:#070b16;
+--panel:#131b30;
+--panel2:#0b1020;
+--text:#f5f7fb;
+--muted:#aeb7c7;
+--gold:#ffd54f;
+--line:rgba(255,255,255,0.08);
+--shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+
+body{
+margin:0;
+font-family:Inter, sans-serif;
+color:var(--text);
+background:linear-gradient(180deg,#060a14,#0a1020);
+}
+
+/* NAVBAR */
+.navbar{
+position:sticky;
+top:0;
+background:rgba(10,15,30,0.9);
+border-bottom:1px solid rgba(255,213,79,0.2);
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-weight:900;
+color:var(--gold);
+}
+
+.nav a{
+margin-left:15px;
+color:#aaa;
+text-decoration:none;
+font-weight:700;
+}
+
+.nav a:hover{color:white;}
+
+/* HERO */
+.hero{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
+}
+
+.hero h1{
+font-size:48px;
+font-weight:1000;
+}
+
+.hero p{
+color:var(--muted);
+}
+
+/* GRID */
+.grid{
+max-width:1100px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+padding:20px;
+}
+
+/* CARD */
+.card{
+background:linear-gradient(180deg,var(--panel),var(--panel2));
+border-radius:20px;
+padding:25px;
+border:1px solid var(--line);
+box-shadow:var(--shadow);
+}
+
+.card h3{
+margin-bottom:10px;
+}
+
+.card p{
+color:var(--muted);
+font-size:14px;
+}
+
+/* CONTACT BOX */
+.contact-box{
+margin-top:15px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.item{
+padding:12px;
+border-radius:10px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+font-weight:700;
+}
+
+/* BUTTONS */
+.btn{
+margin-top:10px;
+padding:12px;
+border-radius:10px;
+text-align:center;
+font-weight:900;
+cursor:pointer;
+text-decoration:none;
+display:block;
+}
+
+.discord{
+background:#5865F2;
+color:white;
+}
+
+.instagram{
+background:#E1306C;
+color:white;
+}
+
+.mail{
+background:var(--gold);
+color:black;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.grid{grid-template-columns:1fr;}
+.hero h1{font-size:30px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+<div class="logo">TETA LEAGUE</div>
+
+<div class="nav">
+<a href="home.html">Ana Sayfa</a>
+<a href="index.html">Lig Delta</a>
+<a href="fixture.html">Fikstür</a>
+<a href="teams.html">Takımlar</a>
+<a href="news.html">Haberler</a>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<h1>İletişim & Destek</h1>
+<p>
+Lig ile ilgili tüm sorular, destek talepleri ve iletişim kanalları burada yer alır.
+</p>
+</div>
+
+<!-- GRID -->
+<div class="grid">
+
+<div class="card">
+<h3>📩 İletişim</h3>
+<p>Lig yönetimi ile iletişime geçmek için aşağıdaki kanalları kullanabilirsin.</p>
+
+<div class="contact-box">
+<div class="item">Lig Yetkilisi: TETA Admin</div>
+<div class="item">Yanıt Süresi: 24 Saat</div>
+</div>
+
+<a href="#" class="btn mail">Mail Gönder</a>
+</div>
+
+<div class="card">
+<h3>🌐 Sosyal & Topluluk</h3>
+<p>Toplulukla iletişim kurmak ve gelişmeleri takip etmek için:</p>
+
+<a href="#" class="btn discord">Discord Sunucusu</a>
+<a href="#" class="btn instagram">Instagram Sayfası</a>
+</div>
+
+<div class="card">
+<h3>⚠️ Destek</h3>
+<p>
+Maç, sonuç veya lig sistemi ile ilgili sorunlarda destek talebi oluşturabilirsin.
+</p>
+
+<div class="contact-box">
+<div class="item">Maç Sorunları</div>
+<div class="item">Sonuç İtirazları</div>
+<div class="item">Genel Destek</div>
+</div>
+</div>
+
+<div class="card">
+<h3>📢 Bilgilendirme</h3>
+<p>
+Tüm duyurular ve güncellemeler haberler sayfasında paylaşılır.
+</p>
+
+<a href="news.html" class="btn mail">Haberlere Git</a>
+</div>
+
+</div>
+
+</body>
+</html>
