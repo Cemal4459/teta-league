@@ -51,19 +51,25 @@
         }
 
         .controls {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.2fr;
             gap: 10px;
-            flex-wrap: wrap;
             margin-bottom: 22px;
         }
 
         .control {
+            width: 100%;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.12);
             color: #fff;
             border-radius: 10px;
-            padding: 10px 12px;
+            padding: 12px 12px;
             font-size: 14px;
+            outline: none;
+        }
+
+        .control::placeholder {
+            color: rgba(255,255,255,0.45);
         }
 
         .week-section {
@@ -234,6 +240,10 @@
                 height: 56px;
             }
 
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
             .week-title {
                 font-size: 18px;
             }
@@ -278,9 +288,17 @@
             <select id="weekFilter" class="control">
                 <option value="all">Tüm Haftalar</option>
             </select>
+
             <select id="teamFilter" class="control">
                 <option value="all">Tüm Takımlar</option>
             </select>
+
+            <input
+                id="searchInput"
+                class="control"
+                type="text"
+                placeholder="Takım, skor veya hafta ara..."
+            />
         </div>
 
         <div id="resultsRoot"></div>
@@ -364,14 +382,52 @@
                     .join("");
         }
 
+        function normalizeText(text) {
+            return String(text || "")
+                .toLocaleLowerCase("tr")
+                .replace(/\s+/g, " ")
+                .trim();
+        }
+
+        function matchSearch(match, query) {
+            if (!query) return true;
+
+            const text = normalizeText(query);
+
+            const weekText = `hafta ${match.week}`;
+            const scoreDash = `${match.homeScore}-${match.awayScore}`;
+            const scoreColon = `${match.homeScore}:${match.awayScore}`;
+            const combined1 = `${match.home} ${scoreDash} ${match.away}`;
+            const combined2 = `${match.home} ${scoreColon} ${match.away}`;
+
+            const haystack = [
+                match.home,
+                match.away,
+                weekText,
+                scoreDash,
+                scoreColon,
+                combined1,
+                combined2,
+                match.week,
+                match.homeScore,
+                match.awayScore
+            ]
+            .map(normalizeText)
+            .join(" | ");
+
+            return haystack.includes(text);
+        }
+
         function getFilteredMatches() {
             const weekValue = document.getElementById("weekFilter").value;
             const teamValue = document.getElementById("teamFilter").value;
+            const searchValue = document.getElementById("searchInput").value;
 
             return allMatches.filter(match => {
                 const weekOk = weekValue === "all" || String(match.week) === weekValue;
                 const teamOk = teamValue === "all" || match.home === teamValue || match.away === teamValue;
-                return weekOk && teamOk;
+                const searchOk = matchSearch(match, searchValue);
+                return weekOk && teamOk && searchOk;
             });
         }
 
@@ -466,6 +522,7 @@
 
         document.getElementById("weekFilter").addEventListener("change", renderResults);
         document.getElementById("teamFilter").addEventListener("change", renderResults);
+        document.getElementById("searchInput").addEventListener("input", renderResults);
 
         loadResults();
         setInterval(loadResults, 30000);
