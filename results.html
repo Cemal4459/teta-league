@@ -94,6 +94,32 @@
             padding: 14px 18px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             background: rgba(0, 10, 80, 0.16);
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+        .week-header:hover {
+            background: rgba(0, 10, 80, 0.24);
+        }
+
+        .week-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toggle-icon {
+            width: 18px;
+            text-align: center;
+            font-size: 14px;
+            color: #7defff;
+            font-weight: 900;
+            transition: transform 0.2s ease;
+        }
+
+        .week-section.closed .toggle-icon {
+            transform: rotate(-90deg);
         }
 
         .week-title {
@@ -111,6 +137,10 @@
 
         .match-list {
             padding: 10px;
+        }
+
+        .week-section.closed .match-list {
+            display: none;
         }
 
         .match-card {
@@ -135,6 +165,7 @@
             align-items: center;
             gap: 12px;
             min-width: 0;
+            transition: transform 0.2s ease, filter 0.2s ease;
         }
 
         .team.right {
@@ -186,8 +217,33 @@
             color: #7defff;
         }
 
+        .winner {
+            filter: drop-shadow(0 0 14px rgba(125, 239, 255, 0.38));
+        }
+
         .winner .team-name {
             color: #7defff;
+            text-shadow: 0 0 12px rgba(125, 239, 255, 0.32);
+            font-weight: 900;
+        }
+
+        .winner .team-logo {
+            box-shadow: 0 0 18px rgba(125, 239, 255, 0.24);
+        }
+
+        .winner-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(125, 239, 255, 0.12);
+            border: 1px solid rgba(125, 239, 255, 0.22);
+            color: #9df5ff;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
         }
 
         .meta {
@@ -312,6 +368,7 @@
     <script>
         let allTeams = [];
         let allMatches = [];
+        const collapsedWeeks = new Set();
 
         function safeLogo(path) {
             return path || "logos/default.png";
@@ -363,6 +420,16 @@
             if (side === "home" && home > away) return "winner";
             if (side === "away" && away > home) return "winner";
             return "";
+        }
+
+        function isWinner(side, match) {
+            const home = Number(match.homeScore);
+            const away = Number(match.awayScore);
+
+            if (Number.isNaN(home) || Number.isNaN(away) || home === away) return false;
+            if (side === "home") return home > away;
+            if (side === "away") return away > home;
+            return false;
         }
 
         function buildFilters(teams, matches) {
@@ -431,6 +498,28 @@
             });
         }
 
+        function toggleWeek(week) {
+            if (collapsedWeeks.has(week)) {
+                collapsedWeeks.delete(week);
+            } else {
+                collapsedWeeks.add(week);
+            }
+            renderResults();
+        }
+
+        function setupDefaultCollapsedWeeks(grouped) {
+            collapsedWeeks.clear();
+
+            if (!grouped.length) return;
+
+            const latestWeek = grouped[0].week;
+            grouped.forEach(group => {
+                if (group.week !== latestWeek) {
+                    collapsedWeeks.add(group.week);
+                }
+            });
+        }
+
         function renderResults() {
             const root = document.getElementById("resultsRoot");
             const teamMap = getTeamMap(allTeams);
@@ -443,10 +532,19 @@
 
             const grouped = groupByWeek(filtered);
 
+            if (document.getElementById("weekFilter").value !== "all") {
+                collapsedWeeks.clear();
+            } else if (collapsedWeeks.size === 0 && grouped.length > 1) {
+                setupDefaultCollapsedWeeks(grouped);
+            }
+
             root.innerHTML = grouped.map(group => `
-                <section class="week-section">
-                    <div class="week-header">
-                        <h2 class="week-title">Hafta ${group.week}</h2>
+                <section class="week-section ${collapsedWeeks.has(group.week) ? "closed" : ""}">
+                    <div class="week-header" onclick="toggleWeek(${group.week})">
+                        <div class="week-header-left">
+                            <div class="toggle-icon">▼</div>
+                            <h2 class="week-title">Hafta ${group.week}</h2>
+                        </div>
                         <div class="week-count">${group.matches.length} maç</div>
                     </div>
 
@@ -466,7 +564,7 @@
                                         >
                                         <div>
                                             <div class="team-name" title="${homeTeam.name}">${homeTeam.name}</div>
-                                            <div class="meta">Ev sahibi</div>
+                                            ${isWinner("home", match) ? `<div class="winner-badge">WINNER</div>` : `<div class="meta">Ev sahibi</div>`}
                                         </div>
                                     </div>
 
@@ -479,7 +577,7 @@
                                     <div class="team right ${getWinnerClass("away", match)}">
                                         <div>
                                             <div class="team-name" title="${awayTeam.name}">${awayTeam.name}</div>
-                                            <div class="meta">Deplasman</div>
+                                            ${isWinner("away", match) ? `<div class="winner-badge">WINNER</div>` : `<div class="meta">Deplasman</div>`}
                                         </div>
                                         <img
                                             class="team-logo"
@@ -520,9 +618,20 @@
             }
         }
 
-        document.getElementById("weekFilter").addEventListener("change", renderResults);
-        document.getElementById("teamFilter").addEventListener("change", renderResults);
-        document.getElementById("searchInput").addEventListener("input", renderResults);
+        document.getElementById("weekFilter").addEventListener("change", () => {
+            collapsedWeeks.clear();
+            renderResults();
+        });
+
+        document.getElementById("teamFilter").addEventListener("change", () => {
+            collapsedWeeks.clear();
+            renderResults();
+        });
+
+        document.getElementById("searchInput").addEventListener("input", () => {
+            collapsedWeeks.clear();
+            renderResults();
+        });
 
         loadResults();
         setInterval(loadResults, 30000);
