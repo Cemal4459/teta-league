@@ -22,12 +22,12 @@
   {
     "name": "96 BOYS",
     "logo": "logos/96-boys.png",
-    "p": 0,
-    "w": 0,
+    "p": 1,
+    "w": 1,
     "d": 0,
     "l": 0,
-    "gd": 0,
-    "pts": 0
+    "gd": 16,
+    "pts": 3
   },
   {
     "name": "Los Blancos",
@@ -42,11 +42,11 @@
   {
     "name": "Shepherds",
     "logo": "logos/shepherds.png",
-    "p": 0,
+    "p": 1,
     "w": 0,
     "d": 0,
-    "l": 0,
-    "gd": 0,
+    "l": 1,
+    "gd": -16,
     "pts": 0
   },
   {
