@@ -15,5 +15,14 @@
     "awayScore": 1,
     "createdAt": "2026-04-09T04:16:23.249Z",
     "updatedAt": "2026-04-09T04:16:23.249Z"
+  },
+  {
+    "week": 2,
+    "home": "AKIN FC",
+    "away": "96 BOYS",
+    "homeScore": 1,
+    "awayScore": 0,
+    "createdAt": "2026-04-09T04:18:22.238Z",
+    "updatedAt": "2026-04-09T04:18:22.238Z"
   }
 ]
