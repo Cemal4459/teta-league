@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TETA Admin - Maç Girişi</title>
+    <title>TETA Admin - Maç Yönetimi</title>
     <style>
         * {
             box-sizing: border-box;
@@ -17,26 +17,28 @@
             font-family: "Segoe UI", Arial, sans-serif;
             display: flex;
             justify-content: center;
-            align-items: center;
             padding: 24px;
         }
 
         .container {
             width: 100%;
-            max-width: 540px;
+            max-width: 720px;
             background: linear-gradient(180deg, #202020 0%, #1a1a1a 100%);
-            padding: 30px 24px;
+            padding: 28px 22px;
             border-radius: 18px;
             border: 1px solid #3d3d3d;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
         }
 
-        h2 {
+        h2, h3 {
+            margin: 0 0 18px;
             text-align: center;
             color: #00d4ff;
-            margin-top: 4px;
-            margin-bottom: 24px;
-            font-size: 20px;
+        }
+
+        h3 {
+            margin-top: 28px;
+            font-size: 18px;
         }
 
         label {
@@ -54,7 +56,7 @@
             border: 1px solid #4a4a4a;
             border-radius: 8px;
             padding: 12px 14px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             font-size: 15px;
             outline: none;
         }
@@ -83,17 +85,23 @@
             width: auto;
         }
 
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
         .match-row {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 14px;
-            margin: 10px 0 22px;
+            margin: 8px 0 20px;
         }
 
         .score-input {
-            width: 64px;
-            height: 58px;
+            width: 72px;
+            height: 60px;
             text-align: center;
             font-size: 28px;
             font-weight: 800;
@@ -107,74 +115,195 @@
             color: #ffffff;
         }
 
-        button.main-btn {
-            width: 100%;
-            background: #19c0e3;
-            color: #000;
+        .btn-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
             border: none;
             border-radius: 8px;
             padding: 14px;
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 800;
             cursor: pointer;
             transition: 0.2s ease;
         }
 
-        button.main-btn:hover {
+        .main-btn {
+            flex: 1;
+            background: #19c0e3;
+            color: #000;
+        }
+
+        .main-btn:hover {
             background: #0fb0d2;
         }
 
-        button.main-btn:active {
+        .secondary-btn {
+            background: #3a3a3a;
+            color: #fff;
+            min-width: 130px;
+        }
+
+        .secondary-btn:hover {
+            background: #4a4a4a;
+        }
+
+        button:active {
             transform: scale(0.985);
         }
 
-        button.main-btn:disabled {
+        button:disabled {
             opacity: 0.7;
             cursor: not-allowed;
         }
 
         #status {
             min-height: 26px;
-            margin-top: 18px;
+            margin-top: 16px;
             text-align: center;
             font-weight: 700;
             color: #d8faff;
         }
 
-        .last-match {
-            margin-top: 16px;
+        .edit-box {
+            margin-top: 14px;
             padding: 12px 14px;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(0, 212, 255, 0.08);
             color: #dcefff;
             font-size: 14px;
             text-align: center;
             min-height: 42px;
+            display: none;
         }
 
         .note {
-            margin-top: 14px;
+            margin-top: 12px;
             text-align: center;
             color: #bfbfbf;
             font-size: 13px;
             line-height: 1.5;
         }
+
+        .match-list {
+            margin-top: 14px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .match-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .match-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .match-week {
+            color: #7defff;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .match-date {
+            color: rgba(255,255,255,0.55);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .match-scoreline {
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.4;
+        }
+
+        .match-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .small-btn {
+            padding: 10px 12px;
+            font-size: 13px;
+            flex: 1;
+        }
+
+        .edit-btn {
+            background: #1f8fff;
+            color: #fff;
+        }
+
+        .edit-btn:hover {
+            background: #1679d9;
+        }
+
+        .delete-btn {
+            background: #ff5b6b;
+            color: #fff;
+        }
+
+        .delete-btn:hover {
+            background: #e14a5a;
+        }
+
+        .empty-list {
+            text-align: center;
+            color: #d0d0d0;
+            padding: 22px 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .btn-row {
+                flex-direction: column;
+            }
+
+            .match-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .match-actions {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Maç Sonucu Gir</h2>
+        <h2>Maç Yönetimi</h2>
 
         <div class="token-wrap">
             <input type="password" id="token" placeholder="GitHub token gir" autocomplete="off" />
             <button type="button" class="toggle-token" onclick="toggleToken()">Göster</button>
         </div>
 
-        <label for="week">Hafta</label>
-        <input type="number" id="week" min="1" value="1" />
-
-        <label for="homeTeam">Ev Sahibi</label>
-        <select id="homeTeam"></select>
+        <div class="grid-2">
+            <div>
+                <label for="week">Hafta</label>
+                <input type="number" id="week" min="1" value="1" />
+            </div>
+            <div>
+                <label for="homeTeam">Ev Sahibi</label>
+                <select id="homeTeam"></select>
+            </div>
+        </div>
 
         <div class="match-row">
             <input class="score-input" type="number" id="homeScore" value="0" min="0" />
@@ -185,14 +314,20 @@
         <label for="awayTeam">Deplasman</label>
         <select id="awayTeam"></select>
 
-        <button id="saveBtn" class="main-btn" onclick="maciKaydet()">MAÇI KAYDET</button>
+        <div class="btn-row">
+            <button id="saveBtn" class="main-btn" onclick="saveMatch()">MAÇI KAYDET</button>
+            <button id="cancelEditBtn" class="secondary-btn" onclick="cancelEdit()" style="display:none;">DÜZENLEMEYİ İPTAL ET</button>
+        </div>
 
         <div id="status">Veriler yükleniyor...</div>
-        <div class="last-match" id="lastMatch">Henüz maç kaydedilmedi.</div>
+        <div class="edit-box" id="editBox"></div>
 
         <div class="note">
-            Aynı hafta içinde aynı eşleşme iki kez kaydedilemez.
+            Aynı hafta içinde aynı eşleşme iki kez kaydedilemez. Düzenleme modunda mevcut maç güncellenir.
         </div>
+
+        <h3>Kayıtlı Maçlar</h3>
+        <div class="match-list" id="matchList"></div>
     </div>
 
     <script>
@@ -202,6 +337,7 @@
         let teams = [];
         let matches = [];
         let matchesSha = "";
+        let editingIndex = null;
 
         function setStatus(message, color = "#d8faff") {
             const status = document.getElementById("status");
@@ -260,12 +396,153 @@
             return [a, b].sort((x, y) => x.localeCompare(y, "tr")).join("||");
         }
 
-        function matchAlreadyExists(week, home, away) {
+        function matchAlreadyExists(week, home, away, ignoreIndex = null) {
             const pair = normalizePair(home, away);
-            return matches.some(match =>
-                Number(match.week) === Number(week) &&
-                normalizePair(match.home, match.away) === pair
+
+            return matches.some((match, index) => {
+                if (ignoreIndex !== null && index === ignoreIndex) return false;
+
+                return Number(match.week) === Number(week) &&
+                    normalizePair(match.home, match.away) === pair;
+            });
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return "Tarih yok";
+            const d = new Date(dateStr);
+            if (Number.isNaN(d.getTime())) return "Tarih yok";
+
+            return d.toLocaleString("tr-TR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+        }
+
+        function sortMatchesForList(list) {
+            return [...list]
+                .map((match, originalIndex) => ({ match, originalIndex }))
+                .sort((a, b) => {
+                    const weekDiff = Number(b.match.week) - Number(a.match.week);
+                    if (weekDiff !== 0) return weekDiff;
+
+                    const aTime = a.match.createdAt ? new Date(a.match.createdAt).getTime() : 0;
+                    const bTime = b.match.createdAt ? new Date(b.match.createdAt).getTime() : 0;
+                    return bTime - aTime;
+                });
+        }
+
+        function renderMatchList() {
+            const matchList = document.getElementById("matchList");
+
+            if (!matches.length) {
+                matchList.innerHTML = `<div class="empty-list">Henüz kayıtlı maç yok.</div>`;
+                return;
+            }
+
+            const sorted = sortMatchesForList(matches);
+
+            matchList.innerHTML = sorted.map(({ match, originalIndex }) => `
+                <div class="match-item">
+                    <div class="match-top">
+                        <div class="match-week">Hafta ${match.week}</div>
+                        <div class="match-date">${formatDate(match.createdAt)}</div>
+                    </div>
+
+                    <div class="match-scoreline">
+                        ${match.home} ${match.homeScore} - ${match.awayScore} ${match.away}
+                    </div>
+
+                    <div class="match-actions">
+                        <button class="small-btn edit-btn" onclick="startEdit(${originalIndex})">DÜZENLE</button>
+                        <button class="small-btn delete-btn" onclick="deleteMatch(${originalIndex})">SİL</button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function updateEditUI() {
+            const editBox = document.getElementById("editBox");
+            const saveBtn = document.getElementById("saveBtn");
+            const cancelBtn = document.getElementById("cancelEditBtn");
+
+            if (editingIndex === null) {
+                editBox.style.display = "none";
+                editBox.textContent = "";
+                saveBtn.textContent = "MAÇI KAYDET";
+                cancelBtn.style.display = "none";
+                return;
+            }
+
+            const match = matches[editingIndex];
+            editBox.style.display = "block";
+            editBox.textContent = `Düzenleme modu: Hafta ${match.week} - ${match.home} ${match.homeScore}:${match.awayScore} ${match.away}`;
+            saveBtn.textContent = "MAÇI GÜNCELLE";
+            cancelBtn.style.display = "block";
+        }
+
+        function startEdit(index) {
+            const match = matches[index];
+            if (!match) return;
+
+            editingIndex = index;
+
+            document.getElementById("week").value = match.week;
+            document.getElementById("homeTeam").value = match.home;
+            updateAwayOptions(match.home, match.away);
+            document.getElementById("awayTeam").value = match.away;
+            document.getElementById("homeScore").value = match.homeScore;
+            document.getElementById("awayScore").value = match.awayScore;
+
+            updateEditUI();
+            setStatus("Düzenleme modu açıldı.", "#9fffb8");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function cancelEdit() {
+            editingIndex = null;
+            document.getElementById("week").value = 1;
+            document.getElementById("homeScore").value = 0;
+            document.getElementById("awayScore").value = 0;
+
+            fillTeamSelects();
+            updateEditUI();
+            setStatus("Düzenleme iptal edildi.", "#d8faff");
+        }
+
+        async function saveMatchesToGitHub(updatedMatches, commitMessage) {
+            const token = document.getElementById("token").value.trim();
+
+            if (!token) {
+                alert("Lütfen GitHub token gir.");
+                return false;
+            }
+
+            const response = await fetch(
+                `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/matches.json`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `token ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: commitMessage,
+                        content: btoa(unescape(encodeURIComponent(JSON.stringify(updatedMatches, null, 2)))),
+                        sha: matchesSha
+                    })
+                }
             );
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || "Güncelleme başarısız.");
+            }
+
+            return true;
         }
 
         async function verileriYukle() {
@@ -296,6 +573,9 @@
                 matchesSha = matchesFile.sha;
 
                 fillTeamSelects();
+                renderMatchList();
+                updateEditUI();
+
                 setStatus("Veriler hazır.", "#9fffb8");
             } catch (error) {
                 console.error(error);
@@ -303,20 +583,13 @@
             }
         }
 
-        async function maciKaydet() {
-            const token = document.getElementById("token").value.trim();
+        async function saveMatch() {
             const week = parseInt(document.getElementById("week").value, 10);
             const homeName = document.getElementById("homeTeam").value;
             const awayName = document.getElementById("awayTeam").value;
             const homeScore = parseInt(document.getElementById("homeScore").value, 10);
             const awayScore = parseInt(document.getElementById("awayScore").value, 10);
             const saveBtn = document.getElementById("saveBtn");
-            const lastMatch = document.getElementById("lastMatch");
-
-            if (!token) {
-                alert("Lütfen GitHub token gir.");
-                return;
-            }
 
             if (Number.isNaN(week) || week < 1) {
                 alert("Geçerli bir hafta gir.");
@@ -338,7 +611,7 @@
                 return;
             }
 
-            if (matchAlreadyExists(week, homeName, awayName)) {
+            if (matchAlreadyExists(week, homeName, awayName, editingIndex)) {
                 alert("Bu hafta için bu eşleşme zaten kayıtlı.");
                 return;
             }
@@ -349,42 +622,40 @@
                 away: awayName,
                 homeScore,
                 awayScore,
-                createdAt: new Date().toISOString()
+                createdAt: editingIndex !== null && matches[editingIndex]?.createdAt
+                    ? matches[editingIndex].createdAt
+                    : new Date().toISOString(),
+                updatedAt: new Date().toISOString()
             };
 
-            const updatedMatches = [...matches, newMatch];
+            let updatedMatches;
+            let commitMessage;
+
+            if (editingIndex === null) {
+                updatedMatches = [...matches, newMatch];
+                commitMessage = `Hafta ${week}: ${homeName} ${homeScore}-${awayScore} ${awayName}`;
+            } else {
+                updatedMatches = [...matches];
+                updatedMatches[editingIndex] = newMatch;
+                commitMessage = `Düzenle: Hafta ${week} ${homeName} ${homeScore}-${awayScore} ${awayName}`;
+            }
 
             try {
                 saveBtn.disabled = true;
-                setStatus("Kaydediliyor...");
+                setStatus(editingIndex === null ? "Kaydediliyor..." : "Güncelleniyor...");
 
-                const response = await fetch(
-                    `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/matches.json`,
-                    {
-                        method: "PUT",
-                        headers: {
-                            "Authorization": `token ${token}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            message: `Hafta ${week}: ${homeName} ${homeScore}-${awayScore} ${awayName}`,
-                            content: btoa(unescape(encodeURIComponent(JSON.stringify(updatedMatches, null, 2)))),
-                            sha: matchesSha
-                        })
-                    }
-                );
-
-                const result = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(result.message || "Güncelleme başarısız.");
-                }
+                await saveMatchesToGitHub(updatedMatches, commitMessage);
 
                 matches = updatedMatches;
 
-                setStatus("Başarılı! Maç kaydedildi.", "#86ff9e");
-                lastMatch.textContent = `Son kayıt: Hafta ${week} - ${homeName} ${homeScore} : ${awayScore} ${awayName}`;
+                if (editingIndex === null) {
+                    setStatus("Başarılı! Maç kaydedildi.", "#86ff9e");
+                } else {
+                    setStatus("Başarılı! Maç güncellendi.", "#86ff9e");
+                }
 
+                editingIndex = null;
+                document.getElementById("week").value = 1;
                 document.getElementById("homeScore").value = 0;
                 document.getElementById("awayScore").value = 0;
 
@@ -394,6 +665,38 @@
                 setStatus(`Hata: ${error.message}`, "#ff8d8d");
             } finally {
                 saveBtn.disabled = false;
+            }
+        }
+
+        async function deleteMatch(index) {
+            const match = matches[index];
+            if (!match) return;
+
+            const ok = confirm(`Silinsin mi?\nHafta ${match.week}: ${match.home} ${match.homeScore}-${match.awayScore} ${match.away}`);
+            if (!ok) return;
+
+            try {
+                setStatus("Maç siliniyor...");
+
+                const updatedMatches = matches.filter((_, i) => i !== index);
+                await saveMatchesToGitHub(
+                    updatedMatches,
+                    `Sil: Hafta ${match.week} ${match.home} ${match.homeScore}-${match.awayScore} ${match.away}`
+                );
+
+                if (editingIndex === index) {
+                    editingIndex = null;
+                } else if (editingIndex !== null && index < editingIndex) {
+                    editingIndex -= 1;
+                }
+
+                matches = updatedMatches;
+                setStatus("Başarılı! Maç silindi.", "#86ff9e");
+
+                await verileriYukle();
+            } catch (error) {
+                console.error(error);
+                setStatus(`Hata: ${error.message}`, "#ff8d8d");
             }
         }
 
