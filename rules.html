@@ -5,85 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TETA LEAGUE S4 - Kurallar</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         :root {
-            --bg: #070b16;
-            --bg-2: #0c1324;
-            --panel: rgba(19, 27, 48, 0.94);
-            --panel-2: rgba(11, 16, 30, 0.96);
-            --text: #f5f7fb;
-            --muted: #aeb7c7;
+            --bg-1: #050914;
+            --bg-2: #0a1020;
+            --panel: rgba(15, 23, 45, 0.88);
+            --text: #f6f8fc;
+            --muted: #aeb7c8;
             --gold: #ffd54f;
             --gold-2: #ffea94;
-            --line: rgba(255, 213, 79, 0.18);
-            --line-soft: rgba(255, 255, 255, 0.08);
-            --shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
-            --green: #63d471;
-            --red: #ff6b6b;
-            --blue: #6ecbff;
+            --cyan: #66e3ff;
+            --line: rgba(255, 255, 255, 0.08);
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
         }
 
         body {
             margin: 0;
+            min-height: 100vh;
             font-family: Inter, "Segoe UI", Arial, sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at 15% 20%, rgba(255, 213, 79, 0.10), transparent 20%),
-                radial-gradient(circle at 85% 15%, rgba(255, 213, 79, 0.06), transparent 18%),
-                linear-gradient(180deg, #060a14 0%, #0a1020 100%);
-            min-height: 100vh;
+                radial-gradient(circle at 12% 16%, rgba(255, 213, 79, 0.12), transparent 18%),
+                radial-gradient(circle at 86% 14%, rgba(102, 227, 255, 0.10), transparent 18%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+        a { color: inherit; text-decoration: none; }
 
         .container {
-            width: min(1220px, calc(100% - 36px));
+            width: min(1240px, calc(100% - 36px));
             margin: 0 auto;
         }
 
         .navbar {
             position: sticky;
             top: 0;
-            z-index: 100;
-            background: rgba(8, 12, 24, 0.88);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--line);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+            z-index: 200;
+            background: rgba(7, 11, 22, 0.82);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.24);
         }
 
         .nav-inner {
-            min-height: 78px;
+            min-height: 82px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 18px;
         }
 
         .brand {
             display: flex;
             align-items: center;
             gap: 14px;
-            font-weight: 900;
-            letter-spacing: 0.4px;
         }
 
         .brand-mark {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
             display: grid;
             place-items: center;
-            background: linear-gradient(180deg, rgba(255, 213, 79, 0.2), rgba(255, 213, 79, 0.06));
-            border: 1px solid rgba(255, 213, 79, 0.22);
-            color: var(--gold);
             font-size: 20px;
+            font-weight: 1000;
+            color: #111827;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 55%, #ffffff 100%);
         }
 
         .brand-text {
@@ -93,16 +81,17 @@
         }
 
         .brand-title {
-            font-size: 21px;
+            font-size: 22px;
+            font-weight: 1000;
         }
 
         .brand-sub {
             margin-top: 4px;
             font-size: 10px;
-            color: var(--gold);
+            font-weight: 800;
             letter-spacing: 1.3px;
             text-transform: uppercase;
-            font-weight: 800;
+            color: var(--cyan);
         }
 
         .nav-links {
@@ -113,10 +102,10 @@
         }
 
         .nav-link {
-            color: #c7ced8;
+            color: #c7cfdb;
             font-size: 14px;
-            font-weight: 700;
-            padding: 10px 14px;
+            font-weight: 800;
+            padding: 11px 14px;
             border-radius: 12px;
             border: 1px solid transparent;
             transition: 0.22s ease;
@@ -124,45 +113,45 @@
 
         .nav-link:hover {
             color: #fff;
-            background: rgba(255,255,255,0.04);
-            border-color: rgba(255, 213, 79, 0.12);
+            background: rgba(255,255,255,0.05);
         }
 
         .nav-link.active {
-            color: #10141d;
+            color: #0e1524;
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 100%);
             box-shadow: 0 8px 24px rgba(255, 213, 79, 0.18);
         }
 
         .hero {
-            padding: 42px 0 14px;
+            padding: 42px 0 18px;
         }
 
         .hero-card {
-            padding: 28px;
-            border-radius: 28px;
-            background: linear-gradient(135deg, rgba(20, 28, 50, 0.96), rgba(10, 15, 28, 0.96));
-            border: 1px solid rgba(255, 213, 79, 0.15);
+            padding: 30px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(13, 20, 39, 0.96), rgba(8, 13, 26, 0.98));
+            border: 1px solid rgba(255,255,255,0.08);
             box-shadow: var(--shadow);
         }
 
         .eyebrow {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 14px;
+            min-height: 38px;
+            padding: 0 14px;
             border-radius: 999px;
+            color: var(--gold);
             background: rgba(255, 213, 79, 0.08);
             border: 1px solid rgba(255, 213, 79, 0.18);
-            color: var(--gold);
             font-size: 12px;
             font-weight: 900;
             letter-spacing: 1px;
             text-transform: uppercase;
+            margin-bottom: 18px;
         }
 
         .hero-title {
-            margin: 16px 0 10px;
+            margin: 0;
             font-size: clamp(34px, 6vw, 62px);
             line-height: 0.95;
             font-weight: 1000;
@@ -171,15 +160,46 @@
         }
 
         .hero-text {
-            margin: 0;
+            margin-top: 14px;
             color: var(--muted);
             font-size: 16px;
             line-height: 1.8;
-            max-width: 780px;
+            max-width: 820px;
         }
 
         .section {
-            padding: 24px 0 40px;
+            padding: 24px 0 42px;
+        }
+
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .highlight {
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: var(--shadow);
+        }
+
+        .highlight-value {
+            font-size: 30px;
+            font-weight: 1000;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .highlight-label {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
         }
 
         .rules-grid {
@@ -191,41 +211,22 @@
         .rule-card {
             padding: 24px;
             border-radius: 24px;
-            background: linear-gradient(180deg, var(--panel), var(--panel-2));
-            border: 1px solid var(--line-soft);
+            background: linear-gradient(180deg, rgba(18, 27, 48, 0.96), rgba(11, 16, 30, 0.98));
+            border: 1px solid rgba(255,255,255,0.08);
             box-shadow: var(--shadow);
         }
 
-        .rule-top {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 14px;
-        }
-
-        .rule-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(180deg, rgba(255, 213, 79, 0.18), rgba(255, 213, 79, 0.08));
-            border: 1px solid rgba(255, 213, 79, 0.18);
-            color: var(--gold);
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-
         .rule-title {
-            margin: 0;
-            font-size: 22px;
+            margin: 0 0 12px;
+            font-size: 24px;
             font-weight: 1000;
+            color: var(--gold);
         }
 
         .rule-text {
             margin: 0;
             color: var(--muted);
-            line-height: 1.85;
+            line-height: 1.8;
             font-size: 15px;
         }
 
@@ -237,37 +238,6 @@
             font-size: 14px;
         }
 
-        .highlight-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 16px;
-            margin-bottom: 18px;
-        }
-
-        .highlight-box {
-            padding: 18px;
-            border-radius: 18px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-        }
-
-        .highlight-value {
-            font-size: 28px;
-            font-weight: 1000;
-            color: var(--gold);
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .highlight-label {
-            color: var(--muted);
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
         .bottom-nav {
             margin-top: 24px;
             display: flex;
@@ -276,22 +246,23 @@
         }
 
         .bottom-link {
-            padding: 12px 14px;
+            min-height: 44px;
+            padding: 0 14px;
             border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255, 213, 79, 0.14);
-            color: var(--gold);
+            border: 1px solid rgba(255,255,255,0.08);
             font-size: 14px;
             font-weight: 900;
+            color: var(--gold);
         }
 
-        @media (max-width: 980px) {
+        @media (max-width: 960px) {
+            .highlights,
             .rules-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .highlight-grid {
-                grid-template-columns: 1fr 1fr;
             }
 
             .nav-inner {
@@ -302,39 +273,18 @@
         }
 
         @media (max-width: 640px) {
-            .container {
-                width: min(100% - 18px, 1220px);
-            }
-
+            .container { width: min(100% - 18px, 1240px); }
             .hero-card,
-            .rule-card {
-                border-radius: 20px;
-            }
-
-            .hero-card {
-                padding: 22px 18px;
-            }
-
-            .highlight-grid {
-                grid-template-columns: 1fr;
-            }
-
+            .rule-card,
+            .highlight { border-radius: 20px; }
             .nav-links,
-            .bottom-nav {
-                width: 100%;
-            }
-
+            .bottom-nav { width: 100%; }
             .nav-link,
-            .bottom-link {
-                width: 100%;
-                text-align: center;
-                justify-content: center;
-            }
+            .bottom-link { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
-
     <header class="navbar">
         <div class="container nav-inner">
             <a href="home.html" class="brand">
@@ -346,11 +296,11 @@
             </a>
 
             <nav class="nav-links">
-                <a class="nav-link" href="#">📰 Haberler</a>
+                <a class="nav-link" href="news.html">📰 Haberler</a>
                 <a class="nav-link" href="#">Lig Alpha</a>
-                <a class="nav-link active" href="index.html">Lig Delta</a>
-                <a class="nav-link" href="#">İletişim</a>
-                <a class="nav-link" href="#">Destek</a>
+                <a class="nav-link active" href="home.html">Lig Delta</a>
+                <a class="nav-link" href="contact.html">İletişim</a>
+                <a class="nav-link" href="contact.html">Destek</a>
             </nav>
         </div>
     </header>
@@ -361,8 +311,7 @@
                 <div class="eyebrow">Season 4 · Rules</div>
                 <h1 class="hero-title">Lig Kuralları</h1>
                 <p class="hero-text">
-                    TETA League S4 içinde geçerli olan temel format, sıralama ve rekabet kuralları bu sayfada yer alır.
-                    Açılışta bu alan ligin ciddiyetini ve düzenini yansıtan temel merkezlerden biri olacaktır.
+                    TETA League içindeki temel rekabet yapısı, puan sistemi ve yönetim ilkeleri bu sayfada yer alır.
                 </p>
             </section>
         </div>
@@ -370,16 +319,16 @@
 
     <section class="section">
         <div class="container">
-            <div class="highlight-grid">
-                <div class="highlight-box">
+            <div class="highlights">
+                <div class="highlight">
                     <div class="highlight-value">3</div>
                     <div class="highlight-label">Galibiyet Puanı</div>
                 </div>
-                <div class="highlight-box">
+                <div class="highlight">
                     <div class="highlight-value">1</div>
                     <div class="highlight-label">Beraberlik Puanı</div>
                 </div>
-                <div class="highlight-box">
+                <div class="highlight">
                     <div class="highlight-value">0</div>
                     <div class="highlight-label">Mağlubiyet Puanı</div>
                 </div>
@@ -387,98 +336,40 @@
 
             <div class="rules-grid">
                 <div class="rule-card">
-                    <div class="rule-top">
-                        <div class="rule-icon">📘</div>
-                        <h3 class="rule-title">Lig Formatı</h3>
-                    </div>
-                    <p class="rule-text">
-                        TETA League S4, belirlenen takımların hafta bazlı maçlar oynadığı düzenli lig sistemine göre ilerler.
-                    </p>
+                    <h2 class="rule-title">Lig Formatı</h2>
+                    <p class="rule-text">Lig, hafta bazlı maçlardan oluşan düzenli bir sezon yapısına göre ilerler.</p>
                     <ul class="rule-list">
                         <li>Takımlar haftalara göre eşleşir.</li>
-                        <li>Her maç sonucu sisteme işlenir.</li>
-                        <li>Lig akışı hafta hafta takip edilir.</li>
-                        <li>Sezon boyunca puan tablosu güncellenir.</li>
+                        <li>Sonuçlar sisteme işlenir.</li>
+                        <li>Tablo düzenli şekilde güncellenir.</li>
                     </ul>
                 </div>
 
                 <div class="rule-card">
-                    <div class="rule-top">
-                        <div class="rule-icon">🏆</div>
-                        <h3 class="rule-title">Puan Sistemi</h3>
-                    </div>
-                    <p class="rule-text">
-                        Tüm sıralama klasik lig puan sistemine göre hesaplanır.
-                    </p>
+                    <h2 class="rule-title">Sıralama Sistemi</h2>
+                    <p class="rule-text">Takımlar önce puana, ardından averaja göre sıralanır.</p>
                     <ul class="rule-list">
-                        <li>Galibiyet: 3 puan</li>
-                        <li>Beraberlik: 1 puan</li>
-                        <li>Mağlubiyet: 0 puan</li>
-                        <li>Tüm puanlar lig tablosunda işlenir.</li>
-                    </ul>
-                </div>
-
-                <div class="rule-card">
-                    <div class="rule-top">
-                        <div class="rule-icon">📊</div>
-                        <h3 class="rule-title">Sıralama Kriteri</h3>
-                    </div>
-                    <p class="rule-text">
-                        Takımlar lig tablosunda belirli sıralama ölçütlerine göre dizilir.
-                    </p>
-                    <ul class="rule-list">
-                        <li>Öncelik toplam puandır.</li>
+                        <li>İlk kriter puandır.</li>
                         <li>Puan eşitliğinde averaj dikkate alınır.</li>
-                        <li>Gerekirse ek lig kriterleri uygulanabilir.</li>
-                        <li>Son karar lig yönetimince açıklanır.</li>
+                        <li>Ek lig kararı gerektiğinde yönetim açıklama yapar.</li>
                     </ul>
                 </div>
 
                 <div class="rule-card">
-                    <div class="rule-top">
-                        <div class="rule-icon">🗓️</div>
-                        <h3 class="rule-title">Hafta Sistemi</h3>
-                    </div>
-                    <p class="rule-text">
-                        Lig, haftalara ayrılmış eşleşme düzenine göre ilerler ve her hafta ayrı bir maç takvimi içerir.
-                    </p>
+                    <h2 class="rule-title">Hafta Düzeni</h2>
+                    <p class="rule-text">Her hafta belirli eşleşmeler üzerinden değerlendirilir ve sonuçlar o hafta kapsamında arşivlenir.</p>
                     <ul class="rule-list">
-                        <li>Her hafta için belirli karşılaşmalar bulunur.</li>
-                        <li>Maçlar ilgili hafta kapsamında değerlendirilir.</li>
-                        <li>Sonuçlar hafta düzenine göre arşivlenir.</li>
-                        <li>Fikstür sayfası bu akışı destekler.</li>
+                        <li>Her haftanın fikstürü ayrıdır.</li>
+                        <li>Hafta ekranı ligin akışını takip etmek için kullanılır.</li>
                     </ul>
                 </div>
 
                 <div class="rule-card">
-                    <div class="rule-top">
-                        <div class="rule-icon">⚠️</div>
-                        <h3 class="rule-title">Disiplin ve İhlaller</h3>
-                    </div>
-                    <p class="rule-text">
-                        Ligin düzenli ilerleyebilmesi için belirli davranış ve sorumluluk kuralları geçerlidir.
-                    </p>
+                    <h2 class="rule-title">Yönetim Yetkisi</h2>
+                    <p class="rule-text">Uyuşmazlık veya özel durumlarda son karar lig yönetimine aittir.</p>
                     <ul class="rule-list">
-                        <li>Sportmenlik dışı davranışlar değerlendirilir.</li>
-                        <li>Maça çıkmama durumları yönetim tarafından incelenir.</li>
-                        <li>Gerekli durumlarda hükmen karar uygulanabilir.</li>
-                        <li>Lig düzenini bozan durumlar ayrıca ele alınır.</li>
-                    </ul>
-                </div>
-
-                <div class="rule-card">
-                    <div class="rule-top">
-                        <div class="rule-icon">🛡️</div>
-                        <h3 class="rule-title">Yönetim Yetkisi</h3>
-                    </div>
-                    <p class="rule-text">
-                        Tartışmalı veya özel durumlarda son karar lig yönetimine aittir.
-                    </p>
-                    <ul class="rule-list">
-                        <li>Eksik veri veya uyuşmazlıklarda yönetim devreye girer.</li>
-                        <li>Kural yorumları resmi yönetim açıklamasına bağlıdır.</li>
-                        <li>Lig düzeni korunarak karar verilir.</li>
-                        <li>Güncellenen maddeler gerektiğinde duyurulur.</li>
+                        <li>Eksik bilgi durumunda yönetim devreye girer.</li>
+                        <li>Resmi kararlar duyurularla paylaşılır.</li>
                     </ul>
                 </div>
             </div>
@@ -492,6 +383,5 @@
             </div>
         </div>
     </section>
-
 </body>
 </html>
