@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TETA LEAGUE S4 - Sonuçlar</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #02051a;
+            color: #fff;
+            font-family: "Segoe UI", Arial, sans-serif;
+            padding: 24px;
+        }
+
+        .page {
+            width: min(1100px, 100%);
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .title {
+            margin: 0;
+            font-size: clamp(28px, 5vw, 54px);
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            margin: 6px 0 0;
+            color: #9ddfff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .logo {
+            width: 74px;
+            height: 74px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .control {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 14px;
+        }
+
+        .week-section {
+            margin-bottom: 24px;
+            border: 1px solid rgba(125, 239, 255, 0.16);
+            border-radius: 18px;
+            overflow: hidden;
+            background: linear-gradient(
+                to bottom,
+                rgba(4, 8, 60, 0.34) 0%,
+                rgba(4, 8, 60, 0.24) 45%,
+                rgba(0, 0, 0, 0.42) 100%
+            );
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+        }
+
+        .week-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0, 10, 80, 0.16);
+        }
+
+        .week-title {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 900;
+            color: #7defff;
+        }
+
+        .week-count {
+            color: rgba(255,255,255,0.72);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .match-list {
+            padding: 10px;
+        }
+
+        .match-card {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+            align-items: center;
+            gap: 10px;
+            min-height: 84px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .match-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .team.right {
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        .team-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            flex-shrink: 0;
+            border-radius: 50%;
+        }
+
+        .team-name {
+            min-width: 0;
+            font-size: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .score-box {
+            min-width: 164px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 8px 14px;
+            border-radius: 12px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.16);
+        }
+
+        .score {
+            font-size: 30px;
+            font-weight: 900;
+            line-height: 1;
+            color: #fff;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .dash {
+            font-size: 26px;
+            font-weight: 900;
+            color: #7defff;
+        }
+
+        .winner .team-name {
+            color: #7defff;
+        }
+
+        .meta {
+            margin-top: 6px;
+            color: rgba(255,255,255,0.58);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .empty,
+        .error {
+            padding: 26px 18px;
+            text-align: center;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            font-weight: 700;
+        }
+
+        .error {
+            color: #ff9ca7;
+        }
+
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: #7defff;
+            text-decoration: none;
+            font-weight: 800;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(125, 239, 255, 0.18);
+        }
+
+        @media (max-width: 800px) {
+            body { padding: 16px; }
+
+            .topbar {
+                align-items: flex-start;
+            }
+
+            .logo {
+                width: 56px;
+                height: 56px;
+            }
+
+            .week-title {
+                font-size: 18px;
+            }
+
+            .match-card {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 14px;
+            }
+
+            .team.right {
+                justify-content: flex-start;
+                text-align: left;
+            }
+
+            .score-box {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .team-name {
+                font-size: 17px;
+            }
+
+            .score {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="topbar">
+            <div>
+                <h1 class="title">MATCH RESULTS</h1>
+                <p class="subtitle">TETA League S4 sonuç ekranı</p>
+            </div>
+            <img class="logo" src="logos/default.png" alt="League logo" onerror="this.style.display='none'">
+        </div>
+
+        <div class="controls">
+            <select id="weekFilter" class="control">
+                <option value="all">Tüm Haftalar</option>
+            </select>
+            <select id="teamFilter" class="control">
+                <option value="all">Tüm Takımlar</option>
+            </select>
+        </div>
+
+        <div id="resultsRoot"></div>
+
+        <div class="nav">
+            <a href="index.html">Puan Tablosu</a>
+            <a href="admin.html">Admin Panel</a>
+        </div>
+    </div>
+
+    <script>
+        let allTeams = [];
+        let allMatches = [];
+
+        function safeLogo(path) {
+            return path || "logos/default.png";
+        }
+
+        function getTeamMap(teams) {
+            const map = new Map();
+            teams.forEach(team => {
+                map.set(team.name, team);
+            });
+            return map;
+        }
+
+        function getWeekOptions(matches) {
+            const weeks = [...new Set(matches.map(m => Number(m.week)).filter(n => !Number.isNaN(n)))];
+            return weeks.sort((a, b) => b - a);
+        }
+
+        function sortMatches(matches) {
+            return [...matches].sort((a, b) => {
+                const weekDiff = Number(b.week) - Number(a.week);
+                if (weekDiff !== 0) return weekDiff;
+
+                const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+                const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+                return bTime - aTime;
+            });
+        }
+
+        function groupByWeek(matches) {
+            const grouped = new Map();
+
+            matches.forEach(match => {
+                const key = Number(match.week);
+                if (!grouped.has(key)) grouped.set(key, []);
+                grouped.get(key).push(match);
+            });
+
+            return [...grouped.entries()]
+                .sort((a, b) => b[0] - a[0])
+                .map(([week, list]) => ({ week, matches: sortMatches(list) }));
+        }
+
+        function getWinnerClass(side, match) {
+            const home = Number(match.homeScore);
+            const away = Number(match.awayScore);
+
+            if (Number.isNaN(home) || Number.isNaN(away) || home === away) return "";
+            if (side === "home" && home > away) return "winner";
+            if (side === "away" && away > home) return "winner";
+            return "";
+        }
+
+        function buildFilters(teams, matches) {
+            const weekFilter = document.getElementById("weekFilter");
+            const teamFilter = document.getElementById("teamFilter");
+
+            const weeks = getWeekOptions(matches);
+
+            weekFilter.innerHTML = `<option value="all">Tüm Haftalar</option>` +
+                weeks.map(week => `<option value="${week}">Hafta ${week}</option>`).join("");
+
+            teamFilter.innerHTML = `<option value="all">Tüm Takımlar</option>` +
+                teams
+                    .slice()
+                    .sort((a, b) => a.name.localeCompare(b.name, "tr"))
+                    .map(team => `<option value="${team.name}">${team.name}</option>`)
+                    .join("");
+        }
+
+        function getFilteredMatches() {
+            const weekValue = document.getElementById("weekFilter").value;
+            const teamValue = document.getElementById("teamFilter").value;
+
+            return allMatches.filter(match => {
+                const weekOk = weekValue === "all" || String(match.week) === weekValue;
+                const teamOk = teamValue === "all" || match.home === teamValue || match.away === teamValue;
+                return weekOk && teamOk;
+            });
+        }
+
+        function renderResults() {
+            const root = document.getElementById("resultsRoot");
+            const teamMap = getTeamMap(allTeams);
+            const filtered = getFilteredMatches();
+
+            if (!filtered.length) {
+                root.innerHTML = `<div class="empty">Gösterilecek maç bulunamadı.</div>`;
+                return;
+            }
+
+            const grouped = groupByWeek(filtered);
+
+            root.innerHTML = grouped.map(group => `
+                <section class="week-section">
+                    <div class="week-header">
+                        <h2 class="week-title">Hafta ${group.week}</h2>
+                        <div class="week-count">${group.matches.length} maç</div>
+                    </div>
+
+                    <div class="match-list">
+                        ${group.matches.map(match => {
+                            const homeTeam = teamMap.get(match.home) || { name: match.home, logo: "logos/default.png" };
+                            const awayTeam = teamMap.get(match.away) || { name: match.away, logo: "logos/default.png" };
+
+                            return `
+                                <article class="match-card">
+                                    <div class="team ${getWinnerClass("home", match)}">
+                                        <img
+                                            class="team-logo"
+                                            src="${safeLogo(homeTeam.logo)}"
+                                            alt="${homeTeam.name} logo"
+                                            onerror="this.src='logos/default.png'"
+                                        >
+                                        <div>
+                                            <div class="team-name" title="${homeTeam.name}">${homeTeam.name}</div>
+                                            <div class="meta">Ev sahibi</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="score-box">
+                                        <div class="score">${match.homeScore}</div>
+                                        <div class="dash">-</div>
+                                        <div class="score">${match.awayScore}</div>
+                                    </div>
+
+                                    <div class="team right ${getWinnerClass("away", match)}">
+                                        <div>
+                                            <div class="team-name" title="${awayTeam.name}">${awayTeam.name}</div>
+                                            <div class="meta">Deplasman</div>
+                                        </div>
+                                        <img
+                                            class="team-logo"
+                                            src="${safeLogo(awayTeam.logo)}"
+                                            alt="${awayTeam.name} logo"
+                                            onerror="this.src='logos/default.png'"
+                                        >
+                                    </div>
+                                </article>
+                            `;
+                        }).join("")}
+                    </div>
+                </section>
+            `).join("");
+        }
+
+        async function loadResults() {
+            const root = document.getElementById("resultsRoot");
+
+            try {
+                const [teamsRes, matchesRes] = await Promise.all([
+                    fetch("teams.json?v=" + Date.now(), { cache: "no-store" }),
+                    fetch("matches.json?v=" + Date.now(), { cache: "no-store" })
+                ]);
+
+                if (!teamsRes.ok || !matchesRes.ok) {
+                    throw new Error("Dosyalar yüklenemedi.");
+                }
+
+                allTeams = await teamsRes.json();
+                allMatches = await matchesRes.json();
+
+                buildFilters(allTeams, allMatches);
+                renderResults();
+            } catch (error) {
+                console.error(error);
+                root.innerHTML = `<div class="error">Sonuçlar yüklenemedi.</div>`;
+            }
+        }
+
+        document.getElementById("weekFilter").addEventListener("change", renderResults);
+        document.getElementById("teamFilter").addEventListener("change", renderResults);
+
+        loadResults();
+        setInterval(loadResults, 30000);
+    </script>
+</body>
+</html>
