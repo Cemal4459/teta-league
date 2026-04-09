@@ -12,9 +12,9 @@
             align-items: center;
             min-height: 100vh;
             font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
         }
 
-        /* Ana Çerçeve */
         .wrapper {
             width: 1000px; 
             height: 1000px;
@@ -25,13 +25,12 @@
             position: relative;
         }
 
-        /* Tabloyu resmin içine tam oturtan bölge */
         .table-container {
             position: absolute;
-            top: 228px;    /* Yazıları biraz yukarı çektim */
-            left: 145px;   /* Sola hizaladım */
+            /* Yazıların yukarıdan başladığı yer */
+            top: 242px;    
+            left: 145px;   
             width: 615px;  
-            height: 520px; 
         }
 
         table {
@@ -40,31 +39,24 @@
             table-layout: fixed;
         }
 
-        /* Başlık boşluğu ayarı */
-        .hidden-header { 
-            height: 48px; 
-            visibility: hidden; 
-        }
-
-        /* Takım satırları - Çizgilerin tam ortasına sığması için */
+        /* Başlık boşluğunu kaldırdık, ilk satırdan başlatıyoruz */
         td {
-            height: 38.5px; 
+            height: 42.4px; /* Çizgilerin arasına tam oturan altın oran */
             color: white;
             text-align: center;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             padding: 0;
             vertical-align: middle;
         }
 
-        /* Sütun Hizalamaları */
         .col-rank { width: 45px; text-align: right; padding-right: 18px; }
         .col-name { width: 230px; text-align: left; white-space: nowrap; overflow: hidden; }
         .col-stats { width: 47px; }
         .col-pts { 
             width: 55px; 
             color: #00d4ff; 
-            font-size: 18px; 
+            font-size: 20px; 
             text-shadow: 0 0 10px rgba(0, 212, 255, 0.8); 
         }
     </style>
@@ -74,15 +66,6 @@
 <div class="wrapper">
     <div class="table-container">
         <table>
-            <thead>
-                <tr class="hidden-header">
-                    <th class="col-rank"></th>
-                    <th class="col-name"></th>
-                    <th class="col-stats"></th><th class="col-stats"></th>
-                    <th class="col-stats"></th><th class="col-stats"></th>
-                    <th class="col-stats"></th><th class="col-pts"></th>
-                </tr>
-            </thead>
             <tbody id="league-body">
                 </tbody>
         </table>
@@ -95,7 +78,6 @@
             const res = await fetch('data.json?v=' + Date.now());
             const teams = await res.json();
             
-            // Sıralama: Önce puan, sonra averaj
             teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
 
             const tbody = document.getElementById('league-body');
@@ -114,7 +96,7 @@
         } catch (e) { console.error("Hata:", e); }
     }
     loadTable();
-    setInterval(loadTable, 30000); // 30 saniyede bir güncelle
+    setInterval(loadTable, 30000);
 </script>
 
 </body>
