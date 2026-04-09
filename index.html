@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>TETA LEAGUE S4 - LIVE</title>
+    <title>TETA LEAGUE S4</title>
     <style>
         body {
             background-color: #02051a;
@@ -12,100 +12,88 @@
             align-items: center;
             min-height: 100vh;
             font-family: 'Segoe UI', sans-serif;
-            overflow: hidden;
         }
 
-        .wrapper {
-            width: 1000px; 
-            height: 1000px;
-            background-image: url('teta-tablo.png'); 
-            background-size: contain;
+        .main-wrapper {
+            width: 900px;
+            height: 900px;
+            background-image: url('teta-tablo.png');
+            background-size: 100% 100%;
             background-repeat: no-repeat;
-            background-position: center;
             position: relative;
         }
 
-        /* Yazıların olduğu alanı tam bir kutu olarak tanımlıyoruz */
-        .table-container {
+        /* Verilerin oturacağı kutuyu resmin tam üzerine sabitledik */
+        .grid-overlay {
             position: absolute;
-            top: 242px;    /* İlk satırın başladığı yer */
-            left: 145px;   
-            width: 615px;  
-            height: 508px; /* 12 satırın toplam kaplayacağı alan */
-            display: flex;
-            flex-direction: column;
+            top: 200px;    /* Üst boşluk */
+            left: 108px;   /* Sol boşluk */
+            width: 580px;  /* Genişlik */
+            height: 565px; /* Toplam yükseklik */
+            display: grid;
+            grid-template-rows: repeat(13, 1fr); /* 1 başlık + 12 takım */
         }
 
-        table {
-            width: 100%;
-            height: 100%; /* Kutunun tamamına yayıl */
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        td {
+        .row {
+            display: grid;
+            grid-template-columns: 42px 225px 44px 44px 44px 44px 44px 50px;
+            align-items: center;
             color: white;
-            text-align: center;
-            font-size: 16px;
             font-weight: bold;
-            padding: 0;
-            vertical-align: middle;
-            border-bottom: 1px solid transparent; /* Çizgileri resimden alıyoruz */
+            font-size: 14px;
         }
 
-        /* Satır yüksekliğini otomatik paylaştır */
-        tr {
-            height: calc(100% / 12);
-        }
+        /* Başlık satırını gizliyoruz çünkü resimde yazıyor */
+        .header-row { visibility: hidden; }
 
-        .col-rank { width: 45px; text-align: right; padding-right: 18px; }
-        .col-name { width: 230px; text-align: left; white-space: nowrap; overflow: hidden; }
-        .col-stats { width: 47px; }
-        .col-pts { 
-            width: 55px; 
-            color: #00d4ff; 
-            font-size: 20px; 
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8); 
-        }
+        .center { text-align: center; }
+        .right { text-align: right; padding-right: 15px; }
+        .team-name { padding-left: 5px; white-space: nowrap; overflow: hidden; }
+        .pts { color: #00d4ff; font-size: 17px; text-shadow: 0 0 8px rgba(0, 212, 255, 0.6); }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <div class="table-container">
-        <table>
-            <tbody id="league-body">
-                </tbody>
-        </table>
-    </div>
+<div class="main-wrapper">
+    <div class="grid-overlay" id="league-content">
+        </div>
 </div>
 
 <script>
-    async function loadTable() {
+    async function updateLeague() {
         try {
-            const res = await fetch('data.json?v=' + Date.now());
-            const teams = await res.json();
+            const response = await fetch('data.json?v=' + Date.now());
+            const teams = await response.json();
             
-            // Puan ve averaj sıralaması
+            // Puan ve Averaj sıralaması
             teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
 
-            const tbody = document.getElementById('league-body');
-            tbody.innerHTML = teams.map((t, i) => `
-                <tr>
-                    <td class="col-rank">${i + 1}</td>
-                    <td class="col-name">${t.name}</td>
-                    <td class="col-stats">${t.p}</td>
-                    <td class="col-stats">${t.w}</td>
-                    <td class="col-stats">${t.d}</td>
-                    <td class="col-stats">${t.l}</td>
-                    <td class="col-stats">${t.gd}</td>
-                    <td class="col-pts">${t.pts}</td>
-                </tr>
-            `).join('');
-        } catch (e) { console.error("Hata:", e); }
+            const container = document.getElementById('league-content');
+            
+            // Önce görünmez başlık satırını ekle (hizalama için)
+            let html = `<div class="row header-row"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>`;
+
+            // Takımları ekle
+            teams.forEach((t, i) => {
+                html += `
+                <div class="row">
+                    <div class="right">${i + 1}</div>
+                    <div class="team-name">${t.name}</div>
+                    <div class="center">${t.p}</div>
+                    <div class="center">${t.w}</div>
+                    <div class="center">${t.d}</td>
+                    <div class="center">${t.l}</div>
+                    <div class="center">${t.gd}</div>
+                    <div class="center pts">${t.pts}</div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+        } catch (e) { console.error("Veri hatası:", e); }
     }
-    loadTable();
-    setInterval(loadTable, 30000);
+
+    updateLeague();
+    setInterval(updateLeague, 30000);
 </script>
 
 </body>
