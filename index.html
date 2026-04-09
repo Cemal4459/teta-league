@@ -7,6 +7,8 @@
         :root {
             --bg-page: #02051a; 
             --cyan: #00d4ff; 
+            /* Çizgilerin rengini tasarımdaki gibi parlak beyaz yapıyoruz */
+            --row-border: rgba(255, 255, 255, 0.8); 
         }
 
         body {
@@ -23,8 +25,8 @@
         /* Ana Kart (Yuvarlak içine aldığın yer) */
         .league-container {
             width: 850px;
-            /* ARKA PLAN BURADA */
-            background-image: linear-gradient(rgba(5, 10, 48, 0.85), rgba(5, 10, 48, 0.85)), url('arka-plan.jpg');
+            /* Arka plan sadece kartın içinde */
+            background-image: linear-gradient(rgba(5, 10, 48, 0.9), rgba(5, 10, 48, 0.9)), url('arka-plan.jpg');
             background-size: cover;
             background-position: center;
             
@@ -36,7 +38,7 @@
             overflow: hidden; /* Dikey yazının karttan taşmasını engeller */
         }
 
-        /* Dikey GROUP DELTA Yazısı (Kartın içine aldık) */
+        /* Dikey GROUP DELTA Yazısı (Katmanlama burası çok önemli) */
         .vertical-text {
             position: absolute;
             right: 20px; /* Kartın en sağ iç kısmına çektik */
@@ -46,11 +48,13 @@
             font-size: 5.5rem;
             font-weight: 900;
             color: var(--cyan);
-            opacity: 0.4;
+            opacity: 0.35; /* Arka planda kalması için şeffaflık */
             letter-spacing: 10px;
             white-space: nowrap;
             text-transform: uppercase;
-            z-index: 1;
+            
+            /* --- KATMANLAMA --- */
+            z-index: 1; /* En altta dikey yazı */
             pointer-events: none;
         }
 
@@ -61,6 +65,8 @@
             letter-spacing: 6px;
             margin-bottom: 30px;
             text-transform: uppercase;
+            position: relative;
+            z-index: 3; /* Başlık en üstte */
         }
         .header span { color: var(--cyan); }
 
@@ -71,9 +77,24 @@
             z-index: 2; /* Tablo yazıları dikey yazının üstünde kalsın */
         }
 
-        thead tr { border-bottom: 2px solid white; }
-        th { padding: 12px; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; }
-        td { padding: 15px 10px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 1.1rem; }
+        thead tr { 
+            border-bottom: 2px solid white; 
+        }
+        
+        th { 
+            padding: 12px; 
+            font-size: 0.8rem; 
+            letter-spacing: 3px; 
+            text-transform: uppercase; 
+        }
+        
+        /* Takımların arasındaki yatay beyaz çizgiler */
+        td { 
+            padding: 15px 10px; 
+            text-align: center; 
+            border-bottom: 1px solid var(--row-border); /* Belirgin beyaz çizgiler */
+            font-size: 1.1rem; 
+        }
 
         .team-cell { text-align: left; display: flex; align-items: center; gap: 20px; font-weight: 600; }
         .rank-number { font-size: 1.2rem; font-weight: 900; width: 25px; }
@@ -99,16 +120,21 @@
                     <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th>
                 </tr>
             </thead>
-            <tbody id="league-body"></tbody>
+            <tbody id="league-body">
+                </tbody>
         </table>
     </div>
 
     <script>
         async function loadTable() {
             try {
+                // data.json dosyasını çekiyoruz
                 const res = await fetch('data.json?v=' + Date.now());
                 const teams = await res.json();
+
+                // Puana, sonra averaja (GD) göre sıralama
                 teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
+
                 const tbody = document.getElementById('league-body');
                 tbody.innerHTML = teams.map((t, i) => `
                     <tr>
@@ -122,8 +148,12 @@
                 `).join('');
             } catch (error) { console.error("Hata:", error); }
         }
+
+        // Sayfa açıldığında yükle
         loadTable();
+        // Her 30 saniyede bir otomatik tazele (Sayfayı yenilemeye gerek kalmasın)
         setInterval(loadTable, 30000);
     </script>
+
 </body>
 </html>
