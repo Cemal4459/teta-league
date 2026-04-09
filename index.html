@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>TETA LEAGUE S4</title>
+    <title>TETA LEAGUE S4 - LIVE</title>
     <style>
         body {
             background-color: #02051a;
@@ -12,76 +12,86 @@
             align-items: center;
             min-height: 100vh;
             font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
         }
 
-        .main-wrapper {
-            width: 900px;
-            height: 900px;
+        /* Resim ve tabloyu bir arada tutan ana kutu */
+        .wrapper {
+            width: 1000px;
+            height: 1000px;
             background-image: url('teta-tablo.png');
-            background-size: 100% 100%;
+            background-size: contain;
             background-repeat: no-repeat;
+            background-position: center;
             position: relative;
         }
 
-        /* Verilerin oturacağı kutuyu resmin tam üzerine sabitledik */
-        .grid-overlay {
+        /* Tabloyu resmin üzerindeki beyaz alana tam oturtan katman */
+        .overlay {
             position: absolute;
-            top: 200px;    /* Üst boşluk */
-            left: 108px;   /* Sol boşluk */
-            width: 580px;  /* Genişlik */
-            height: 565px; /* Toplam yükseklik */
+            top: 220px;    /* Başlık satırının başladığı yer */
+            left: 120px;   /* Tablonun başladığı yer */
+            width: 645px;  /* Tablo genişliği */
+            height: 610px; /* 13 satırlık (1 başlık + 12 takım) toplam alan */
             display: grid;
-            grid-template-rows: repeat(13, 1fr); /* 1 başlık + 12 takım */
+            grid-template-rows: repeat(13, 1fr); /* Alanı 13 eşit parçaya böl */
         }
 
         .row {
             display: grid;
-            grid-template-columns: 42px 225px 44px 44px 44px 44px 44px 50px;
+            /* Sütunları resimdeki başlıklara göre hizalar */
+            grid-template-columns: 50px 250px 50px 50px 50px 50px 50px 60px;
             align-items: center;
             color: white;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
         }
 
-        /* Başlık satırını gizliyoruz çünkü resimde yazıyor */
-        .header-row { visibility: hidden; }
+        /* Resimde zaten başlık var, ilk satırı görünmez yapıyoruz ama yer kaplıyor */
+        .header-spacer { visibility: hidden; }
 
         .center { text-align: center; }
-        .right { text-align: right; padding-right: 15px; }
-        .team-name { padding-left: 5px; white-space: nowrap; overflow: hidden; }
-        .pts { color: #00d4ff; font-size: 17px; text-shadow: 0 0 8px rgba(0, 212, 255, 0.6); }
+        .num { text-align: right; padding-right: 20px; }
+        .team { padding-left: 10px; white-space: nowrap; overflow: hidden; }
+        
+        /* Puan kısmına o neon maviyi veriyoruz */
+        .pts { 
+            color: #00d4ff; 
+            font-size: 20px; 
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.7); 
+        }
     </style>
 </head>
 <body>
 
-<div class="main-wrapper">
-    <div class="grid-overlay" id="league-content">
+<div class="wrapper">
+    <div class="overlay" id="league-content">
         </div>
 </div>
 
 <script>
-    async function updateLeague() {
+    async function loadLeague() {
         try {
-            const response = await fetch('data.json?v=' + Date.now());
-            const teams = await response.json();
+            const res = await fetch('data.json?v=' + Date.now());
+            const teams = await res.json();
             
             // Puan ve Averaj sıralaması
             teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
 
             const container = document.getElementById('league-content');
             
-            // Önce görünmez başlık satırını ekle (hizalama için)
-            let html = `<div class="row header-row"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>`;
+            // İlk satırı boşluk (spacer) olarak ekle
+            let html = '<div class="row header-spacer"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
 
             // Takımları ekle
             teams.forEach((t, i) => {
                 html += `
                 <div class="row">
-                    <div class="right">${i + 1}</div>
-                    <div class="team-name">${t.name}</div>
+                    <div class="num">${i + 1}</div>
+                    <div class="team">${t.name}</div>
                     <div class="center">${t.p}</div>
                     <div class="center">${t.w}</div>
-                    <div class="center">${t.d}</td>
+                    <div class="center">${t.d}</div>
                     <div class="center">${t.l}</div>
                     <div class="center">${t.gd}</div>
                     <div class="center pts">${t.pts}</div>
@@ -89,11 +99,11 @@
             });
 
             container.innerHTML = html;
-        } catch (e) { console.error("Veri hatası:", e); }
+        } catch (e) { console.error("Hata:", e); }
     }
 
-    updateLeague();
-    setInterval(updateLeague, 30000);
+    loadLeague();
+    setInterval(loadLeague, 30000); // 30 saniyede bir güncelle
 </script>
 
 </body>
