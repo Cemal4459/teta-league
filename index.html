@@ -23,7 +23,7 @@
 
         .wrapper {
             position: relative;
-            width: min(92vw, 900px);
+            width: min(94vw, 980px);
             aspect-ratio: 1 / 1;
             background-image: url("teta-tablo.png");
             background-size: cover;
@@ -32,15 +32,26 @@
             overflow: hidden;
         }
 
+        .last-update {
+            position: absolute;
+            left: 58px;
+            top: 108px;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
+        }
+
         .overlay {
             position: absolute;
-            top: 160px;
-            left: 85px;
-            width: 465px;
-            padding: 14px 14px 10px;
-            border-radius: 18px;
-            background: rgba(3, 10, 35, 0.38);
-            border: 1px solid rgba(0, 212, 255, 0.16);
+            top: 145px;
+            left: 55px;
+            width: 620px;
+            padding: 18px 18px 14px;
+            border-radius: 20px;
+            background: rgba(3, 10, 35, 0.34);
+            border: 1px solid rgba(0, 212, 255, 0.18);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.22);
@@ -49,30 +60,30 @@
         .table-head,
         .row {
             display: grid;
-            grid-template-columns: 34px 1.9fr 42px 42px 42px 42px 50px 58px;
+            grid-template-columns: 42px 2.4fr 48px 48px 48px 48px 58px 68px;
             align-items: center;
-            column-gap: 6px;
+            column-gap: 8px;
         }
 
         .table-head {
             color: #7defff;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
-            letter-spacing: 0.4px;
-            margin-bottom: 8px;
-            padding: 0 4px 6px;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            padding: 0 6px 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .row {
-            min-height: 35px;
+            min-height: 42px;
             color: #ffffff;
-            font-size: 14px;
+            font-size: 17px;
             font-weight: 600;
-            border-radius: 10px;
-            padding: 2px 4px;
+            border-radius: 12px;
+            padding: 3px 6px;
             transition: all 0.25s ease;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .row:nth-child(even) {
@@ -93,7 +104,7 @@
         }
 
         .team {
-            padding-left: 4px;
+            padding-left: 6px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -101,62 +112,64 @@
 
         .pts {
             color: #00d4ff;
-            font-size: 18px;
+            font-size: 23px;
             font-weight: 800;
             text-shadow: 0 0 10px rgba(0, 212, 255, 0.38);
         }
 
-        .last-update {
-            position: absolute;
-            left: 85px;
-            top: 125px;
-            color: rgba(255, 255, 255, 0.72);
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            text-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
-        }
-
         .error-box {
             color: #ff8f8f;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             text-align: center;
-            padding: 10px 8px;
+            padding: 12px 8px;
         }
 
         @media (max-width: 900px) {
+            .wrapper {
+                width: 96vw;
+            }
+
+            .last-update {
+                left: 6%;
+                top: 14%;
+                font-size: 10px;
+            }
+
             .overlay {
                 top: 18%;
-                left: 10%;
-                width: 50%;
+                left: 6%;
+                width: 58%;
                 padding: 10px;
                 border-radius: 14px;
             }
 
-            .last-update {
-                top: 14%;
-                left: 10%;
-                font-size: 10px;
-            }
-
             .table-head,
             .row {
-                grid-template-columns: 24px 1.7fr 28px 28px 28px 28px 34px 40px;
+                grid-template-columns: 20px 1.8fr 24px 24px 24px 24px 30px 34px;
                 column-gap: 4px;
             }
 
             .table-head {
-                font-size: 9px;
+                font-size: 8px;
+                margin-bottom: 6px;
+                padding: 0 2px 6px;
             }
 
             .row {
                 min-height: 24px;
-                font-size: 10px;
+                font-size: 9px;
+                padding: 2px;
+                margin-bottom: 2px;
+                border-radius: 8px;
+            }
+
+            .team {
+                padding-left: 2px;
             }
 
             .pts {
-                font-size: 12px;
+                font-size: 11px;
             }
         }
     </style>
@@ -220,7 +233,7 @@
                     html += `
                         <div class="row ${extraClass}">
                             <div class="num">${index + 1}</div>
-                            <div class="team">${team.name}</div>
+                            <div class="team" title="${team.name}">${team.name}</div>
                             <div class="center">${team.p}</div>
                             <div class="center">${team.w}</div>
                             <div class="center">${team.d}</div>
