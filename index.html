@@ -11,53 +11,62 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', sans-serif;
         }
 
-        /* Ana Çerçeve: Arka plana senin boş görselini koyuyoruz */
+        /* Ana Çerçeve */
         .wrapper {
-            width: 900px;
-            height: 900px;
-            background-image: url('teta-tablo.png'); /* Görsel adını kontrol et */
+            width: 1000px; 
+            height: 1000px;
+            background-image: url('teta-tablo.png'); 
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             position: relative;
         }
 
-        /* Tabloyu resmin içindeki beyaz kutuya tam oturtmak için */
+        /* Tabloyu resmin içine tam oturtan bölge */
         .table-container {
             position: absolute;
-            top: 195px;    /* Üstten boşluk (Resme göre ayarlandı) */
-            left: 108px;   /* Soldan boşluk */
-            width: 580px;  /* Tablonun genişliği */
-            height: 565px; /* Tablonun toplam yüksekliği */
+            top: 228px;    /* Yazıları biraz yukarı çektim */
+            left: 145px;   /* Sola hizaladım */
+            width: 615px;  
+            height: 520px; 
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed; /* Hücre boyutlarını sabitler */
+            table-layout: fixed;
         }
 
+        /* Başlık boşluğu ayarı */
+        .hidden-header { 
+            height: 48px; 
+            visibility: hidden; 
+        }
+
+        /* Takım satırları - Çizgilerin tam ortasına sığması için */
         td {
-            height: 43.5px; /* Satır yüksekliği (Resmindeki çizgiler arası mesafe) */
+            height: 38.5px; 
             color: white;
             text-align: center;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             padding: 0;
             vertical-align: middle;
         }
 
-        /* Sütun Genişlik Ayarları */
-        .col-rank { width: 40px; text-align: right; padding-right: 15px; }
-        .col-name { width: 220px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .col-stats { width: 45px; }
-        .col-pts { width: 50px; color: #00d4ff; font-size: 18px; text-shadow: 0 0 10px rgba(0, 212, 255, 0.5); }
-
-        /* Başlıkları gizliyoruz çünkü resimde zaten yazıyor */
-        .hidden-header { height: 40px; visibility: hidden; }
+        /* Sütun Hizalamaları */
+        .col-rank { width: 45px; text-align: right; padding-right: 18px; }
+        .col-name { width: 230px; text-align: left; white-space: nowrap; overflow: hidden; }
+        .col-stats { width: 47px; }
+        .col-pts { 
+            width: 55px; 
+            color: #00d4ff; 
+            font-size: 18px; 
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8); 
+        }
     </style>
 </head>
 <body>
@@ -85,6 +94,8 @@
         try {
             const res = await fetch('data.json?v=' + Date.now());
             const teams = await res.json();
+            
+            // Sıralama: Önce puan, sonra averaj
             teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
 
             const tbody = document.getElementById('league-body');
@@ -103,7 +114,7 @@
         } catch (e) { console.error("Hata:", e); }
     }
     loadTable();
-    setInterval(loadTable, 30000);
+    setInterval(loadTable, 30000); // 30 saniyede bir güncelle
 </script>
 
 </body>
