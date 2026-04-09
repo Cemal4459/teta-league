@@ -1,110 +1,247 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TETA LEAGUE S4 - LIVE</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #02051a;
             margin: 0;
+            min-height: 100vh;
+            background: #02051a;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: "Segoe UI", Arial, sans-serif;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        .wrapper {
+            position: relative;
+            width: min(92vw, 900px);
+            aspect-ratio: 1 / 1;
+            background-image: url("teta-tablo.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             overflow: hidden;
         }
 
-        /* Resim ve tabloyu bir arada tutan ana kutu */
-        .wrapper {
-            width: 1000px;
-            height: 1000px;
-            background-image: url('teta-tablo.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            position: relative;
-        }
-
-        /* Tabloyu resmin üzerindeki beyaz alana tam oturtan katman */
         .overlay {
             position: absolute;
-            top: 220px;    /* Başlık satırının başladığı yer */
-            left: 120px;   /* Tablonun başladığı yer */
-            width: 645px;  /* Tablo genişliği */
-            height: 610px; /* 13 satırlık (1 başlık + 12 takım) toplam alan */
+            top: 160px;
+            left: 85px;
+            width: 465px;
+            padding: 14px 14px 10px;
+            border-radius: 18px;
+            background: rgba(3, 10, 35, 0.38);
+            border: 1px solid rgba(0, 212, 255, 0.16);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.22);
+        }
+
+        .table-head,
+        .row {
             display: grid;
-            grid-template-rows: repeat(13, 1fr); /* Alanı 13 eşit parçaya böl */
+            grid-template-columns: 34px 1.9fr 42px 42px 42px 42px 50px 58px;
+            align-items: center;
+            column-gap: 6px;
+        }
+
+        .table-head {
+            color: #7defff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            margin-bottom: 8px;
+            padding: 0 4px 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .row {
-            display: grid;
-            /* Sütunları resimdeki başlıklara göre hizalar */
-            grid-template-columns: 50px 250px 50px 50px 50px 50px 50px 60px;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
+            min-height: 35px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 2px 4px;
+            transition: all 0.25s ease;
+            margin-bottom: 2px;
         }
 
-        /* Resimde zaten başlık var, ilk satırı görünmez yapıyoruz ama yer kaplıyor */
-        .header-spacer { visibility: hidden; }
+        .row:nth-child(even) {
+            background: rgba(255, 255, 255, 0.035);
+        }
 
-        .center { text-align: center; }
-        .num { text-align: right; padding-right: 20px; }
-        .team { padding-left: 10px; white-space: nowrap; overflow: hidden; }
-        
-        /* Puan kısmına o neon maviyi veriyoruz */
-        .pts { 
-            color: #00d4ff; 
-            font-size: 20px; 
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.7); 
+        .top3 {
+            background: rgba(255, 215, 0, 0.08) !important;
+        }
+
+        .bottom3 {
+            background: rgba(255, 70, 70, 0.08) !important;
+        }
+
+        .num,
+        .center {
+            text-align: center;
+        }
+
+        .team {
+            padding-left: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pts {
+            color: #00d4ff;
+            font-size: 18px;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.38);
+        }
+
+        .last-update {
+            position: absolute;
+            left: 85px;
+            top: 125px;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
+        }
+
+        .error-box {
+            color: #ff8f8f;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            padding: 10px 8px;
+        }
+
+        @media (max-width: 900px) {
+            .overlay {
+                top: 18%;
+                left: 10%;
+                width: 50%;
+                padding: 10px;
+                border-radius: 14px;
+            }
+
+            .last-update {
+                top: 14%;
+                left: 10%;
+                font-size: 10px;
+            }
+
+            .table-head,
+            .row {
+                grid-template-columns: 24px 1.7fr 28px 28px 28px 28px 34px 40px;
+                column-gap: 4px;
+            }
+
+            .table-head {
+                font-size: 9px;
+            }
+
+            .row {
+                min-height: 24px;
+                font-size: 10px;
+            }
+
+            .pts {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="wrapper">
+        <div class="last-update" id="last-update">Güncelleniyor...</div>
+        <div class="overlay" id="league-content"></div>
+    </div>
 
-<div class="wrapper">
-    <div class="overlay" id="league-content">
-        </div>
-</div>
-
-<script>
-    async function loadLeague() {
-        try {
-            const res = await fetch('data.json?v=' + Date.now());
-            const teams = await res.json();
-            
-            // Puan ve Averaj sıralaması
-            teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
-
-            const container = document.getElementById('league-content');
-            
-            // İlk satırı boşluk (spacer) olarak ekle
-            let html = '<div class="row header-spacer"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
-
-            // Takımları ekle
-            teams.forEach((t, i) => {
-                html += `
-                <div class="row">
-                    <div class="num">${i + 1}</div>
-                    <div class="team">${t.name}</div>
-                    <div class="center">${t.p}</div>
-                    <div class="center">${t.w}</div>
-                    <div class="center">${t.d}</div>
-                    <div class="center">${t.l}</div>
-                    <div class="center">${t.gd}</div>
-                    <div class="center pts">${t.pts}</div>
-                </div>`;
+    <script>
+        function formatTime(date) {
+            return date.toLocaleTimeString("tr-TR", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
             });
+        }
 
-            container.innerHTML = html;
-        } catch (e) { console.error("Hata:", e); }
-    }
+        async function loadLeague() {
+            const container = document.getElementById("league-content");
+            const lastUpdate = document.getElementById("last-update");
 
-    loadLeague();
-    setInterval(loadLeague, 30000); // 30 saniyede bir güncelle
-</script>
+            try {
+                const res = await fetch("data.json?v=" + Date.now(), {
+                    cache: "no-store"
+                });
 
+                if (!res.ok) {
+                    throw new Error("Veri alınamadı.");
+                }
+
+                const teams = await res.json();
+
+                teams.sort((a, b) => {
+                    if (b.pts !== a.pts) return b.pts - a.pts;
+                    if (b.gd !== a.gd) return b.gd - a.gd;
+                    return a.name.localeCompare(b.name, "tr");
+                });
+
+                let html = `
+                    <div class="table-head">
+                        <div>#</div>
+                        <div>TEAM</div>
+                        <div>P</div>
+                        <div>W</div>
+                        <div>D</div>
+                        <div>L</div>
+                        <div>GD</div>
+                        <div>PTS</div>
+                    </div>
+                `;
+
+                teams.forEach((team, index) => {
+                    let extraClass = "";
+                    if (index < 3) extraClass = "top3";
+                    else if (index >= teams.length - 3) extraClass = "bottom3";
+
+                    const gdText = team.gd > 0 ? `+${team.gd}` : team.gd;
+
+                    html += `
+                        <div class="row ${extraClass}">
+                            <div class="num">${index + 1}</div>
+                            <div class="team">${team.name}</div>
+                            <div class="center">${team.p}</div>
+                            <div class="center">${team.w}</div>
+                            <div class="center">${team.d}</div>
+                            <div class="center">${team.l}</div>
+                            <div class="center">${gdText}</div>
+                            <div class="center pts">${team.pts}</div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+                lastUpdate.textContent = `Son güncelleme: ${formatTime(new Date())}`;
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = `<div class="error-box">Tablo yüklenemedi.</div>`;
+                lastUpdate.textContent = "Son güncelleme alınamadı";
+            }
+        }
+
+        loadLeague();
+        setInterval(loadLeague, 30000);
+    </script>
 </body>
 </html>
