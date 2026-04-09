@@ -25,29 +25,37 @@
             position: relative;
         }
 
+        /* Yazıların olduğu alanı tam bir kutu olarak tanımlıyoruz */
         .table-container {
             position: absolute;
-            /* Yazıların yukarıdan başladığı yer */
-            top: 242px;    
+            top: 242px;    /* İlk satırın başladığı yer */
             left: 145px;   
             width: 615px;  
+            height: 508px; /* 12 satırın toplam kaplayacağı alan */
+            display: flex;
+            flex-direction: column;
         }
 
         table {
             width: 100%;
+            height: 100%; /* Kutunun tamamına yayıl */
             border-collapse: collapse;
             table-layout: fixed;
         }
 
-        /* Başlık boşluğunu kaldırdık, ilk satırdan başlatıyoruz */
         td {
-            height: 42.4px; /* Çizgilerin arasına tam oturan altın oran */
             color: white;
             text-align: center;
             font-size: 16px;
             font-weight: bold;
             padding: 0;
             vertical-align: middle;
+            border-bottom: 1px solid transparent; /* Çizgileri resimden alıyoruz */
+        }
+
+        /* Satır yüksekliğini otomatik paylaştır */
+        tr {
+            height: calc(100% / 12);
         }
 
         .col-rank { width: 45px; text-align: right; padding-right: 18px; }
@@ -78,6 +86,7 @@
             const res = await fetch('data.json?v=' + Date.now());
             const teams = await res.json();
             
+            // Puan ve averaj sıralaması
             teams.sort((a, b) => b.pts - a.pts || b.gd - a.gd);
 
             const tbody = document.getElementById('league-body');
