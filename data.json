@@ -1,14 +1,14 @@
 [
-  { "name": "Shepherds", "p": 3, "w": 3, "d": 0, "l": 0, "gd": 9, "pts": 9 },
-  { "name": "96 BOYS", "p": 3, "w": 3, "d": 0, "l": 0, "gd": 6, "pts": 9 },
-  { "name": "AKIN FC", "p": 3, "w": 3, "d": 0, "l": 0, "gd": 5, "pts": 9 },
-  { "name": "Last Mohicans", "p": 3, "w": 2, "d": 0, "l": 1, "gd": 7, "pts": 6 },
-  { "name": "Füzeci Crew", "p": 3, "w": 2, "d": 0, "l": 1, "gd": 3, "pts": 6 },
-  { "name": "CatBird Esports", "p": 3, "w": 2, "d": 0, "l": 1, "gd": 2, "pts": 6 },
-  { "name": "Kardashians FC", "p": 3, "w": 1, "d": 0, "l": 2, "gd": -3, "pts": 3 },
-  { "name": "Hababam FC", "p": 3, "w": 1, "d": 0, "l": 2, "gd": -3, "pts": 3 },
-  { "name": "Cabak Guys", "p": 3, "w": 1, "d": 0, "l": 2, "gd": -3, "pts": 3 },
-  { "name": "Maniboys FC", "p": 3, "w": 0, "d": 0, "l": 3, "gd": -5, "pts": 0 },
-  { "name": "Los Blancos", "p": 3, "w": 0, "d": 0, "l": 3, "gd": -7, "pts": 0 },
-  { "name": "Babalarspor", "p": 3, "w": 0, "d": 0, "l": 3, "gd": -11, "pts": 0 }
+  { "name": "Cabak GUYS", "logo": "logos/cabak-guys.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "Füzeci Crew", "logo": "logos/fuzeci-crew.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "96 BOYS", "logo": "logos/96-boys.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "Los Blancos", "logo": "logos/los-blancos.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "Shepherds", "logo": "logos/shepherds.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "Maniboys FC", "logo": "logos/maniboys-fc.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "AKIN FC", "logo": "logos/akin-fc.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "Hababam FC", "logo": "logos/hababam-fc.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "Kardashians FC", "logo": "logos/kardashians-fc.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "Last Mohicans", "logo": "logos/last-mohicans.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "CatBird Esports", "logo": "logos/catbird-esports.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 },
+  { "name": "Babalarspor", "logo": "logos/babalarspor.png", "p": 0, "w": 0, "d": 0, "l": 0, "gd": 0, "pts": 0 }
 ]
