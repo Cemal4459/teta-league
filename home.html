@@ -10,14 +10,20 @@
         }
 
         :root {
-            --bg: #02051a;
-            --card: rgba(255, 255, 255, 0.05);
-            --card-border: rgba(125, 239, 255, 0.14);
-            --text: #ffffff;
-            --muted: rgba(255, 255, 255, 0.72);
-            --accent: #7defff;
-            --accent-strong: #00d4ff;
-            --danger: #ff5b6b;
+            --bg-main: #020817;
+            --bg-deep: #030d24;
+            --bg-card: rgba(7, 19, 48, 0.72);
+            --bg-soft: rgba(255, 255, 255, 0.04);
+            --line: rgba(105, 226, 255, 0.16);
+            --line-strong: rgba(105, 226, 255, 0.28);
+            --text: #f5fbff;
+            --muted: rgba(223, 241, 255, 0.72);
+            --blue-1: #9cecff;
+            --blue-2: #5fdfff;
+            --blue-3: #00cfff;
+            --blue-4: #009dff;
+            --shadow: 0 18px 60px rgba(0, 0, 0, 0.34);
+            --glow: 0 0 30px rgba(0, 207, 255, 0.18);
         }
 
         html {
@@ -30,7 +36,9 @@
             font-family: "Segoe UI", Arial, sans-serif;
             color: var(--text);
             background:
-                linear-gradient(rgba(2, 5, 26, 0.78), rgba(2, 5, 26, 0.92)),
+                radial-gradient(circle at top left, rgba(0, 207, 255, 0.14), transparent 28%),
+                radial-gradient(circle at top right, rgba(0, 157, 255, 0.12), transparent 24%),
+                linear-gradient(180deg, rgba(2, 8, 23, 0.96), rgba(3, 13, 36, 0.96)),
                 url("teta-tablo.png") center/cover no-repeat fixed;
         }
 
@@ -40,43 +48,50 @@
         }
 
         .container {
-            width: min(1180px, calc(100% - 32px));
+            width: min(1200px, calc(100% - 32px));
             margin: 0 auto;
         }
 
         .navbar {
             position: sticky;
             top: 0;
-            z-index: 20;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            background: rgba(2, 5, 26, 0.58);
-            border-bottom: 1px solid rgba(125, 239, 255, 0.08);
+            z-index: 100;
+            background: rgba(2, 8, 23, 0.66);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(95, 223, 255, 0.08);
         }
 
         .nav-inner {
+            min-height: 78px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            min-height: 74px;
+            gap: 18px;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 900;
-            letter-spacing: 0.4px;
+            gap: 14px;
+        }
+
+        .brand-logo-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(180deg, rgba(95, 223, 255, 0.16), rgba(0, 157, 255, 0.12));
+            border: 1px solid rgba(95, 223, 255, 0.16);
+            box-shadow: var(--glow);
         }
 
         .brand-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
+            width: 34px;
+            height: 34px;
             object-fit: contain;
-            background: rgba(255,255,255,0.06);
-            padding: 4px;
+            border-radius: 50%;
         }
 
         .brand-text {
@@ -85,14 +100,19 @@
             line-height: 1.05;
         }
 
-        .brand-text span:first-child {
-            font-size: 18px;
+        .brand-title {
+            font-size: 19px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
         }
 
-        .brand-text span:last-child {
+        .brand-sub {
+            margin-top: 4px;
             font-size: 11px;
-            color: var(--accent);
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--blue-2);
         }
 
         .nav-links {
@@ -104,9 +124,10 @@
 
         .nav-link {
             padding: 10px 14px;
-            border-radius: 10px;
+            border-radius: 12px;
             color: var(--muted);
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
             transition: 0.2s ease;
         }
 
@@ -116,265 +137,314 @@
         }
 
         .hero {
-            padding: 72px 0 34px;
+            position: relative;
+            padding: 82px 0 36px;
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 24px;
-            align-items: center;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 22px;
+            align-items: stretch;
         }
 
         .hero-card,
-        .panel,
+        .info-panel,
         .feature-card,
         .about-card,
         .footer-card {
-            background: var(--card);
-            border: 1px solid var(--card-border);
-            border-radius: 22px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+            background: linear-gradient(180deg, rgba(8, 22, 56, 0.82), rgba(5, 15, 38, 0.82));
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .hero-card {
-            padding: 34px 30px;
+            position: relative;
+            overflow: hidden;
+            padding: 34px 32px;
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(95, 223, 255, 0.14), transparent 24%),
+                radial-gradient(circle at 80% 10%, rgba(0, 157, 255, 0.14), transparent 22%);
+            pointer-events: none;
         }
 
         .eyebrow {
+            position: relative;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 12px;
+            min-height: 36px;
+            padding: 0 14px;
             border-radius: 999px;
-            background: rgba(0, 212, 255, 0.08);
-            border: 1px solid rgba(0, 212, 255, 0.18);
-            color: var(--accent);
+            background: rgba(0, 207, 255, 0.10);
+            border: 1px solid rgba(0, 207, 255, 0.18);
+            color: var(--blue-1);
             font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.4px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
         }
 
         .hero h1 {
-            margin: 16px 0 14px;
-            font-size: clamp(34px, 6vw, 72px);
-            line-height: 0.95;
-            letter-spacing: -1.8px;
+            position: relative;
+            margin: 18px 0 16px;
+            font-size: clamp(40px, 7vw, 86px);
+            line-height: 0.92;
+            letter-spacing: -2px;
+            font-weight: 1000;
+            text-transform: uppercase;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(180deg, #ffffff 0%, #a9f0ff 52%, #59dfff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 28px rgba(89, 223, 255, 0.12);
         }
 
         .hero p {
+            position: relative;
             margin: 0;
+            max-width: 760px;
             color: var(--muted);
             font-size: 17px;
-            line-height: 1.7;
-            max-width: 720px;
+            line-height: 1.8;
         }
 
         .hero-actions {
+            position: relative;
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-top: 28px;
+            margin-top: 30px;
         }
 
         .btn {
+            min-height: 52px;
+            padding: 0 20px;
+            border-radius: 14px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 48px;
-            padding: 0 18px;
-            border-radius: 12px;
-            font-weight: 800;
-            transition: 0.2s ease;
-            border: 1px solid transparent;
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: 0.2px;
+            transition: 0.22s ease;
         }
 
         .btn-primary {
-            background: var(--accent-strong);
-            color: #00121a;
+            color: #04111d;
+            background: linear-gradient(135deg, #a8f1ff 0%, #57deff 54%, #1fb6ff 100%);
+            box-shadow: 0 10px 26px rgba(0, 207, 255, 0.22);
         }
 
         .btn-primary:hover {
-            transform: translateY(-1px);
-            background: #27dbff;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 34px rgba(0, 207, 255, 0.26);
         }
 
         .btn-secondary {
-            background: rgba(255,255,255,0.04);
             color: white;
-            border-color: rgba(125, 239, 255, 0.16);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(95, 223, 255, 0.16);
         }
 
         .btn-secondary:hover {
             background: rgba(255,255,255,0.08);
+            transform: translateY(-2px);
         }
 
-        .hero-side {
+        .hero-stats {
+            position: relative;
             display: grid;
-            gap: 16px;
-        }
-
-        .panel {
-            padding: 22px;
-        }
-
-        .panel-title {
-            margin: 0 0 10px;
-            font-size: 18px;
-            color: var(--accent);
-            font-weight: 900;
-        }
-
-        .panel-text {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.65;
-            font-size: 14px;
-        }
-
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 14px;
-            margin-top: 28px;
+            margin-top: 30px;
         }
 
-        .stat-box {
-            padding: 18px;
+        .hero-stat {
+            padding: 16px;
             border-radius: 18px;
             background: rgba(255,255,255,0.035);
             border: 1px solid rgba(255,255,255,0.06);
         }
 
-        .stat-value {
+        .hero-stat-value {
             font-size: 28px;
-            font-weight: 900;
-            color: var(--accent);
+            font-weight: 1000;
             line-height: 1;
+            color: var(--blue-2);
             margin-bottom: 8px;
         }
 
-        .stat-label {
+        .hero-stat-label {
+            font-size: 12px;
+            font-weight: 800;
             color: var(--muted);
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .side-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .info-panel {
+            padding: 22px;
+        }
+
+        .info-title {
+            margin: 0 0 10px;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--blue-2);
+        }
+
+        .info-text {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 14px;
         }
 
         .section {
-            padding: 22px 0 10px;
+            padding: 26px 0 10px;
         }
 
         .section-head {
-            display: flex;
-            align-items: end;
-            justify-content: space-between;
-            gap: 16px;
             margin-bottom: 18px;
         }
 
         .section-title {
             margin: 0;
-            font-size: clamp(24px, 4vw, 38px);
-            font-weight: 900;
-            letter-spacing: -0.8px;
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 1000;
+            letter-spacing: -1px;
         }
 
         .section-desc {
-            margin: 8px 0 0;
+            margin: 10px 0 0;
+            max-width: 780px;
             color: var(--muted);
-            max-width: 760px;
-            line-height: 1.7;
+            line-height: 1.8;
+            font-size: 15px;
         }
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 18px;
         }
 
         .feature-card {
-            padding: 22px;
-            transition: 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            padding: 24px;
+            transition: 0.22s ease;
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            inset: auto -30% -40% auto;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 207, 255, 0.18), transparent 65%);
+            pointer-events: none;
         }
 
         .feature-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(125, 239, 255, 0.24);
+            transform: translateY(-4px);
+            border-color: var(--line-strong);
+            box-shadow: 0 22px 40px rgba(0,0,0,0.28), 0 0 28px rgba(0, 207, 255, 0.12);
         }
 
         .feature-icon {
-            width: 48px;
-            height: 48px;
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 14px;
-            background: rgba(0, 212, 255, 0.10);
-            color: var(--accent);
-            font-size: 22px;
+            background: linear-gradient(180deg, rgba(95, 223, 255, 0.16), rgba(0, 157, 255, 0.12));
+            border: 1px solid rgba(95, 223, 255, 0.18);
+            color: var(--blue-1);
+            font-size: 24px;
             margin-bottom: 16px;
+            box-shadow: var(--glow);
         }
 
         .feature-title {
             margin: 0 0 10px;
-            font-size: 20px;
-            font-weight: 900;
+            font-size: 22px;
+            font-weight: 1000;
         }
 
         .feature-text {
-            margin: 0 0 16px;
+            margin: 0 0 18px;
             color: var(--muted);
-            line-height: 1.7;
-            font-size: 14px;
+            line-height: 1.8;
+            font-size: 15px;
         }
 
         .feature-link {
-            color: var(--accent);
-            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--blue-2);
+            font-weight: 900;
             font-size: 14px;
         }
 
-        .about-wrap {
+        .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 18px;
         }
 
         .about-card {
-            padding: 24px;
+            padding: 26px;
         }
 
         .about-title {
             margin: 0 0 12px;
             font-size: 22px;
-            font-weight: 900;
-            color: var(--accent);
+            font-weight: 1000;
+            color: var(--blue-2);
         }
 
         .about-text {
             margin: 0;
             color: var(--muted);
-            line-height: 1.8;
+            line-height: 1.85;
             font-size: 15px;
         }
 
-        .bullet-list {
+        .about-list {
             margin: 14px 0 0;
             padding-left: 18px;
             color: var(--muted);
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
         .footer {
-            padding: 28px 0 38px;
+            padding: 30px 0 40px;
         }
 
         .footer-card {
-            padding: 20px 22px;
+            padding: 22px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -384,8 +454,8 @@
 
         .footer-text {
             color: var(--muted);
+            line-height: 1.8;
             font-size: 14px;
-            line-height: 1.7;
         }
 
         .footer-links {
@@ -394,32 +464,39 @@
             flex-wrap: wrap;
         }
 
-        .mini-link {
-            padding: 10px 14px;
-            border-radius: 10px;
+        .footer-link {
+            min-height: 44px;
+            padding: 0 14px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue-2);
             background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(125, 239, 255, 0.14);
-            color: var(--accent);
-            font-weight: 800;
+            border: 1px solid rgba(95, 223, 255, 0.16);
+            font-weight: 900;
             font-size: 14px;
         }
 
-        @media (max-width: 960px) {
+        .footer-link:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        @media (max-width: 980px) {
             .hero-grid,
-            .feature-grid,
-            .about-wrap {
+            .about-grid,
+            .feature-grid {
                 grid-template-columns: 1fr;
             }
 
-            .nav-inner {
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-                padding: 12px 0;
+            .hero-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
-            .stat-grid {
-                grid-template-columns: 1fr 1fr;
+            .nav-inner {
+                padding: 12px 0;
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
 
@@ -429,37 +506,37 @@
             }
 
             .container {
-                width: min(100% - 20px, 1180px);
+                width: min(100% - 18px, 1200px);
             }
 
             .hero {
-                padding-top: 42px;
+                padding-top: 44px;
             }
 
             .hero-card,
-            .panel,
+            .info-panel,
             .feature-card,
             .about-card,
             .footer-card {
-                border-radius: 18px;
+                border-radius: 20px;
             }
 
             .hero-card {
                 padding: 24px 20px;
             }
 
-            .stat-grid {
+            .hero-stats {
                 grid-template-columns: 1fr;
             }
 
             .hero-actions,
-            .footer-links,
-            .nav-links {
+            .nav-links,
+            .footer-links {
                 width: 100%;
             }
 
             .btn,
-            .mini-link,
+            .footer-link,
             .nav-link {
                 width: 100%;
                 justify-content: center;
@@ -472,10 +549,12 @@
     <header class="navbar">
         <div class="container nav-inner">
             <a href="home.html" class="brand">
-                <img class="brand-logo" src="logos/default.png" alt="League logo" onerror="this.style.display='none'">
+                <div class="brand-logo-wrap">
+                    <img class="brand-logo" src="logos/default.png" alt="League logo" onerror="this.style.display='none'">
+                </div>
                 <div class="brand-text">
-                    <span>TETA LEAGUE S4</span>
-                    <span>PRO CLUBS LEAGUE</span>
+                    <div class="brand-title">TETA LEAGUE S4</div>
+                    <div class="brand-sub">PRO CLUBS LEAGUE</div>
                 </div>
             </a>
 
@@ -493,10 +572,15 @@
         <div class="container hero-grid">
             <section class="hero-card">
                 <div class="eyebrow">Season 4 · Group Delta</div>
-                <h1>TETA LEAGUE<br>PRO CLUBS</h1>
+
+                <h1 class="hero-gradient">
+                    TETA LEAGUE<br>
+                    PRO CLUBS
+                </h1>
+
                 <p>
-                    TETA League S4 için hazırlanmış resmi lig merkezi. Buradan güncel puan tablosuna,
-                    hafta hafta maç sonuçlarına ve lig hakkında temel bilgilere hızlıca ulaşabilirsiniz.
+                    TETA League S4 için hazırlanmış resmi lig merkezi. Güncel puan tablosunu takip et,
+                    hafta hafta maç sonuçlarını incele ve Pro Clubs rekabetini tek merkezden yaşa.
                 </p>
 
                 <div class="hero-actions">
@@ -505,45 +589,45 @@
                     <a class="btn btn-secondary" href="#about">Lig Hakkında</a>
                 </div>
 
-                <div class="stat-grid">
-                    <div class="stat-box">
-                        <div class="stat-value">12</div>
-                        <div class="stat-label">Takım</div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">12</div>
+                        <div class="hero-stat-label">Takım</div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-value">S4</div>
-                        <div class="stat-label">Sezon</div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">S4</div>
+                        <div class="hero-stat-label">Sezon</div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-value">PC</div>
-                        <div class="stat-label">Pro Clubs Formatı</div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">LIVE</div>
+                        <div class="hero-stat-label">Güncel Sistem</div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-value">LIVE</div>
-                        <div class="stat-label">Canlı Güncellenen Sistem</div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">PC</div>
+                        <div class="hero-stat-label">Pro Clubs</div>
                     </div>
                 </div>
             </section>
 
-            <aside class="hero-side">
-                <div class="panel">
-                    <h3 class="panel-title">Hızlı Erişim</h3>
-                    <p class="panel-text">
-                        En güncel lig sıralaması için lig tablosuna, oynanan maçları incelemek için sonuçlar sayfasına geçebilirsin.
+            <aside class="side-grid">
+                <div class="info-panel">
+                    <h3 class="info-title">Lig Merkezi</h3>
+                    <p class="info-text">
+                        Tüm temel lig verileri tek yerde toplanır. Takip etmesi kolay, görünümü güçlü ve Pro Clubs havasına uygun bir yapı.
                     </p>
                 </div>
 
-                <div class="panel">
-                    <h3 class="panel-title">Lig Akışı</h3>
-                    <p class="panel-text">
-                        Tüm sistem hafta bazlı ilerler. Sonuçlar işlendiğinde puan tablosu otomatik güncellenir ve herkes güncel sıralamayı anında görebilir.
+                <div class="info-panel">
+                    <h3 class="info-title">Hafta Bazlı Akış</h3>
+                    <p class="info-text">
+                        Oynanan maçlar haftalara göre işlenir. Sonuçlar girildikçe sıralama otomatik güncellenir ve herkes en güncel tabloyu görür.
                     </p>
                 </div>
 
-                <div class="panel">
-                    <h3 class="panel-title">Topluluk</h3>
-                    <p class="panel-text">
-                        TETA League sadece skor değil, aynı zamanda rekabet, düzen ve lig kültürü için hazırlanmış bir Pro Clubs alanıdır.
+                <div class="info-panel">
+                    <h3 class="info-title">Rekabet ve Düzen</h3>
+                    <p class="info-text">
+                        Amaç sadece skor göstermek değil; ligin düzenini, rekabetini ve topluluk hissini güçlü bir görsellikle sunmak.
                     </p>
                 </div>
             </aside>
@@ -553,12 +637,10 @@
     <section id="pages" class="section">
         <div class="container">
             <div class="section-head">
-                <div>
-                    <h2 class="section-title">Sayfalar</h2>
-                    <p class="section-desc">
-                        Lig içindeki temel sayfalara buradan ulaşabilirsin. Her kart seni farklı bir bölüme götürür.
-                    </p>
-                </div>
+                <h2 class="section-title">Lig Sayfaları</h2>
+                <p class="section-desc">
+                    Lig içinde herkese açık olan temel bölümlere buradan hızlıca ulaşabilirsin.
+                </p>
             </div>
 
             <div class="feature-grid">
@@ -566,50 +648,41 @@
                     <div class="feature-icon">🏆</div>
                     <h3 class="feature-title">Lig Tablosu</h3>
                     <p class="feature-text">
-                        Takımların sıralamasını, puanlarını, galibiyetlerini, beraberliklerini, mağlubiyetlerini ve averajlarını görüntüle.
+                        Takımların puan durumunu, galibiyet sayılarını, beraberliklerini, mağlubiyetlerini ve averaj durumlarını takip et.
                     </p>
-                    <div class="feature-link">Sayfaya git →</div>
+                    <div class="feature-link">Aç →</div>
                 </a>
 
                 <a class="feature-card" href="results.html">
                     <div class="feature-icon">📋</div>
                     <h3 class="feature-title">Maç Sonuçları</h3>
                     <p class="feature-text">
-                        Haftalara göre oynanan maçları incele. Kazananları, beraberlikleri ve skorları tek sayfada takip et.
+                        Oynanan maçları hafta hafta görüntüle. Kazananları, beraberlikleri ve skorları düzenli şekilde incele.
                     </p>
-                    <div class="feature-link">Sayfaya git →</div>
-                </a>
-
-                <a class="feature-card" href="admin.html">
-                    <div class="feature-icon">⚙️</div>
-                    <h3 class="feature-title">Admin Panel</h3>
-                    <p class="feature-text">
-                        Maç ekleme, düzenleme ve silme işlemlerini yönet. Lig sistemi bu panel üzerinden güncellenir.
-                    </p>
-                    <div class="feature-link">Sayfaya git →</div>
+                    <div class="feature-link">Aç →</div>
                 </a>
             </div>
         </div>
     </section>
 
     <section id="about" class="section">
-        <div class="container about-wrap">
+        <div class="container about-grid">
             <div class="about-card">
-                <h3 class="about-title">Lig Hakkında</h3>
+                <h3 class="about-title">TETA League Nedir?</h3>
                 <p class="about-text">
-                    TETA League S4, Pro Clubs rekabetini düzenli ve takip edilebilir hale getirmek için hazırlanmış bir lig yapısıdır.
-                    Amaç, takımların performansını haftalık olarak işlemek ve herkesin tek bir merkezden güncel verilere ulaşmasını sağlamaktır.
+                    TETA League S4, Pro Clubs rekabetini daha düzenli ve daha takip edilebilir hale getirmek için hazırlanmış bir lig yapısıdır.
+                    Bu site; ligin merkezi, puan takibi ekranı ve sonuç arşivi olarak kullanılır.
                 </p>
             </div>
 
             <div class="about-card">
-                <h3 class="about-title">Bu Sitede Neler Var?</h3>
-                <ul class="bullet-list">
+                <h3 class="about-title">Bu Merkezde Neler Var?</h3>
+                <ul class="about-list">
                     <li>Canlı güncellenen lig tablosu</li>
-                    <li>Hafta hafta sonuç ekranı</li>
-                    <li>Admin üzerinden kolay maç yönetimi</li>
-                    <li>Takım odaklı düzenli lig görünümü</li>
-                    <li>Pro Clubs lig kültürüne uygun sade tasarım</li>
+                    <li>Haftalara göre sonuç ekranı</li>
+                    <li>Takım odaklı sade ve güçlü görünüm</li>
+                    <li>Pro Clubs lig yapısına uygun modern tasarım</li>
+                    <li>Tek noktadan kolay takip deneyimi</li>
                 </ul>
             </div>
         </div>
@@ -619,13 +692,12 @@
         <div class="container">
             <div class="footer-card">
                 <div class="footer-text">
-                    TETA League S4 · Pro Clubs League merkezi. Lig takibi, sonuçlar ve tablo tek yerde.
+                    TETA League S4 · Pro Clubs League merkezi. Güncel tablo ve sonuçlar tek yerde.
                 </div>
 
                 <div class="footer-links">
-                    <a class="mini-link" href="index.html">Lig Tablosu</a>
-                    <a class="mini-link" href="results.html">Sonuçlar</a>
-                    <a class="mini-link" href="admin.html">Admin</a>
+                    <a class="footer-link" href="index.html">Lig Tablosu</a>
+                    <a class="footer-link" href="results.html">Sonuçlar</a>
                 </div>
             </div>
         </div>
