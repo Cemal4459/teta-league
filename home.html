@@ -3,33 +3,32 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TETA LEAGUE S4</title>
+    <title>TETA LEAGUE S4 | Powered by IAU Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
         }
 
         :root {
-            --bg-1: #050914;
-            --bg-2: #0a1020;
-            --bg-3: #0f172d;
-            --panel: rgba(15, 23, 45, 0.88);
-            --panel-strong: rgba(12, 19, 38, 0.96);
-            --panel-soft: rgba(255, 255, 255, 0.04);
-            --text: #f6f8fc;
-            --muted: #aeb7c8;
-            --gold: #ffd54f;
-            --gold-2: #ffea94;
-            --cyan: #66e3ff;
-            --cyan-2: #00cfff;
-            --line: rgba(255, 255, 255, 0.08);
-            --line-gold: rgba(255, 213, 79, 0.18);
-            --line-cyan: rgba(102, 227, 255, 0.16);
-            --shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
-            --glow-gold: 0 0 34px rgba(255, 213, 79, 0.12);
-            --glow-cyan: 0 0 34px rgba(0, 207, 255, 0.14);
-            --radius-xl: 28px;
-            --radius-lg: 22px;
+            /* IAU Yapay Zeka Temalı Renk Paleti */
+            --bg-deep: #020617;        /* Derin Uzay Siyahı */
+            --bg-panel: #070e27;       /* IAU Panel Rengi */
+            --bg-accent: #1e1b4b;      /* AI Vurgu Moru */
+            
+            --gold: #f59e0b;           /* IAU Altın Sarısı */
+            --gold-glow: rgba(245, 158, 11, 0.4);
+            
+            --cyan: #06b6d4;           /* IAU Neon Mavi */
+            --cyan-glow: rgba(6, 182, 212, 0.4);
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            --glass: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            
+            --radius-lg: 24px;
             --radius-md: 16px;
         }
 
@@ -40,862 +39,355 @@
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: Inter, "Segoe UI", Arial, sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at 12% 16%, rgba(255, 213, 79, 0.12), transparent 18%),
-                radial-gradient(circle at 86% 14%, rgba(102, 227, 255, 0.10), transparent 18%),
-                radial-gradient(circle at 50% 100%, rgba(255, 213, 79, 0.05), transparent 24%),
-                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 56%, #0d1427 100%);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-deep);
+            /* IAU Tarzı Arka Plan Işımaları */
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
             overflow-x: hidden;
         }
 
+        /* Teknolojik Grid Efekti */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
+            opacity: 0.15;
+            background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 45px 45px;
+            mask-image: linear-gradient(to bottom, black, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, black, transparent);
             pointer-events: none;
-            opacity: 0.06;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-            background-size: 34px 34px;
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 90%);
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 90%);
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
+            z-index: 0;
         }
 
         .container {
-            width: min(1240px, calc(100% - 36px));
+            width: min(1200px, calc(100% - 40px));
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
+        /* --- NAVBAR --- */
         .navbar {
             position: sticky;
             top: 0;
             z-index: 200;
-            background: rgba(7, 11, 22, 0.82);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 10px 28px rgba(0,0,0,0.24);
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .nav-inner {
-            min-height: 82px;
+            height: 85px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 18px;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 14px;
-            flex-shrink: 0;
+            gap: 15px;
         }
 
         .brand-mark {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             display: grid;
             place-items: center;
-            font-size: 20px;
-            font-weight: 1000;
-            color: #111827;
-            background:
-                linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 55%, #ffffff 100%);
-            box-shadow: var(--glow-gold);
-        }
-
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.02;
+            font-weight: 900;
+            color: var(--bg-deep);
+            background: var(--gold);
+            box-shadow: 0 0 15px var(--gold-glow);
         }
 
         .brand-title {
-            font-size: 22px;
-            font-weight: 1000;
-            letter-spacing: 0.4px;
-        }
-
-        .brand-sub {
-            margin-top: 4px;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1.3px;
-            text-transform: uppercase;
-            color: var(--cyan);
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: flex-end;
+            gap: 5px;
         }
 
         .nav-link {
-            position: relative;
-            color: #c7cfdb;
+            padding: 10px 18px;
             font-size: 14px;
-            font-weight: 800;
-            padding: 11px 14px;
-            border-radius: 12px;
-            border: 1px solid transparent;
-            transition: 0.22s ease;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.3s;
+            border-radius: 8px;
         }
 
         .nav-link:hover {
-            color: #fff;
+            color: var(--text-main);
             background: rgba(255,255,255,0.05);
-            border-color: rgba(255,255,255,0.07);
         }
 
         .nav-link.active {
-            color: #0e1524;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 100%);
-            box-shadow: 0 8px 24px rgba(255, 213, 79, 0.18);
-        }
-
-        .hero {
-            padding: 42px 0 18px;
-        }
-
-        .hero-shell {
-            position: relative;
-            overflow: hidden;
-            border-radius: 34px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background:
-                linear-gradient(135deg, rgba(13, 20, 39, 0.96), rgba(8, 13, 26, 0.98)),
-                url("teta-tablo.png") center/cover no-repeat;
-            box-shadow: var(--shadow);
-        }
-
-        .hero-shell::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(circle at 18% 18%, rgba(255, 213, 79, 0.16), transparent 20%),
-                radial-gradient(circle at 82% 20%, rgba(102, 227, 255, 0.12), transparent 22%),
-                linear-gradient(90deg, rgba(8, 12, 22, 0.96) 0%, rgba(8, 12, 22, 0.82) 46%, rgba(8, 12, 22, 0.36) 100%);
-        }
-
-        .hero-content {
-            position: relative;
-            min-height: 680px;
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 24px;
-            padding: 48px;
-        }
-
-        .hero-left {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-width: 760px;
-        }
-
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            width: fit-content;
-            min-height: 38px;
-            padding: 0 14px;
-            border-radius: 999px;
             color: var(--gold);
-            background: rgba(255, 213, 79, 0.08);
-            border: 1px solid rgba(255, 213, 79, 0.18);
-            font-size: 12px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 18px;
-            box-shadow: var(--glow-gold);
+            border-bottom: 2px solid var(--gold);
+            border-radius: 0;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 60px 0;
+        }
+
+        .hero-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .hero-title {
-            margin: 0;
-            font-size: clamp(42px, 8vw, 94px);
-            line-height: 0.9;
-            letter-spacing: -2.4px;
-            font-weight: 1000;
-            text-transform: uppercase;
+            font-size: clamp(40px, 6vw, 80px);
+            line-height: 0.95;
+            font-weight: 900;
+            margin: 0 0 20px 0;
         }
 
-        .hero-title .gold {
-            color: var(--gold);
-            text-shadow: 0 0 24px rgba(255, 213, 79, 0.12);
-        }
-
-        .hero-title .white {
-            color: #f7fbff;
-        }
-
-        .hero-title .cyan {
-            color: var(--cyan);
-            text-shadow: 0 0 24px rgba(102, 227, 255, 0.12);
-        }
+        .text-gold { color: var(--gold); text-shadow: 0 0 20px var(--gold-glow); }
+        .text-cyan { color: var(--cyan); text-shadow: 0 0 20px var(--cyan-glow); }
 
         .hero-text {
-            margin-top: 20px;
-            max-width: 640px;
-            color: var(--muted);
             font-size: 18px;
-            line-height: 1.82;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-top: 30px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 30px;
         }
 
         .btn {
-            min-height: 54px;
-            padding: 0 22px;
-            border-radius: 14px;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            font-weight: 900;
-            letter-spacing: 0.2px;
-            transition: 0.22s ease;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: 0.3s;
+            cursor: pointer;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 100%);
-            color: #10141d;
-            box-shadow: var(--glow-gold);
+            background: var(--gold);
+            color: var(--bg-deep);
+            box-shadow: 0 10px 20px var(--gold-glow);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 16px 38px rgba(255, 213, 79, 0.22);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px var(--gold-glow);
         }
 
-        .btn-secondary {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(102, 227, 255, 0.16);
-            box-shadow: var(--glow-cyan);
-        }
-
-        .hero-stats {
-            margin-top: 34px;
+        /* --- STATS --- */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 14px;
-            max-width: 800px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 40px;
         }
 
-        .hero-stat {
-            padding: 18px 16px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.07);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+        .stat-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
         }
 
-        .hero-stat-value {
-            font-size: 30px;
-            line-height: 1;
-            font-weight: 1000;
-            margin-bottom: 8px;
-        }
-
-        .hero-stat:nth-child(1) .hero-stat-value { color: var(--gold); }
-        .hero-stat:nth-child(2) .hero-stat-value { color: #ffffff; }
-        .hero-stat:nth-child(3) .hero-stat-value { color: var(--cyan); }
-        .hero-stat:nth-child(4) .hero-stat-value { color: var(--gold); }
-
-        .hero-stat-label {
-            color: var(--muted);
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-        }
-
-        .hero-right {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-        }
-
-        .hero-side-stack {
-            width: 100%;
-            max-width: 380px;
-            display: grid;
-            gap: 16px;
-        }
-
-        .side-card {
-            position: relative;
-            overflow: hidden;
-            padding: 22px;
-            border-radius: 22px;
-            background: linear-gradient(180deg, rgba(17, 25, 46, 0.96), rgba(10, 16, 30, 0.98));
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: var(--shadow);
-        }
-
-        .side-card::after {
-            content: "";
-            position: absolute;
-            top: -40px;
-            right: -40px;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(102, 227, 255, 0.14), transparent 65%);
-            pointer-events: none;
-        }
-
-        .side-title {
-            margin: 0 0 10px;
-            font-size: 18px;
-            font-weight: 1000;
+        .stat-value {
+            display: block;
+            font-size: 28px;
+            font-weight: 900;
             color: var(--cyan);
         }
 
-        .side-text {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.78;
-            font-size: 14px;
-        }
-
-        .ticker {
-            margin-top: 18px;
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.07);
-            background: linear-gradient(90deg, rgba(255, 213, 79, 0.12), rgba(102, 227, 255, 0.08));
-        }
-
-        .ticker-inner {
-            display: flex;
-            gap: 28px;
-            padding: 14px 18px;
-            white-space: nowrap;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-
-        .ticker-inner::-webkit-scrollbar {
-            display: none;
-        }
-
-        .ticker-item {
-            color: #ebf4ff;
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 0.2px;
-        }
-
-        .ticker-item span {
-            color: var(--gold);
-        }
-
-        .section {
-            padding: 26px 0 8px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: end;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 18px;
-        }
-
+        /* --- CARDS SECTION --- */
         .section-title {
-            margin: 0;
-            font-size: clamp(28px, 4vw, 42px);
-            font-weight: 1000;
-            letter-spacing: -1px;
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .section-text {
-            margin: 10px 0 0;
-            max-width: 760px;
-            color: var(--muted);
-            line-height: 1.8;
-            font-size: 15px;
+        .section-title::before {
+            content: "";
+            width: 5px;
+            height: 30px;
+            background: var(--cyan);
+            border-radius: 10px;
         }
 
-        .cards {
+        .grid-cards {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .card {
-            position: relative;
-            overflow: hidden;
-            padding: 26px;
-            border-radius: 24px;
-            background: linear-gradient(180deg, rgba(18, 27, 48, 0.96), rgba(11, 16, 30, 0.98));
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: var(--shadow);
-            transition: 0.22s ease;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            inset: auto -50px -50px auto;
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 213, 79, 0.12), transparent 62%);
-            pointer-events: none;
-        }
-
-        .card.alt::before {
-            background: radial-gradient(circle, rgba(102, 227, 255, 0.12), transparent 62%);
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: var(--radius-md);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            color: inherit;
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255,255,255,0.12);
+            border-color: var(--cyan);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
         }
 
         .card-icon {
-            width: 58px;
-            height: 58px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 18px;
-            margin-bottom: 16px;
-            font-size: 24px;
-            background: linear-gradient(180deg, rgba(255, 213, 79, 0.18), rgba(255, 213, 79, 0.08));
-            border: 1px solid rgba(255, 213, 79, 0.16);
-            color: var(--gold);
-            box-shadow: var(--glow-gold);
-        }
-
-        .card.alt .card-icon {
-            background: linear-gradient(180deg, rgba(102, 227, 255, 0.18), rgba(102, 227, 255, 0.08));
-            border-color: rgba(102, 227, 255, 0.16);
-            color: var(--cyan);
-            box-shadow: var(--glow-cyan);
+            font-size: 32px;
+            margin-bottom: 15px;
+            display: block;
         }
 
         .card-title {
-            margin: 0 0 10px;
-            font-size: 24px;
-            font-weight: 1000;
-        }
-
-        .card-text {
-            margin: 0 0 18px;
-            color: var(--muted);
-            line-height: 1.82;
-            font-size: 15px;
-        }
-
-        .card-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 900;
-            color: var(--gold);
-        }
-
-        .card.alt .card-link {
-            color: var(--cyan);
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-        }
-
-        .about-card {
-            padding: 28px;
-            border-radius: 24px;
-            background: linear-gradient(180deg, rgba(18, 27, 48, 0.96), rgba(11, 16, 30, 0.98));
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: var(--shadow);
-        }
-
-        .about-title {
-            margin: 0 0 12px;
             font-size: 22px;
-            font-weight: 1000;
+            font-weight: 800;
+            margin-bottom: 10px;
         }
 
-        .about-title.gold { color: var(--gold); }
-        .about-title.cyan { color: var(--cyan); }
-
-        .about-text {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.9;
-            font-size: 15px;
-        }
-
-        .about-list {
-            margin: 14px 0 0;
-            padding-left: 18px;
-            color: var(--muted);
-            line-height: 1.95;
-        }
-
-        .about-list li::marker {
-            color: var(--gold);
-        }
-
+        /* --- FOOTER --- */
         .footer {
-            padding: 30px 0 42px;
-        }
-
-        .footer-card {
-            padding: 22px 24px;
-            border-radius: 22px;
-            background: linear-gradient(180deg, rgba(18, 25, 43, 0.94), rgba(11, 17, 32, 0.96));
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .footer-text {
-            color: var(--muted);
+            margin-top: 80px;
+            padding: 40px 0;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            color: var(--text-muted);
             font-size: 14px;
-            line-height: 1.8;
         }
 
-        .footer-links {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        /* Animations */
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
         }
 
-        .footer-link {
-            min-height: 44px;
-            padding: 0 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            font-size: 14px;
-            font-weight: 900;
-            transition: 0.2s ease;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .footer-link:hover {
-            background: rgba(255,255,255,0.08);
-        }
-
-        @media (max-width: 1040px) {
-            .hero-content,
-            .cards,
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-content {
-                min-height: unset;
-                padding: 34px 24px;
-            }
-
-            .hero-right {
-                justify-content: flex-start;
-            }
-
-            .hero-side-stack {
-                max-width: none;
-            }
-
-            .hero-stats {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .nav-inner {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 12px 0;
-            }
-
-            .nav-links {
-                width: 100%;
-                justify-content: flex-start;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                width: min(100% - 18px, 1240px);
-            }
-
-            .hero {
-                padding-top: 24px;
-            }
-
-            .hero-shell,
-            .card,
-            .about-card,
-            .footer-card,
-            .side-card {
-                border-radius: 20px;
-            }
-
-            .hero-content {
-                padding: 24px 18px;
-            }
-
-            .hero-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-actions,
-            .nav-links,
-            .footer-links {
-                width: 100%;
-            }
-
-            .btn,
-            .nav-link,
-            .footer-link {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .hero-text {
-                font-size: 16px;
-            }
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .hero-card { grid-template-columns: 1fr; padding: 30px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-inner { flex-direction: column; height: auto; padding: 20px 0; }
         }
     </style>
 </head>
 <body>
 
-    <header class="navbar">
+    <nav class="navbar">
         <div class="container nav-inner">
-            <a href="home.html" class="brand">
+            <div class="brand">
                 <div class="brand-mark">T</div>
-                <div class="brand-text">
-                    <div class="brand-title">TETA LEAGUE</div>
-                    <div class="brand-sub">PRO CLUBS LEAGUE</div>
-                </div>
-            </a>
-
-            <nav class="nav-links">
-                <a class="nav-link" href="news.html">📰 Haberler</a>
-                <a class="nav-link" href="#">Lig Alpha</a>
-                <a class="nav-link active" href="home.html">Lig Delta</a>
-                <a class="nav-link" href="contact.html">İletişim</a>
-                <a class="nav-link" href="contact.html">Destek</a>
-            </nav>
+                <div class="brand-title">TETA LEAGUE</div>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Haberler</a>
+                <a href="#" class="nav-link active">Lig Delta</a>
+                <a href="#" class="nav-link">Takımlar</a>
+                <a href="#" class="nav-link">İletişim</a>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="hero">
-        <div class="container">
-            <section class="hero-shell">
-                <div class="hero-content">
-                    <div class="hero-left">
-                        <div class="eyebrow">Season 4 · Group Delta</div>
-
-                        <h1 class="hero-title">
-                            <span class="gold">TETA</span>
-                            <span class="white">LEAGUE</span>
-                            <span class="cyan">S4</span>
-                        </h1>
-
-                        <p class="hero-text">
-                            Pro Clubs rekabetini tek merkezde toplayan resmi lig portalı.
-                            Puan tablosuna, maç sonuçlarına, fikstüre ve takım sayfalarına
-                            modern, güçlü ve profesyonel bir arayüzle eriş.
-                        </p>
-
-                        <div class="hero-actions">
-                            <a href="index.html" class="btn btn-primary">Lig Tablosu</a>
-                            <a href="results.html" class="btn btn-secondary">Maç Sonuçları</a>
-                            <a href="fixture.html" class="btn btn-secondary">Fikstür</a>
-                        </div>
-
-                        <div class="hero-stats">
-                            <div class="hero-stat">
-                                <div class="hero-stat-value">12</div>
-                                <div class="hero-stat-label">Takım</div>
-                            </div>
-                            <div class="hero-stat">
-                                <div class="hero-stat-value">S4</div>
-                                <div class="hero-stat-label">Sezon</div>
-                            </div>
-                            <div class="hero-stat">
-                                <div class="hero-stat-value">LIVE</div>
-                                <div class="hero-stat-label">Lig Merkezi</div>
-                            </div>
-                            <div class="hero-stat">
-                                <div class="hero-stat-value">PC</div>
-                                <div class="hero-stat-label">Pro Clubs</div>
-                            </div>
-                        </div>
-
-                        <div class="ticker">
-                            <div class="ticker-inner">
-                                <div class="ticker-item"><span>Lig Delta</span> resmi merkez</div>
-                                <div class="ticker-item"><span>Takımlar</span> sayfası aktif</div>
-                                <div class="ticker-item"><span>Fikstür</span> hazır</div>
-                                <div class="ticker-item"><span>Sonuçlar</span> erişime açık</div>
-                                <div class="ticker-item"><span>TETA League</span> Season 4</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="hero-right">
-                        <div class="hero-side-stack">
-                            <div class="side-card">
-                                <h3 class="side-title">Lig Merkezi</h3>
-                                <p class="side-text">
-                                    Tüm temel lig bölümleri tek merkezde toplanır.
-                                    Bu yapı, Pro Clubs lig deneyimini düzenli ve güçlü bir görünümle sunar.
-                                </p>
-                            </div>
-
-                            <div class="side-card">
-                                <h3 class="side-title">Delta Akışı</h3>
-                                <p class="side-text">
-                                    Lig Delta için tablo, sonuçlar, fikstür ve takım bilgileri
-                                    aynı portal içinde düzenli şekilde sunulur.
-                                </p>
-                            </div>
-
-                            <div class="side-card">
-                                <h3 class="side-title">Profesyonel Sunum</h3>
-                                <p class="side-text">
-                                    Bu site sadece bilgi göstermek için değil, ligin kimliğini ve rekabet hissini
-                                    premium bir arayüzle yansıtmak için tasarlandı.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <section class="section">
-        <div class="container">
-            <div class="section-header">
-                <div>
-                    <h2 class="section-title">Lig Sayfaları</h2>
-                    <p class="section-text">
-                        Lig içindeki temel bölümlere buradan hızlıca ulaşabilirsin.
+    <main class="container">
+        
+        <section class="hero">
+            <div class="hero-card fade-in">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        <span class="text-gold">TETA</span><br>
+                        LEAGUE <span class="text-cyan">S4</span>
+                    </h1>
+                    <p class="hero-text">
+                        İstanbul Aydın Üniversitesi Yapay Zeka vizyonuyla geliştirilen, 
+                        Pro Clubs dünyasının en prestijli lig portalına hoş geldiniz. 
+                        Rekabeti ve teknolojiyi burada birleştiriyoruz.
                     </p>
+                    <div class="hero-actions">
+                        <a href="#league" class="btn btn-primary">Lig Tablosu</a>
+                        <a href="#" class="btn" style="color: var(--text-main); border: 1px solid var(--glass-border); margin-left: 10px;">Fikstür</a>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-value">12</span>
+                            <small style="color: var(--text-muted); font-weight: 700;">TAKIM</small>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">S4</span>
+                            <small style="color: var(--text-muted); font-weight: 700;">SEZON</small>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">LIVE</span>
+                            <small style="color: var(--text-muted); font-weight: 700;">DURUM</small>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">PC</span>
+                            <small style="color: var(--text-muted); font-weight: 700;">PRO CLUBS</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-right" style="display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, var(--bg-accent), transparent); border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: grid; place-items: center; font-size: 80px;">
+                        🏆
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="cards">
-                <a href="index.html" class="card">
-                    <div class="card-icon">🏆</div>
-                    <h3 class="card-title">Lig Tablosu</h3>
-                    <p class="card-text">
-                        Takımların sıralamasını, puan durumunu ve genel rekabet yapısını tek bakışta görüntüle.
-                    </p>
-                    <div class="card-link">Tabloya git →</div>
+        <section id="league" class="fade-in" style="animation-delay: 0.2s;">
+            <h2 class="section-title">Lig Merkezi</h2>
+            <div class="grid-cards">
+                <a href="#" class="card">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">Puan Durumu</h3>
+                    <p style="color: var(--text-muted); font-size: 14px;">Delta grubundaki tüm takımların güncel sıralaması ve detaylı istatistikleri.</p>
                 </a>
-
-                <a href="results.html" class="card alt">
-                    <div class="card-icon">📋</div>
-                    <h3 class="card-title">Maç Sonuçları</h3>
-                    <p class="card-text">
-                        Haftalara göre oynanan karşılaşmaları, kazananları ve beraberlikleri düzenli biçimde incele.
-                    </p>
-                    <div class="card-link">Sonuçlara git →</div>
+                <a href="#" class="card">
+                    <span class="card-icon">⚽</span>
+                    <h3 class="card-title">Sonuçlar</h3>
+                    <p style="color: var(--text-muted); font-size: 14px;">Oynanan son maçların skorları, gol krallığı ve asist krallığı listesi.</p>
                 </a>
-
-                <a href="fixture.html" class="card">
-                    <div class="card-icon">🗓️</div>
+                <a href="#" class="card">
+                    <span class="card-icon">📅</span>
                     <h3 class="card-title">Fikstür</h3>
-                    <p class="card-text">
-                        Haftalık eşleşmeleri takip et ve ligin genel akışını önceden gör.
-                    </p>
-                    <div class="card-link">Fikstüre git →</div>
-                </a>
-
-                <a href="teams.html" class="card alt">
-                    <div class="card-icon">🛡️</div>
-                    <h3 class="card-title">Takımlar</h3>
-                    <p class="card-text">
-                        Lig Delta içinde yer alan ekipleri ve kimliklerini tek sayfada keşfet.
-                    </p>
-                    <div class="card-link">Takımlara git →</div>
+                    <p style="color: var(--text-muted); font-size: 14px;">Gelecek haftaların maç takvimi ve önemli derbi tarihleri.</p>
                 </a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="section">
-        <div class="container about-grid">
-            <div class="about-card">
-                <h3 class="about-title gold">TETA League Nedir?</h3>
-                <p class="about-text">
-                    TETA League, Pro Clubs rekabetini daha güçlü, daha düzenli ve daha profesyonel bir lig
-                    yapısına dönüştürmek için hazırlanmış özel bir organizasyon yapısıdır.
-                    Bu merkez, ligin temel bölümlerini tek yerde toplar.
-                </p>
-            </div>
-
-            <div class="about-card">
-                <h3 class="about-title cyan">Bu Merkezde Neler Var?</h3>
-                <ul class="about-list">
-                    <li>Güncel lig tablosu</li>
-                    <li>Hafta bazlı maç sonuçları</li>
-                    <li>Düzenli fikstür görünümü</li>
-                    <li>Takım tanıtım alanları</li>
-                    <li>Haberler ve iletişim sayfaları</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <footer class="footer">
         <div class="container">
-            <div class="footer-card">
-                <div class="footer-text">
-                    TETA League S4 · Pro Clubs League portalı. Lig Delta merkezi, tablo, sonuçlar ve fikstür tek yerde.
-                </div>
-
-                <div class="footer-links">
-                    <a class="footer-link" href="index.html">Lig Tablosu</a>
-                    <a class="footer-link" href="results.html">Sonuçlar</a>
-                    <a class="footer-link" href="fixture.html">Fikstür</a>
-                    <a class="footer-link" href="teams.html">Takımlar</a>
-                </div>
+            <p>© 2026 TETA League | Made by IAU AI Club Developers with ❤️</p>
+            <div style="margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                <a href="#" style="color: var(--gold); text-decoration: none; font-weight: 700;">Instagram</a>
+                <a href="#" style="color: var(--gold); text-decoration: none; font-weight: 700;">Discord</a>
             </div>
         </div>
     </footer>
