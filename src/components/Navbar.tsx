@@ -112,7 +112,7 @@ export default function Navbar() {
           
           {/* PROFİL / AYARLAR DİNAMİK LİNK */}
           <Link 
-            href={user ? "/settings" : "/login"}
+            href={user ? "/profile" : "/login"}
             style={{
               textDecoration: 'none',
               color: user ? '#ffd700' : 'rgba(255,255,255,0.4)',
@@ -126,7 +126,7 @@ export default function Navbar() {
               textShadow: user ? '0 0 10px rgba(255,215,0,0.5)' : 'none'
             }}
           >
-            {user ? 'PROFİL AYARLARI' : '🔒 PROFİL AYARLARI'}
+            {user ? 'OYUNCUM' : '🔒 OYUNCUM'}
           </Link>
         </div>
       </div>

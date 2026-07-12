@@ -49,7 +49,7 @@ const formatCurrency = (val: number) => {
 
 // --- COMPONENTS ---
 const SilhouetteAvatar = () => (
-  <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.8) 100%)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)' }}>
+  <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.8) 100%)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden', flexShrink: 0, boxShadow: 'inset 0 0 15px rgba(255,255,255,0.05)' }}>
     <svg width="40" height="48" viewBox="0 0 24 24" fill="none" stroke="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="rgba(255,255,255,0.2)" />
     </svg>
@@ -89,84 +89,124 @@ export default function TransferCenterPage() {
     <div style={{ paddingBottom: '100px', maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '40px', paddingLeft: '40px', paddingRight: '40px' }}>
       
       {/* HEADER */}
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <div style={{ display: 'inline-block', padding: '6px 12px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold', letterSpacing: '2px', marginBottom: '16px', color: 'var(--brand-main)' }}>
+      <div style={{ textAlign: 'center', marginTop: '40px' }}>
+        <div style={{ display: 'inline-block', padding: '6px 12px', background: 'rgba(64, 224, 208, 0.05)', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold', letterSpacing: '3px', marginBottom: '16px', color: 'var(--brand-main)', border: '1px solid rgba(64, 224, 208, 0.2)' }}>
           SCOUT NETWORK
         </div>
-        <h1 className="font-bold" style={{ fontSize: '3rem', textShadow: '0 4px 10px rgba(0,0,0,0.5)', margin: 0 }}>Transfer Merkezi</h1>
-        <p className="text-muted" style={{ fontSize: '1.1rem', marginTop: '8px' }}>Takımını güçlendirmek için serbest oyuncuları keşfet ve teklif yap.</p>
+        <h1 className="font-bold" style={{ fontSize: '3.5rem', textShadow: '0 4px 15px rgba(0,0,0,0.6)', margin: 0, letterSpacing: '1px' }}>TRANSFER MERKEZİ</h1>
+        <p className="text-muted" style={{ fontSize: '1.2rem', marginTop: '12px' }}>Takımını güçlendirmek için serbest oyuncuları keşfet ve teklif yap.</p>
         
         {MY_USER.is_captain && (
-          <div style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: 'rgba(217, 119, 95, 0.1)', border: '1px solid rgba(217, 119, 95, 0.3)', borderRadius: '8px', color: 'var(--brand-light)', fontWeight: 'bold', fontSize: '0.9rem' }}>
-            👑 KAPTAN YETKİSİ AKTİF (Teklif Gönderebilirsiniz)
+          <div style={{ marginTop: '24px', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: 'rgba(64, 224, 208, 0.1)', border: '1px solid rgba(64, 224, 208, 0.3)', borderRadius: '12px', color: '#fff', fontWeight: 'bold', fontSize: '0.95rem', boxShadow: '0 0 20px rgba(64, 224, 208, 0.2)' }}>
+            👑 KAPTAN YETKİSİ AKTİF <span style={{ opacity: 0.7, fontWeight: 'normal', marginLeft: '4px' }}>(Teklif Gönderebilirsiniz)</span>
           </div>
         )}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '40px', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '60px', alignItems: 'start', marginTop: '40px' }}>
         
-        {/* SOL: FİLTRELEME MOTORU */}
-        <div className="game-panel" style={{ padding: '32px', position: 'sticky', top: '120px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          <h2 className="font-bold" style={{ fontSize: '1.2rem', color: 'var(--brand-light)', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px' }}>
-            Gelişmiş Filtreleme
+        {/* SOL: FİLTRELEME MOTORU (Şeffaf HUD) */}
+        <div style={{ padding: '32px 24px', position: 'sticky', top: '120px', display: 'flex', flexDirection: 'column', gap: '40px', background: 'rgba(0,0,0,0.1)', backdropFilter: 'blur(10px)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.02)' }}>
+          <h2 className="font-bold" style={{ fontSize: '1.2rem', color: '#fff', letterSpacing: '1px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ width: '8px', height: '8px', background: 'var(--brand-main)', borderRadius: '50%', boxShadow: '0 0 10px var(--brand-glow)' }} />
+            GELİŞMİŞ FİLTRE
           </h2>
 
           <div>
-            <label className="text-muted font-bold" style={{ fontSize: '0.8rem', display: 'block', marginBottom: '12px' }}>STATÜ</label>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {(['Tümü', 'Serbest', 'Sözleşmeli'] as const).map(s => (
-                <button key={s} onClick={() => setFilterStatus(s)} className="flat-button" style={{ textAlign: 'left', padding: '10px 16px', background: filterStatus === s ? 'rgba(255,255,255,0.1)' : 'transparent', border: '1px solid', borderColor: filterStatus === s ? 'var(--brand-main)' : 'rgba(255,255,255,0.05)' }}>
-                  {s}
-                </button>
-              ))}
+            <label className="text-muted font-bold" style={{ fontSize: '0.8rem', display: 'block', marginBottom: '16px', letterSpacing: '1px' }}>STATÜ</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {(['Tümü', 'Serbest', 'Sözleşmeli'] as const).map(s => {
+                const isActive = filterStatus === s
+                return (
+                  <button 
+                    key={s} 
+                    onClick={() => setFilterStatus(s)} 
+                    style={{ 
+                      textAlign: 'left', 
+                      padding: '12px 16px', 
+                      background: isActive ? 'rgba(64, 224, 208, 0.1)' : 'transparent', 
+                      border: '1px solid', 
+                      borderColor: isActive ? 'var(--brand-main)' : 'rgba(255,255,255,0.05)',
+                      color: isActive ? '#fff' : 'var(--text-muted)',
+                      borderRadius: '8px',
+                      fontWeight: isActive ? 'bold' : 'normal',
+                      boxShadow: isActive ? 'inset 0 0 15px rgba(64, 224, 208, 0.2), 0 0 10px rgba(64, 224, 208, 0.2)' : 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s'
+                    }}
+                  >
+                    {s}
+                  </button>
+                )
+              })}
             </div>
           </div>
 
           <div>
-            <label className="text-muted font-bold" style={{ fontSize: '0.8rem', display: 'block', marginBottom: '12px' }}>MEVKİ</label>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-              {(['Tümü', 'GK', 'DEF', 'MID', 'ATT'] as const).map(p => (
-                <button key={p} onClick={() => setFilterPosition(p)} className="flat-button" style={{ gridColumn: p === 'Tümü' ? '1 / -1' : 'auto', textAlign: 'center', padding: '10px', background: filterPosition === p ? 'rgba(255,255,255,0.1)' : 'transparent', border: '1px solid', borderColor: filterPosition === p ? 'var(--brand-main)' : 'rgba(255,255,255,0.05)' }}>
-                  {p}
-                </button>
-              ))}
+            <label className="text-muted font-bold" style={{ fontSize: '0.8rem', display: 'block', marginBottom: '16px', letterSpacing: '1px' }}>MEVKİ</label>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              {(['Tümü', 'GK', 'DEF', 'MID', 'ATT'] as const).map(p => {
+                const isActive = filterPosition === p
+                return (
+                  <button 
+                    key={p} 
+                    onClick={() => setFilterPosition(p)} 
+                    style={{ 
+                      gridColumn: p === 'Tümü' ? '1 / -1' : 'auto', 
+                      textAlign: 'center', 
+                      padding: '12px', 
+                      background: isActive ? 'rgba(64, 224, 208, 0.1)' : 'transparent', 
+                      border: '1px solid', 
+                      borderColor: isActive ? 'var(--brand-main)' : 'rgba(255,255,255,0.05)',
+                      color: isActive ? '#fff' : 'var(--text-muted)',
+                      borderRadius: '8px',
+                      fontWeight: isActive ? 'bold' : 'normal',
+                      boxShadow: isActive ? 'inset 0 0 15px rgba(64, 224, 208, 0.2), 0 0 10px rgba(64, 224, 208, 0.2)' : 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s'
+                    }}
+                  >
+                    {p}
+                  </button>
+                )
+              })}
             </div>
           </div>
 
           <div>
-            <label className="text-muted font-bold" style={{ fontSize: '0.8rem', display: 'block', marginBottom: '12px' }}>MAKSİMUM BÜTÇE (Değer)</label>
+            <label className="text-muted font-bold" style={{ fontSize: '0.8rem', display: 'block', marginBottom: '16px', letterSpacing: '1px' }}>MAKSİMUM BÜTÇE (Değer)</label>
             <input 
               type="range" min="100000" max="10000000" step="100000" 
               value={filterMaxVal} onChange={(e) => setFilterMaxVal(Number(e.target.value))}
-              style={{ width: '100%', accentColor: 'var(--brand-main)' }} 
+              style={{ width: '100%', accentColor: 'var(--brand-main)', cursor: 'pointer' }} 
             />
-            <div className="font-bold" style={{ textAlign: 'right', marginTop: '8px', color: '#fff' }}>{formatCurrency(filterMaxVal)}</div>
+            <div className="font-bold" style={{ textAlign: 'right', marginTop: '12px', color: '#fff', fontSize: '1.1rem' }}>{formatCurrency(filterMaxVal)}</div>
           </div>
 
           <div>
-            <label className="text-muted font-bold" style={{ fontSize: '0.8rem', display: 'block', marginBottom: '12px' }}>MİNİMUM REYTİNG</label>
+            <label className="text-muted font-bold" style={{ fontSize: '0.8rem', display: 'block', marginBottom: '16px', letterSpacing: '1px' }}>MİNİMUM REYTİNG</label>
             <input 
               type="range" min="6.0" max="9.5" step="0.1" 
               value={filterMinRating} onChange={(e) => setFilterMinRating(Number(e.target.value))}
-              style={{ width: '100%', accentColor: 'var(--brand-main)' }} 
+              style={{ width: '100%', accentColor: 'var(--brand-main)', cursor: 'pointer' }} 
             />
-            <div className="font-bold" style={{ textAlign: 'right', marginTop: '8px', color: 'var(--brand-light)' }}>{filterMinRating.toFixed(1)}</div>
+            <div className="font-bold" style={{ textAlign: 'right', marginTop: '12px', color: 'var(--brand-main)', fontSize: '1.2rem', textShadow: '0 0 10px rgba(64, 224, 208, 0.4)' }}>{filterMinRating.toFixed(1)}</div>
           </div>
 
         </div>
 
-        {/* SAĞ: OYUNCU LİSTESİ (SCOUT NETWORK) */}
+        {/* SAĞ: OYUNCU LİSTESİ (Süzülen Satırlar) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <div className="text-muted font-bold" style={{ fontSize: '0.9rem' }}>BULUNAN OYUNCULAR ({filteredPlayers.length})</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+            <div className="font-bold" style={{ fontSize: '1.1rem', color: '#fff' }}>BULUNAN OYUNCULAR <span className="text-muted" style={{ fontWeight: 'normal' }}>({filteredPlayers.length})</span></div>
           </div>
 
           <AnimatePresence>
             {filteredPlayers.length === 0 ? (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="game-panel" style={{ padding: '60px', textAlign: 'center', color: 'var(--text-muted)' }}>
-                <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🔍</div>
-                Bu filtrelere uygun oyuncu bulunamadı.
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ padding: '80px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                <div style={{ fontSize: '4rem', marginBottom: '24px', opacity: 0.2 }}>🔍</div>
+                <div style={{ fontSize: '1.2rem', fontWeight: 'bold', letterSpacing: '1px' }}>Bu filtrelere uygun oyuncu bulunamadı.</div>
               </motion.div>
             ) : (
               filteredPlayers.map((player) => (
@@ -174,56 +214,69 @@ export default function TransferCenterPage() {
                   key={player.id} 
                   layout
                   initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.2 }}
-                  className="game-panel interactive" 
-                  style={{ padding: '24px 32px', display: 'flex', alignItems: 'center', gap: '32px', flexWrap: 'wrap' }}
+                  className="interactive" 
+                  style={{ 
+                    padding: '24px 32px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '32px', 
+                    flexWrap: 'wrap',
+                    background: 'transparent',
+                    borderBottom: '1px solid rgba(255,255,255,0.02)',
+                    borderRadius: '16px',
+                    transition: 'all 0.3s'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(64, 224, 208, 0.05)'; e.currentTarget.style.boxShadow = 'inset 0 0 20px rgba(64, 224, 208, 0.1)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.boxShadow = 'none'; }}
                 >
                   
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '20px', width: '250px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '24px', width: '280px' }}>
                     <SilhouetteAvatar />
                     <div>
                       <Link href={`/profile/${player.name.toLowerCase()}`} style={{ color: '#fff', textDecoration: 'none' }}>
-                        <h3 className="font-bold" style={{ fontSize: '1.3rem', margin: '0 0 4px 0' }}>{player.name}</h3>
+                        <h3 className="font-bold" style={{ fontSize: '1.4rem', margin: '0 0 6px 0', textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>{player.name}</h3>
                       </Link>
-                      <div className="font-bold" style={{ fontSize: '1.1rem', color: 'var(--brand-light)' }}>{player.rating.toFixed(1)} <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>ORT</span></div>
+                      <div className="font-bold" style={{ fontSize: '1.1rem', color: 'var(--brand-main)', textShadow: '0 0 10px rgba(64, 224, 208, 0.3)' }}>{player.rating.toFixed(1)} <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>ORT</span></div>
                     </div>
                   </div>
 
-                  <div style={{ flex: 1, display: 'flex', gap: '32px', alignItems: 'center' }}>
+                  <div style={{ flex: 1, display: 'flex', gap: '40px', alignItems: 'center' }}>
                     <div>
-                      <div className="text-muted font-bold" style={{ fontSize: '0.7rem', letterSpacing: '1px', marginBottom: '4px' }}>MEVKİ</div>
-                      <div className="font-bold" style={{ fontSize: '1.1rem', color: '#fff', background: 'rgba(255,255,255,0.1)', padding: '4px 12px', borderRadius: '4px' }}>{player.position}</div>
+                      <div className="text-muted font-bold" style={{ fontSize: '0.7rem', letterSpacing: '2px', marginBottom: '8px' }}>MEVKİ</div>
+                      {/* Teknolojik Rozet */}
+                      <div className="font-bold" style={{ fontSize: '1rem', color: 'var(--brand-main)', background: 'rgba(64, 224, 208, 0.1)', border: '1px solid rgba(64, 224, 208, 0.3)', padding: '6px 16px', borderRadius: '8px', boxShadow: '0 0 10px rgba(64, 224, 208, 0.1)', display: 'inline-block' }}>{player.position}</div>
                     </div>
                     
                     <div>
-                      <div className="text-muted font-bold" style={{ fontSize: '0.7rem', letterSpacing: '1px', marginBottom: '4px' }}>STATÜ</div>
+                      <div className="text-muted font-bold" style={{ fontSize: '0.7rem', letterSpacing: '2px', marginBottom: '8px' }}>STATÜ</div>
                       <div className="font-bold" style={{ fontSize: '1.1rem', color: player.status === 'Serbest' ? '#5de0a0' : 'var(--accent-danger)', textShadow: player.status === 'Serbest' ? '0 0 10px rgba(93, 224, 160, 0.4)' : 'none' }}>
                         {player.status.toUpperCase()}
                       </div>
-                      {player.status === 'Sözleşmeli' && <div className="text-muted" style={{ fontSize: '0.75rem', marginTop: '4px' }}>{player.team}</div>}
+                      {player.status === 'Sözleşmeli' && <div className="text-muted" style={{ fontSize: '0.8rem', marginTop: '4px' }}>{player.team}</div>}
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '48px' }}>
                     <div style={{ textAlign: 'right' }}>
-                      <div className="text-muted font-bold" style={{ fontSize: '0.7rem', letterSpacing: '1px', marginBottom: '4px' }}>PİYASA DEĞERİ</div>
-                      <div className="font-bold" style={{ fontSize: '1.6rem', color: '#ffd700', textShadow: '0 0 15px rgba(255,215,0,0.3)' }}>{formatCurrency(player.value)}</div>
+                      <div className="text-muted font-bold" style={{ fontSize: '0.7rem', letterSpacing: '2px', marginBottom: '8px' }}>PİYASA DEĞERİ</div>
+                      <div className="font-bold" style={{ fontSize: '1.8rem', color: '#ffd700', textShadow: '0 0 15px rgba(255,215,0,0.4)', letterSpacing: '1px' }}>{formatCurrency(player.value)}</div>
                     </div>
                     
-                    {/* KAPTAN YETKİSİ: Teklif Butonu */}
+                    {/* KAPTAN YETKİSİ: Teklif Butonu (Oyun İçi HUD) */}
                     {MY_USER.is_captain && player.status === 'Serbest' && (
                       <motion.button 
+                        whileHover={{ scale: 1.05, boxShadow: '0 0 25px rgba(64, 224, 208, 0.8)' }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setSelectedPlayer(player)}
-                        className="flat-button shimmer-effect"
-                        style={{ padding: '16px 24px', background: 'linear-gradient(135deg, var(--brand-main), var(--brand-dark))', border: '1px solid var(--brand-glow)', color: '#fff', borderRadius: '8px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 0 20px rgba(217, 119, 95, 0.4)' }}
+                        style={{ padding: '16px 24px', background: 'rgba(64, 224, 208, 0.1)', border: '1px solid var(--brand-main)', color: '#fff', borderRadius: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 0 15px rgba(64, 224, 208, 0.4)', cursor: 'pointer', transition: 'all 0.3s' }}
                       >
-                        <span>🤝</span> TEKLİF YAP
+                        <span style={{ fontSize: '1.2rem', textShadow: '0 0 10px rgba(255,255,255,0.8)' }}>🤝</span> TEKLİF YAP
                       </motion.button>
                     )}
 
-                    {/* Kaptan değil veya Sözleşmeli ise Placeholder Box */}
+                    {/* Kaptan değil veya Sözleşmeli ise Saydam Placeholder */}
                     {(!MY_USER.is_captain || player.status !== 'Serbest') && (
-                      <div style={{ width: '170px', padding: '16px', textAlign: 'center', background: 'rgba(0,0,0,0.3)', border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '8px', color: 'rgba(255,255,255,0.3)', fontSize: '0.85rem' }}>
+                      <div style={{ width: '180px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem', opacity: 0.5, fontStyle: 'italic' }}>
                         Teklife Kapalı
                       </div>
                     )}
@@ -237,7 +290,7 @@ export default function TransferCenterPage() {
 
       </div>
 
-      {/* TRANSFER TEKLİFİ MODALI */}
+      {/* TRANSFER TEKLİFİ MODALI (GLASSMORPHISM) */}
       <AnimatePresence>
         {selectedPlayer && (
           <motion.div 
@@ -246,33 +299,33 @@ export default function TransferCenterPage() {
           >
             <motion.div 
               initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
-              className="game-panel interactive"
-              style={{ width: '90%', maxWidth: '450px', background: 'linear-gradient(180deg, #181512 0%, #0c0a09 100%)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '24px', padding: '40px', position: 'relative', boxShadow: '0 30px 60px rgba(0,0,0,0.9)', textAlign: 'center' }}
+              className="client-glass interactive"
+              style={{ width: '90%', maxWidth: '450px', background: 'rgba(10,15,20,0.6)', border: '1px solid rgba(64,224,208,0.2)', borderRadius: '24px', padding: '40px', position: 'relative', boxShadow: '0 30px 60px rgba(0,0,0,0.9), inset 0 0 50px rgba(64,224,208,0.05)', textAlign: 'center' }}
             >
-              <button onClick={() => setSelectedPlayer(null)} style={{ position: 'absolute', top: '24px', right: '24px', background: 'transparent', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer' }}>×</button>
+              <button onClick={() => setSelectedPlayer(null)} style={{ position: 'absolute', top: '24px', right: '24px', background: 'transparent', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = 'var(--brand-main)'} onMouseOut={e => e.currentTarget.style.color = '#fff'}>×</button>
 
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px', transform: 'scale(1.5)' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px', transform: 'scale(1.5)' }}>
                 <SilhouetteAvatar />
               </div>
 
-              <h3 className="font-bold" style={{ fontSize: '2rem', margin: 0 }}>{selectedPlayer.name}</h3>
-              <div className="text-muted" style={{ marginTop: '8px', marginBottom: '32px' }}>{selectedPlayer.position} • {selectedPlayer.rating.toFixed(1)} ORT</div>
+              <h3 className="font-bold" style={{ fontSize: '2.2rem', margin: 0, textShadow: '0 0 15px rgba(255,255,255,0.2)' }}>{selectedPlayer.name}</h3>
+              <div className="text-muted" style={{ marginTop: '8px', marginBottom: '32px', fontSize: '1.1rem' }}>{selectedPlayer.position} • <span style={{ color: 'var(--brand-main)' }}>{selectedPlayer.rating.toFixed(1)} ORT</span></div>
 
-              <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', padding: '24px', marginBottom: '32px', border: '1px solid rgba(255,215,0,0.2)' }}>
-                <div className="text-muted font-bold" style={{ fontSize: '0.8rem', letterSpacing: '1px', marginBottom: '8px' }}>TEKLİF EDİLECEK BEDEL</div>
-                <div className="font-bold" style={{ fontSize: '2.5rem', color: '#ffd700', textShadow: '0 0 15px rgba(255,215,0,0.3)' }}>
+              <div style={{ background: 'rgba(255,215,0,0.05)', borderRadius: '16px', padding: '24px', marginBottom: '32px', border: '1px solid rgba(255,215,0,0.2)', boxShadow: 'inset 0 0 20px rgba(255,215,0,0.05)' }}>
+                <div className="text-muted font-bold" style={{ fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '8px' }}>TEKLİF EDİLECEK BEDEL</div>
+                <div className="font-bold" style={{ fontSize: '2.5rem', color: '#ffd700', textShadow: '0 0 20px rgba(255,215,0,0.4)' }}>
                   {formatCurrency(selectedPlayer.value)}
                 </div>
-                <div className="text-muted" style={{ fontSize: '0.85rem', marginTop: '12px' }}>
+                <div className="text-muted" style={{ fontSize: '0.85rem', marginTop: '16px' }}>
                   Kulüp bütçenizden ({MY_USER.team}) bu tutar eksilecektir.
                 </div>
               </div>
 
               <motion.button 
+                whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(64,224,208,0.6)' }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleOffer}
-                className="flat-button shimmer-effect"
-                style={{ width: '100%', padding: '16px', fontSize: '1.2rem', background: 'var(--brand-main)', color: '#fff', border: 'none', borderRadius: '12px', fontWeight: 'bold' }}
+                style={{ width: '100%', padding: '16px', fontSize: '1.2rem', background: 'rgba(64, 224, 208, 0.15)', border: '1px solid var(--brand-main)', color: '#fff', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 0 20px rgba(64, 224, 208, 0.3)', transition: 'all 0.3s' }}
               >
                 TEKLİFİ GÖNDER
               </motion.button>
@@ -284,7 +337,7 @@ export default function TransferCenterPage() {
       {/* TOAST BİLDİRİMİ */}
       <AnimatePresence>
         {toast && (
-          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }} style={{ position: 'fixed', bottom: '40px', right: '40px', background: 'rgba(93, 224, 160, 0.95)', padding: '16px 24px', color: '#111', borderRadius: '8px', zIndex: 1000, boxShadow: '0 10px 30px rgba(0,0,0,0.5)', fontWeight: 'bold', border: '1px solid #5de0a0' }}>
+          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }} style={{ position: 'fixed', bottom: '40px', right: '40px', background: 'rgba(93, 224, 160, 0.1)', backdropFilter: 'blur(10px)', padding: '16px 24px', color: '#5de0a0', borderRadius: '12px', zIndex: 1000, boxShadow: '0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(93, 224, 160, 0.2)', fontWeight: 'bold', border: '1px solid rgba(93, 224, 160, 0.5)' }}>
             {toast}
           </motion.div>
         )}

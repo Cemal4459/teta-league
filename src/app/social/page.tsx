@@ -98,7 +98,7 @@ export default function SocialPage() {
     setIsBuildPost(false)
   }
 
-  // Regex Mention Parser
+  // Regex Mention Parser with Neon Glow
   const renderTextWithMentions = (text: string) => {
     const mentionRegex = /(@\w+)/g
     const parts = text.split(mentionRegex)
@@ -107,7 +107,7 @@ export default function SocialPage() {
       if (part.match(mentionRegex)) {
         const username = part.substring(1) // remove '@'
         return (
-          <Link key={index} href={`/profile/${username}`} style={{ color: 'var(--brand-light)', fontWeight: 'bold', textDecoration: 'none' }}>
+          <Link key={index} href={`/profile/${username}`} style={{ color: 'var(--brand-main)', fontWeight: 'bold', textDecoration: 'none', textShadow: '0 0 10px rgba(64, 224, 208, 0.5)' }}>
             {part}
           </Link>
         )
@@ -117,18 +117,42 @@ export default function SocialPage() {
   }
 
   return (
-    <div style={{ paddingBottom: '80px', maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+    <div style={{ paddingBottom: '100px', maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '40px', paddingLeft: '40px', paddingRight: '40px' }}>
       
+      {/* HUD & GLOW CSS */}
+      <style>{`
+        .hud-action-btn {
+          background: transparent;
+          border: none;
+          color: var(--text-muted);
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          font-size: 0.95rem;
+          font-weight: 500;
+          padding: 8px 16px;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+        }
+        .hud-action-btn:hover {
+          color: var(--brand-main);
+          background: rgba(64, 224, 208, 0.1);
+          box-shadow: inset 0 0 15px rgba(64, 224, 208, 0.2);
+          text-shadow: 0 0 10px rgba(64, 224, 208, 0.5);
+        }
+      `}</style>
+
       {/* HEADER */}
-      <div style={{ textAlign: 'center' }}>
-        <h1 className="font-bold" style={{ fontSize: '2.5rem', textShadow: '0 4px 10px rgba(0,0,0,0.5)', margin: 0 }}>Teta Network</h1>
-        <p className="text-muted" style={{ fontSize: '1.1rem', marginTop: '8px' }}>Ligin nabzı burada atıyor. Dedikodular, transferler ve taktikler.</p>
+      <div style={{ textAlign: 'center', marginTop: '40px' }}>
+        <h1 className="font-bold" style={{ fontSize: '3.5rem', textShadow: '0 4px 20px rgba(0,0,0,0.8)', margin: 0, letterSpacing: '2px' }}>TETA NETWORK</h1>
+        <p className="text-muted" style={{ fontSize: '1.2rem', marginTop: '12px' }}>Ligin nabzı burada atıyor. Dedikodular, transferler ve taktikler.</p>
       </div>
 
-      {/* CREATE POST PANEL */}
-      <div className="game-panel interactive" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <div style={{ display: 'flex', gap: '16px' }}>
-          <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--brand-main), var(--brand-dark))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 'bold', fontSize: '1.2rem', flexShrink: 0, boxShadow: '0 0 10px var(--brand-glow)' }}>
+      {/* CREATE POST PANEL (GLASSMORPHISM) */}
+      <div className="client-glass interactive" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px', borderRadius: '24px', background: 'rgba(10,15,20,0.4)', border: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ display: 'flex', gap: '20px' }}>
+          <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(135deg, rgba(64,224,208,0.2), transparent)', border: '1px solid rgba(64,224,208,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 'bold', fontSize: '1.5rem', flexShrink: 0, boxShadow: '0 0 20px rgba(64, 224, 208, 0.3)' }}>
             B
           </div>
           <textarea 
@@ -136,32 +160,44 @@ export default function SocialPage() {
             placeholder="Lige dair son havadisler neler? Veya bir @oyuncu etiketle..."
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
-            style={{ minHeight: '100px', resize: 'vertical', background: 'rgba(0,0,0,0.4)' }}
+            style={{ minHeight: '120px', resize: 'vertical', background: 'transparent', border: 'none', fontSize: '1.1rem', color: '#fff', outline: 'none', padding: '16px' }}
           />
         </div>
         
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '64px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <button className="flat-button" style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '76px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+            <button className="flat-button" style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}>
               <span style={{ fontSize: '1.2rem' }}>📷</span> Görsel (Mock)
             </button>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 'bold', color: isBuildPost ? 'var(--brand-light)' : 'var(--text-muted)' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem', fontWeight: 'bold', color: isBuildPost ? 'var(--brand-main)' : 'var(--text-muted)', transition: 'all 0.3s', textShadow: isBuildPost ? '0 0 10px rgba(64, 224, 208, 0.5)' : 'none' }}>
               <input 
                 type="checkbox" 
                 checked={isBuildPost} 
                 onChange={(e) => setIsBuildPost(e.target.checked)}
-                style={{ width: '18px', height: '18px', accentColor: 'var(--brand-main)' }}
+                style={{ width: '20px', height: '20px', accentColor: 'var(--brand-main)', cursor: 'pointer' }}
               />
               ⚔️ Build Paylaş
             </label>
           </div>
           
           <motion.button 
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, boxShadow: '0 0 25px rgba(64,224,208,0.8)' }}
             whileTap={{ scale: 0.95 }}
             onClick={handlePostSubmit}
-            className="flat-button primary" 
-            style={{ padding: '10px 32px', fontSize: '0.9rem', opacity: postContent.trim() ? 1 : 0.5, cursor: postContent.trim() ? 'pointer' : 'not-allowed' }}
+            style={{ 
+              padding: '12px 32px', 
+              fontSize: '1rem', 
+              fontWeight: 'bold',
+              letterSpacing: '1px',
+              opacity: postContent.trim() ? 1 : 0.5, 
+              cursor: postContent.trim() ? 'pointer' : 'not-allowed',
+              background: 'rgba(64, 224, 208, 0.1)',
+              border: '1px solid var(--brand-main)',
+              color: '#fff',
+              borderRadius: '8px',
+              boxShadow: '0 0 15px rgba(64, 224, 208, 0.4)',
+              transition: 'all 0.3s'
+            }}
             disabled={!postContent.trim()}
           >
             AĞA GÖNDER
@@ -169,19 +205,20 @@ export default function SocialPage() {
         </div>
       </div>
 
-      {/* FEED (AKIŞ) */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {/* FEED (AKIŞ) - SÜZÜLEN BLOKLAR */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
         <AnimatePresence>
           {posts.map((post) => (
             <motion.div 
               key={post.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="game-panel interactive" 
-              style={{ padding: '24px', display: 'flex', gap: '16px' }}
+              style={{ padding: '32px 16px', display: 'flex', gap: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)', transition: 'background 0.3s' }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.02)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
             >
               {/* Avatar */}
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: post.isVerifiedJournalist ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.5)', border: post.isVerifiedJournalist ? '2px solid var(--brand-light)' : '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 'bold', fontSize: '1.2rem', flexShrink: 0 }}>
+              <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: post.isVerifiedJournalist ? 'rgba(255,255,255,0.05)' : 'transparent', border: post.isVerifiedJournalist ? '2px solid #1d9bf0' : '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 'bold', fontSize: '1.5rem', flexShrink: 0, boxShadow: post.isVerifiedJournalist ? '0 0 15px rgba(29, 155, 240, 0.4)' : 'none' }}>
                 {post.avatarLetter}
               </div>
 
@@ -190,51 +227,52 @@ export default function SocialPage() {
                 
                 {/* Author Info */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                  <Link href={`/profile/${post.username}`} style={{ color: '#fff', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                  <Link href={`/profile/${post.username}`} style={{ color: '#fff', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.2rem', textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>
                     {post.author}
                   </Link>
                   {post.isVerifiedJournalist && (
-                    <span title="Doğrulanmış Teta Habercisi" style={{ color: '#1d9bf0', fontSize: '1.1rem', background: '#fff', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      ✓
+                    <span title="Doğrulanmış Teta Habercisi" style={{ color: '#1d9bf0', fontSize: '1.1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', filter: 'drop-shadow(0 0 5px rgba(29,155,240,0.5))' }}>
+                      ☑️
                     </span>
                   )}
-                  <span className="text-subtle" style={{ fontSize: '0.85rem', marginLeft: 'auto' }}>{post.timestamp}</span>
+                  <span className="text-subtle" style={{ fontSize: '0.9rem', marginLeft: 'auto' }}>{post.timestamp}</span>
                 </div>
 
                 {/* Text Content */}
-                <p style={{ fontSize: '1.05rem', lineHeight: 1.6, marginBottom: post.isBuildShare ? '16px' : '0' }}>
+                <p style={{ fontSize: '1.15rem', lineHeight: 1.6, marginBottom: post.isBuildShare ? '20px' : '0', color: 'rgba(255,255,255,0.9)' }}>
                   {renderTextWithMentions(post.content)}
                 </p>
 
-                {/* Build Share Card */}
+                {/* Build Share Module (Technological Badge) */}
                 {post.isBuildShare && (
                   <Link href={`/profile/${post.username}?tab=builds`} style={{ textDecoration: 'none' }}>
                     <motion.div 
-                      whileHover={{ scale: 1.01 }}
-                      style={{ background: 'rgba(217, 119, 95, 0.05)', border: '1px solid rgba(217, 119, 95, 0.2)', borderRadius: '12px', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer' }}
+                      whileHover={{ scale: 1.01, boxShadow: '0 0 25px rgba(64, 224, 208, 0.2)' }}
+                      className="interactive"
+                      style={{ background: 'rgba(64, 224, 208, 0.05)', border: '1px solid rgba(64, 224, 208, 0.3)', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '20px', cursor: 'pointer', boxShadow: '0 0 15px rgba(64, 224, 208, 0.1)', backdropFilter: 'blur(5px)' }}
                     >
-                      <div style={{ width: '40px', height: '40px', background: 'var(--brand-main)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', boxShadow: '0 0 15px var(--brand-glow)' }}>
+                      <div style={{ width: '48px', height: '48px', background: 'rgba(64,224,208,0.1)', border: '1px solid var(--brand-main)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', boxShadow: 'inset 0 0 15px rgba(64,224,208,0.3)' }}>
                         ⚙️
                       </div>
                       <div style={{ flex: 1 }}>
-                        <div className="font-bold" style={{ color: 'var(--brand-light)', fontSize: '0.95rem' }}>{post.buildTitle}</div>
-                        <div className="text-muted" style={{ fontSize: '0.75rem' }}>Oyuncunun özel taktiksel dizilimini incelemek için tıkla.</div>
+                        <div className="font-bold" style={{ color: 'var(--brand-main)', fontSize: '1.05rem', textShadow: '0 0 10px rgba(64,224,208,0.3)' }}>{post.buildTitle}</div>
+                        <div className="text-muted" style={{ fontSize: '0.85rem', marginTop: '4px' }}>Oyuncunun özel taktiksel dizilimini incelemek için tıkla.</div>
                       </div>
-                      <div className="text-muted" style={{ fontSize: '1.2rem' }}>&rarr;</div>
+                      <div style={{ fontSize: '1.5rem', color: 'var(--brand-main)' }}>&rarr;</div>
                     </motion.div>
                   </Link>
                 )}
 
-                {/* Interaction Footer */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginTop: '20px' }}>
-                  <button style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '0.9rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = 'var(--brand-main)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-                    ❤️ {post.likes}
+                {/* Interaction Footer (HUD Elements) */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '24px' }}>
+                  <button className="hud-action-btn">
+                    <span>❤️</span> {post.likes}
                   </button>
-                  <button style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '0.9rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-                    💬 Yanıtla
+                  <button className="hud-action-btn">
+                    <span>💬</span> Yanıtla
                   </button>
-                  <button style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '0.9rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-                    🔁 Yeniden Paylaş
+                  <button className="hud-action-btn">
+                    <span>🔁</span> Yeniden Paylaş
                   </button>
                 </div>
 
