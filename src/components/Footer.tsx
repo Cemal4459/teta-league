@@ -6,7 +6,7 @@ import Logo from '@/components/Logo'
 
 const SOCIAL_LINKS = [
   { name: 'Discord', url: '#', icon: '🎮', label: 'Katıl ve takımını bul' },
-  { name: 'Kick', url: '#', icon: '🟢', label: 'Canlı maç yayınları' },
+  { name: 'Kick', url: 'https://kick.com/tetaleague', icon: '🟢', label: 'Canlı maç yayınları', isExternal: true },
   { name: 'X / Instagram', url: '#', icon: '📱', label: 'Sosyal ağlar' }
 ]
 
@@ -52,9 +52,9 @@ export default function Footer() {
             <h4 className="font-bold" style={{ color: 'var(--brand-main)', fontSize: '1.1rem', letterSpacing: '1px', marginBottom: '24px', textShadow: '0 0 10px rgba(64, 224, 208, 0.3)' }}>TOPLULUK</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {SOCIAL_LINKS.map(link => (
-                <Link key={link.name} href={link.url} style={{ textDecoration: 'none' }}>
+                <a key={link.name} href={link.url} target={link.isExternal ? "_blank" : "_self"} rel={link.isExternal ? "noopener noreferrer" : ""} style={{ textDecoration: 'none' }}>
                   <motion.div 
-                    whileHover={{ x: 10, backgroundColor: 'rgba(255,255,255,0.05)' }}
+                    whileHover={{ x: 10, backgroundColor: 'rgba(255,255,255,0.05)', boxShadow: link.isExternal ? '0 0 15px rgba(64, 224, 208, 0.2)' : 'none' }}
                     style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '8px 12px', borderRadius: '8px', transition: 'all 0.3s' }}
                   >
                     <span style={{ fontSize: '1.5rem', filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.2))' }}>{link.icon}</span>
@@ -63,7 +63,7 @@ export default function Footer() {
                       <div className="text-muted" style={{ fontSize: '0.75rem' }}>{link.label}</div>
                     </div>
                   </motion.div>
-                </Link>
+                </a>
               ))}
             </div>
           </div>

@@ -149,9 +149,9 @@ export default function HomePage() {
             <p className="text-muted" style={{ fontSize: '1.1rem', marginBottom: '24px', textShadow: '0 5px 15px rgba(0,0,0,0.8)' }}>
               Sezon 5 açılış derbisi başladı. Şimdi canlı yayında Teta TV üzerinden maçı izleyin.
             </p>
-            <button className="flat-button interactive" style={{ background: 'rgba(5,10,15,0.6)', backdropFilter: 'blur(10px)', border: '1px solid rgba(64,224,208,0.3)', padding: '12px 24px', fontSize: '1rem', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
+            <a href="https://kick.com/tetaleague" target="_blank" rel="noopener noreferrer" className="flat-button interactive" style={{ background: 'rgba(5,10,15,0.6)', backdropFilter: 'blur(10px)', border: '1px solid rgba(64,224,208,0.3)', padding: '12px 24px', fontSize: '1rem', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', gap: '12px', textDecoration: 'none', color: '#fff', boxShadow: '0 0 15px rgba(64, 224, 208, 0)' }} onMouseEnter={e => e.currentTarget.style.boxShadow = '0 0 20px rgba(64, 224, 208, 0.4)'} onMouseLeave={e => e.currentTarget.style.boxShadow = '0 0 15px rgba(64, 224, 208, 0)'}>
               <span style={{ color: 'var(--brand-main)' }}>▶</span> İZLEMEYE BAŞLA
-            </button>
+            </a>
           </div>
         </div>
 
