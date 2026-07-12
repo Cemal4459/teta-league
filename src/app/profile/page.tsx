@@ -3,12 +3,16 @@
 import { useEffect, useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
+import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const POSITIONS = ['GK', 'CB', 'RB', 'LB', 'CDM', 'CM', 'CAM', 'RM', 'LM', 'RW', 'LW', 'ST', 'CF']
 const PLATFORMS = ['PS5', 'Xbox', 'PC']
 
 interface Profile {
   username: string
+  ea_id: string
+  avatar_url: string
   jersey_number: number | null
   platform: string
   main_position: string
@@ -20,11 +24,12 @@ export default function ProfilePage() {
   const supabase = createClient()
   const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<Profile>({
-    username: '', jersey_number: null, platform: 'PS5',
+    username: '', ea_id: '', avatar_url: '', jersey_number: null, platform: 'PS5',
     main_position: 'CAM', playable_positions: [], bio: '',
   })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [toast, setToast] = useState<{ message: string; error: boolean } | null>(null)
   const [isLocked, setIsLocked] = useState(true)
 
@@ -38,6 +43,8 @@ export default function ProfilePage() {
     if (data) {
       setProfile({
         username: data.username ?? '',
+        ea_id: data.ea_id ?? '',
+        avatar_url: data.avatar_url ?? '',
         jersey_number: data.jersey_number ?? null,
         platform: data.platform ?? 'PS5',
         main_position: data.main_position ?? 'CAM',
@@ -80,6 +87,33 @@ export default function ProfilePage() {
     }))
   }
 
+  const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setUploading(true)
+      if (!event.target.files || event.target.files.length === 0) {
+        throw new Error('Yüklemek için bir görsel seçmelisiniz.')
+      }
+      if (!user) throw new Error('Oturum bulunamadı.')
+
+      const file = event.target.files[0]
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${user.id}-${Math.random()}.${fileExt}`
+      const filePath = `${fileName}`
+
+      const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
+      if (uploadError) throw uploadError
+
+      const { data } = supabase.storage.from('avatars').getPublicUrl(filePath)
+      
+      setProfile(prev => ({ ...prev, avatar_url: data.publicUrl }))
+      showToast('Profil resmi başarıyla yüklendi! Kaydetmeyi unutmayın.')
+    } catch (error: any) {
+      showToast(error.message || 'Resim yüklenirken bir hata oluştu.', true)
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!user) return
@@ -94,146 +128,184 @@ export default function ProfilePage() {
     else { showToast('Profil başarıyla güncellendi!') }
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+  }
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { ease: 'easeOut', duration: 0.5 } }
+  }
+
   return (
     <>
-      <div className="pid-layout">
+      <motion.div 
+        className="bento-container"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* SOL: VIP PLAYER ID CARD */}
-        <aside className="pid-card" aria-label="Oyuncu Kimlik Kartı">
-          <div className="pid-glow pid-glow--top" aria-hidden="true"></div>
-          <div className="pid-glow pid-glow--bottom" aria-hidden="true"></div>
-          <span className="pid-corner pid-corner--tl" aria-hidden="true"></span>
-          <span className="pid-corner pid-corner--tr" aria-hidden="true"></span>
-          <span className="pid-corner pid-corner--bl" aria-hidden="true"></span>
-          <span className="pid-corner pid-corner--br" aria-hidden="true"></span>
-          <div className="pid-header-strip">
-            <span className="pid-country"><span className="pid-flag">TR</span>Türkiye</span>
-            <span className="pid-platform-badge">{profile.platform}</span>
+        <motion.aside 
+          className="glass-panel" 
+          variants={itemVariants}
+          style={{ gridColumn: 'span 4', gridRow: 'span 6', padding: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        >
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+            <span className="text-muted heading-orbitron" style={{ fontSize: '0.8rem' }}>ID: {user ? user.id.substring(0, 8).toUpperCase() : 'GUEST'}</span>
+            <span className="heading-orbitron text-accent-red" style={{ fontSize: '0.8rem' }}>{profile.platform}</span>
           </div>
-          <div className="pid-avatar-wrap">
-            <div className="pid-avatar-ring">
-              <img src="/images/teta-logo.jpg" alt="Profil fotoğrafı" className="pid-avatar" />
+
+          <div style={{ width: '120px', height: '120px', border: '2px solid rgba(212,175,55,0.3)', borderRadius: '50%', background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', boxShadow: '0 0 20px rgba(212,175,55,0.05)', overflow: 'hidden' }}>
+            {profile.avatar_url ? (
+              <img src={profile.avatar_url} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.02)' }}>
+                <span className="heading-orbitron text-accent-red" style={{ fontSize: '2rem' }}>?</span>
+              </div>
+            )}
+          </div>
+
+          <h1 className="heading-orbitron" style={{ fontSize: '1.8rem', color: '#fff', textAlign: 'center', marginBottom: '4px' }}>
+            {profile.ea_id || profile.username || 'BİLİNMEYEN'}
+          </h1>
+          <div className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '30px' }}>Serbest Oyuncu</div>
+
+          <div style={{ width: '100%', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--glass-border)', padding: '16px', borderRadius: '8px', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span className="text-muted" style={{ fontSize: '0.8rem' }}>POZİSYON</span>
+              <span className="heading-orbitron text-accent-gold">{profile.main_position}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span className="text-muted" style={{ fontSize: '0.8rem' }}>FORMA NO</span>
+              <span className="heading-orbitron" style={{ color: '#fff' }}>{profile.jersey_number || '--'}</span>
             </div>
           </div>
-          <div className="pid-identity">
-            <h1 className="pid-username">{profile.username || 'Kullanıcı Adı'}</h1>
-            <span className="pid-club">Serbest Oyuncu</span>
-          </div>
-          <div className="pid-primary-pos">
-            <span className="pid-pos-label">Pozisyon</span>
-            <span className="pid-pos-value">{profile.main_position}</span>
-          </div>
-          <div className="pid-badges">
-            <span className="pid-badge pid-badge--active">{profile.main_position}</span>
-            {profile.playable_positions.filter(p => p !== profile.main_position).slice(0, 3).map(p => (
-              <span key={p} className="pid-badge">{p}</span>
-            ))}
-          </div>
-          <div className="pid-divider"></div>
-          <div className="pid-stats">
-            <div className="pid-stat"><span className="pid-stat-val">0</span><span className="pid-stat-key">Reyting</span></div>
-            <div className="pid-stat"><span className="pid-stat-val">0</span><span className="pid-stat-key">Maç</span></div>
-            <div className="pid-stat"><span className="pid-stat-val">S5</span><span className="pid-stat-key">Sezon</span></div>
-          </div>
-        </aside>
 
-        {/* SAĞ: FORM PANELİ */}
-        <section className="pid-form-panel" style={{ position: 'relative' }}>
-          {/* Lock Screen */}
+          <div style={{ display: 'flex', width: '100%', gap: '10px' }}>
+            <div style={{ flex: 1, textAlign: 'center', padding: '10px', border: '1px solid rgba(224, 49, 49, 0.2)', borderRadius: '4px', background: 'rgba(224, 49, 49, 0.02)' }}>
+              <div className="heading-orbitron" style={{ fontSize: '1.2rem' }}>0</div>
+              <div className="text-accent-red" style={{ fontSize: '0.7rem' }}>MAÇ</div>
+            </div>
+            <div style={{ flex: 1, textAlign: 'center', padding: '10px', border: '1px solid rgba(212, 175, 55, 0.2)', borderRadius: '4px', background: 'rgba(212, 175, 55, 0.02)' }}>
+              <div className="heading-orbitron" style={{ fontSize: '1.2rem' }}>0.0</div>
+              <div className="text-accent-gold" style={{ fontSize: '0.7rem' }}>REYTİNG</div>
+            </div>
+          </div>
+        </motion.aside>
+
+        {/* SAĞ: SİSTEM TERMİNALİ (FORM) */}
+        <motion.section 
+          className="glass-panel" 
+          variants={itemVariants}
+          style={{ gridColumn: 'span 8', gridRow: 'span 6', padding: '40px', position: 'relative' }}
+        >
+          {/* Lock Screen for Guests */}
           {isLocked && (
-            <div className="pid-lock-screen" style={{ position: 'absolute', inset: 0, zIndex: 50, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(14, 10, 9, 0.65)', backdropFilter: 'blur(12px)', borderRadius: 'var(--radius-lg)' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--gold)', filter: 'drop-shadow(0 0 12px rgba(184,148,30,0.4))', marginBottom: 16 }}><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <h3 style={{ fontFamily: 'Outfit', fontSize: '1.6rem', fontWeight: 900, color: 'var(--text)', margin: '0 0 8px', letterSpacing: '-0.02em' }}>Oturum Açın</h3>
-              <p style={{ color: 'var(--muted)', fontSize: '0.95rem', marginBottom: 24, textAlign: 'center', maxWidth: 280, lineHeight: 1.5 }}>Profil bilgilerinizi düzenlemek için giriş yapmalısınız.</p>
-              <a href="/login" className="button button-primary">Giriş Yap</a>
+            <div style={{ position: 'absolute', inset: 0, zIndex: 50, background: 'rgba(10, 10, 10, 0.6)', backdropFilter: 'blur(10px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderRadius: 'var(--radius-md)' }}>
+              <h1 className="heading-orbitron text-accent-red" style={{ fontSize: '2rem', marginBottom: '16px' }}>ERİŞİM REDDEDİLDİ</h1>
+              <p className="text-muted" style={{ marginBottom: '24px' }}>Terminal erişimi için yetkilendirme (Oturum Açma) gerekiyor.</p>
+              <Link href="/login" className="premium-button">SİSTEME GİRİŞ YAP</Link>
             </div>
           )}
 
-          <header className="pid-form-header">
+          <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '20px', marginBottom: '30px' }}>
+            <h2 className="heading-orbitron text-accent-gold" style={{ fontSize: '1.5rem' }}>// SİSTEM TERMİNALİ</h2>
+            <p className="text-muted" style={{ margin: '8px 0 0 0' }}>Oyuncu verilerinizi buradan güncelleyin.</p>
+          </div>
+
+          <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label className="heading-orbitron text-accent-gold" style={{ fontSize: '0.8rem' }}>SİBER PROFİL FOTOĞRAFI</label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <label className="premium-button" style={{ cursor: 'pointer', padding: '8px 16px', fontSize: '0.8rem', display: 'inline-block', flexShrink: 0 }}>
+                  {uploading ? 'YÜKLENİYOR...' : 'GÖRSEL SEÇ'}
+                  <input type="file" accept="image/*" onChange={uploadAvatar} disabled={uploading} style={{ display: 'none' }} />
+                </label>
+                <span className="text-muted" style={{ fontSize: '0.8rem' }}>Supabase /avatars bucket</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div>
+                <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '8px' }}>KULLANICI ADI</label>
+                <input className="premium-input" type="text" value={profile.username} onChange={e => setProfile(p => ({ ...p, username: e.target.value }))} placeholder="Sistem Adınız" />
+              </div>
+              <div>
+                <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '8px' }}>EA ID (OYUNİÇİ AD)</label>
+                <input className="premium-input" type="text" value={profile.ea_id} onChange={e => setProfile(p => ({ ...p, ea_id: e.target.value }))} placeholder="EA Oyuncu Adı" />
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div>
+                <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '8px' }}>FORMA NUMARASI</label>
+                <input className="premium-input" type="number" min={1} max={99} value={profile.jersey_number ?? ''} onChange={e => setProfile(p => ({ ...p, jersey_number: parseInt(e.target.value) || null }))} placeholder="10" />
+              </div>
+              <div></div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div>
+                <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '8px' }}>PLATFORM</label>
+                <select className="premium-input" value={profile.platform} onChange={e => setProfile(p => ({ ...p, platform: e.target.value }))}>
+                  {PLATFORMS.map(pl => <option key={pl} value={pl} style={{ background: '#000' }}>{pl}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '8px' }}>ANA POZİSYON</label>
+                <select className="premium-input" value={profile.main_position} onChange={e => setProfile(p => ({ ...p, main_position: e.target.value }))}>
+                  {POSITIONS.map(pos => <option key={pos} value={pos} style={{ background: '#000' }}>{pos}</option>)}
+                </select>
+              </div>
+            </div>
+
             <div>
-              <p className="pid-form-eyebrow">Hesap Ayarları</p>
-              <h2 className="pid-form-title">Profil Bilgileri</h2>
-            </div>
-            <span className="pid-form-badge">Aktif</span>
-          </header>
-          <div className="pid-form-separator"></div>
-
-          <form className="pid-form" onSubmit={handleSave}>
-            <div className="pid-section-label"><span>01</span> Kimlik</div>
-            <div className="pid-row">
-              <div className="pid-field">
-                <label className="pid-label" htmlFor="f-username">Kullanıcı Adı</label>
-                <div className="pid-input-wrap">
-                  <input className="pid-input" id="f-username" type="text" value={profile.username} onChange={e => setProfile(p => ({ ...p, username: e.target.value }))} autoComplete="username" />
-                </div>
-              </div>
-              <div className="pid-field">
-                <label className="pid-label" htmlFor="f-jersey">Forma Numarası</label>
-                <div className="pid-input-wrap">
-                  <input className="pid-input" id="f-jersey" type="number" min={1} max={99} value={profile.jersey_number ?? ''} onChange={e => setProfile(p => ({ ...p, jersey_number: parseInt(e.target.value) || null }))} />
-                </div>
+              <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '12px' }}>EKSTRA POZİSYONLAR</label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {POSITIONS.map(pos => {
+                  const isActive = profile.playable_positions.includes(pos)
+                  return (
+                    <button 
+                      key={pos} type="button" onClick={() => togglePosition(pos)}
+                      style={{ 
+                        padding: '8px 16px', background: isActive ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.02)', 
+                        border: `1px solid ${isActive ? 'var(--glass-border)' : 'transparent'}`, 
+                        color: isActive ? '#fff' : 'var(--text-muted)', fontFamily: 'var(--font-orbitron)', fontSize: '0.8rem', cursor: 'pointer',
+                        transition: 'all 0.3s', borderRadius: '4px'
+                      }}
+                    >
+                      {pos}
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
-            <div className="pid-section-label"><span>02</span> Oyun Tercihleri</div>
-            <div className="pid-row">
-              <div className="pid-field">
-                <label className="pid-label" htmlFor="f-platform">Platform</label>
-                <div className="pid-input-wrap pid-select-wrap">
-                  <select className="pid-input pid-select" id="f-platform" value={profile.platform} onChange={e => setProfile(p => ({ ...p, platform: e.target.value }))}>
-                    {PLATFORMS.map(pl => <option key={pl} value={pl}>{pl}</option>)}
-                  </select>
-                </div>
-              </div>
-              <div className="pid-field">
-                <label className="pid-label" htmlFor="f-position">Ana Pozisyon</label>
-                <div className="pid-input-wrap pid-select-wrap">
-                  <select className="pid-input pid-select" id="f-position" value={profile.main_position} onChange={e => setProfile(p => ({ ...p, main_position: e.target.value }))}>
-                    {POSITIONS.map(pos => <option key={pos} value={pos}>{pos}</option>)}
-                  </select>
-                </div>
-              </div>
+            <div>
+              <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '8px' }}>BİYOGRAFİ / VERİ</label>
+              <textarea className="premium-input" rows={4} value={profile.bio} onChange={e => setProfile(p => ({ ...p, bio: e.target.value }))} placeholder="Sistem kayıtlarına geçecek veriler..." />
             </div>
 
-            <div className="pid-field pid-field--full">
-              <label className="pid-label">Oynayabileceğiniz Pozisyonlar</label>
-              <div className="pid-pos-chips" id="pos-chips" role="group">
-                {POSITIONS.map(pos => (
-                  <button key={pos} type="button" className={`pid-chip ${profile.playable_positions.includes(pos) ? 'pid-chip--on' : ''}`} data-pos={pos} onClick={() => togglePosition(pos)}>{pos}</button>
-                ))}
-              </div>
-            </div>
-
-            <div className="pid-section-label"><span>03</span> Hakkında</div>
-            <div className="pid-field pid-field--full">
-              <label className="pid-label" htmlFor="f-bio">Profil Açıklaması</label>
-              <div className="pid-input-wrap pid-textarea-wrap">
-                <textarea className="pid-input pid-textarea" id="f-bio" rows={4} value={profile.bio} onChange={e => setProfile(p => ({ ...p, bio: e.target.value }))} placeholder="Kendini kısaca tanıt..." />
-              </div>
-            </div>
-
-            <div className="pid-actions">
-              <button className="pid-btn pid-btn--ghost" type="button" onClick={() => setProfile({ username: '', jersey_number: null, platform: 'PS5', main_position: 'CAM', playable_positions: [], bio: '' })}>
-                Sıfırla
+            <div style={{ display: 'flex', gap: '16px', marginTop: '10px' }}>
+              <button type="submit" className="premium-button accent-red" disabled={saving} style={{ flex: 2 }}>
+                {saving ? 'KAYDEDİLİYOR...' : 'VERİLERİ GÜNCELLE'}
               </button>
-              <button className="pid-btn pid-btn--primary" type="submit" disabled={saving}>
-                <span className="pid-btn-shine" aria-hidden="true"></span>
-                {saving ? (
-                  <span style={{ display: 'inline-block', width: 18, height: 18, border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-                ) : null}
-                <span>Profili Kaydet</span>
+              <button type="button" onClick={() => setProfile({ username: '', ea_id: '', avatar_url: '', jersey_number: null, platform: 'PS5', main_position: 'CAM', playable_positions: [], bio: '' })} className="premium-button" style={{ flex: 1 }}>
+                SIFIRLA
               </button>
             </div>
           </form>
-        </section>
-      </div>
+        </motion.section>
+      </motion.div>
 
+      {/* Siber Toast Message */}
       {toast && (
-        <div className="pid-toast show" style={{ borderColor: toast.error ? 'rgba(204,10,29,0.3)' : undefined }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="pid-toast-icon" style={{ color: toast.error ? '#cc0a1d' : '#5de0a0' }}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <span className="pid-toast-text">{toast.message}</span>
+        <div style={{ position: 'fixed', bottom: '30px', right: '30px', background: 'rgba(20,20,20,0.95)', border: `1px solid ${toast.error ? 'var(--neon-red)' : 'var(--glass-border)'}`, padding: '16px 24px', color: '#fff', borderRadius: '6px', zIndex: 100, boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+          {toast.message}
         </div>
       )}
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </>
   )
 }

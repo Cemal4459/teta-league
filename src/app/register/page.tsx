@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
@@ -32,7 +33,6 @@ export default function RegisterPage() {
         return
       }
 
-      // Insert initial profile row
       if (data?.user) {
         const { error: profileError } = await supabase.from('profiles').insert({
           id: data.user.id,
@@ -56,46 +56,76 @@ export default function RegisterPage() {
   }
 
   return (
-    <>
-      <section className="auth-shell">
-        <div className="auth-panel">
-          <img src="/images/teta-logo.jpg" alt="Teta Pro Clubs logosu" />
-          <span className="eyebrow">Hesap</span>
-          <h1>Kayıt Ol</h1>
-          <form className="control-form" onSubmit={handleSubmit}>
-            <label>
-              Kullanıcı adı
-              <input type="text" value={username} onChange={e => setUsername(e.target.value)} required placeholder="Babba10" />
-            </label>
-            <label>
-              E-posta
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="ornek@teta.gg" />
-            </label>
-            <label>
-              Şifre
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6} placeholder="••••••••" />
-            </label>
-            <button className="button button-primary" type="submit" disabled={loading} style={{ width: '100%', minHeight: 42 }}>
-              {loading ? (
-                <span style={{ display: 'inline-block', width: 18, height: 18, border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-              )}
-              {loading ? '' : 'Kayıt Ol'}
-            </button>
-          </form>
-          <Link href="/login">Zaten hesabım var</Link>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <motion.div 
+        className="glass-panel"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ease: 'easeOut', duration: 0.5 }}
+        style={{ width: '100%', maxWidth: '480px', padding: '50px 40px' }}
+      >
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <div style={{ width: '60px', height: '60px', borderRadius: '12px', background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(212, 175, 55, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
+            <span className="heading-orbitron text-accent-gold" style={{ fontSize: '1.2rem' }}>TETA</span>
+          </div>
+          <h1 className="heading-orbitron" style={{ fontSize: '2rem', marginBottom: '8px' }}>YENİ KİMLİK OLUŞTUR</h1>
+          <p className="text-muted">Ağa katılmak için kayıt olun.</p>
         </div>
-      </section>
 
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div>
+            <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '8px' }}>KULLANICI ADI</label>
+            <input
+              type="text"
+              className="premium-input"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              required
+              placeholder="Sistem Adınız"
+            />
+          </div>
+          <div>
+            <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '8px' }}>E-POSTA ADRESİ</label>
+            <input
+              type="email"
+              className="premium-input"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              placeholder="ornek@teta.gg"
+            />
+          </div>
+          <div>
+            <label className="heading-orbitron text-accent-gold" style={{ display: 'block', fontSize: '0.8rem', marginBottom: '8px' }}>ŞİFRE (MİN 6 KARAKTER)</label>
+            <input
+              type="password"
+              className="premium-input"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              minLength={6}
+              placeholder="••••••••"
+            />
+          </div>
+          <button className="premium-button accent-red" type="submit" disabled={loading} style={{ width: '100%', marginTop: '10px', padding: '14px' }}>
+            {loading ? 'SİSTEME KAYIT OLUYOR...' : 'KAYIT OL'}
+          </button>
+        </form>
+
+        <div style={{ textAlign: 'center', marginTop: '30px', paddingTop: '20px', borderTop: '1px solid var(--glass-border)' }}>
+          <span className="text-muted" style={{ fontSize: '0.9rem' }}>Zaten hesabınız var mı? </span>
+          <Link href="/login" className="heading-orbitron" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem' }}>
+            OTURUM AÇ
+          </Link>
+        </div>
+      </motion.div>
+
+      {/* Siber Toast Message */}
       {toast && (
-        <div className="pid-toast show" style={{ borderColor: toast.error ? 'rgba(204,10,29,0.3)' : 'rgba(59,186,114,0.3)' }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: toast.error ? '#cc0a1d' : '#5de0a0' }}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <span className="pid-toast-text">{toast.message}</span>
+        <div style={{ position: 'fixed', bottom: '30px', right: '30px', background: 'rgba(20,20,20,0.95)', border: `1px solid ${toast.error ? 'var(--neon-red)' : 'var(--glass-border)'}`, padding: '16px 24px', color: '#fff', borderRadius: '6px', zIndex: 100, boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+          {toast.message}
         </div>
       )}
-
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-    </>
+    </div>
   )
 }

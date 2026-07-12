@@ -1,37 +1,29 @@
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/Header'
+import Navbar from '@/components/Navbar'
+import CookieBanner from '@/components/CookieBanner'
+import Footer from '@/components/Footer'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-  title: { default: 'Teta Pro Clubs', template: '%s | Teta Pro Clubs' },
-  description: 'Teta Pro Clubs — EA FC Pro Clubs lig ve oyuncu topluluğu. Sezon istatistikleri, puan durumu ve oyuncu veritabanı.',
+  title: { default: 'Teta League | Premium E-Sports', template: '%s | Teta League' },
+  description: 'Teta Pro Clubs — Premium E-Spor Arayüzü',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
+    <html lang="tr" className={`${inter.variable}`}>
       <body>
-        <Header />
-        <main className="page-shell" role="main">
-          {children}
-        </main>
-        <footer className="site-footer">
-          <div>
-            <span>
-              <strong>Teta Pro Clubs</strong>
-              <small>EA FC Pro Clubs lig ve oyuncu topluluğu</small>
-            </span>
-          </div>
-          <div className="footer-links">
-            <a href="/profile">Profil</a>
-            <a href="/teams">Takımlar</a>
-            <a href="/league">Lig</a>
-          </div>
-        </footer>
+        <div className="app-layout" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+          <Navbar />
+          <main className="app-main" role="main" style={{ paddingTop: '100px', flex: 1 }}>
+            {children}
+          </main>
+          <Footer />
+          <CookieBanner />
+        </div>
       </body>
     </html>
   )
