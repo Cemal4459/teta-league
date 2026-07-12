@@ -1,16 +1,16 @@
 :root {
-  --bg-color: #030202;       /* Very dark base with a hint of warm tone */
-  --panel-bg: rgba(20, 14, 12, 0.7); /* Translucent panel, warm tint */
-  --panel-hover: rgba(35, 22, 18, 0.85);
+  --bg-color: #050a0f;
+  --panel-bg: rgba(5, 10, 15, 0.5);
+  --panel-hover: rgba(10, 20, 30, 0.6);
   
   --text-main: #ffffff;
-  --text-muted: #a89f9c;
-  --text-subtle: #6b6360;
+  --text-muted: #a0b0c0;
+  --text-subtle: #607080;
   
-  --brand-light: #fbc6b6;
-  --brand-main: #d9775f;
-  --brand-dark: #8c3325;
-  --brand-glow: rgba(217, 119, 95, 0.4);
+  --brand-light: #7fffd4; /* Aquamarine */
+  --brand-main: #40e0d0; /* Turquoise */
+  --brand-dark: #008b8b; /* Dark Cyan */
+  --brand-glow: rgba(64, 224, 208, 0.4);
 
   --accent-success: #34c759;
   --accent-danger: #ff3b30;
@@ -28,14 +28,14 @@
 }
 
 body {
-  background-color: var(--bg-color);
+  background: linear-gradient(135deg, #050a0f 0%, #1a2a3a 100%);
+  background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   overflow-x: hidden;
-  background-image: radial-gradient(circle at top right, rgba(255,255,255,0.02) 0%, transparent 40%);
 }
 
 /* Layout System */

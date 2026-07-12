@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
+import { motion } from 'framer-motion'
+import Logo from '@/components/Logo'
 
 const LEFT_LINKS = [
   { name: 'LİG', href: '/league' },
@@ -80,7 +82,7 @@ export default function Navbar() {
       background: scrolled ? 'rgba(3, 2, 2, 0.85)' : 'rgba(3, 2, 2, 0.3)',
       backdropFilter: 'blur(16px)',
       WebkitBackdropFilter: 'blur(16px)',
-      borderBottom: scrolled ? '1px solid rgba(217, 119, 95, 0.15)' : '1px solid transparent',
+      borderBottom: scrolled ? '1px solid rgba(64, 224, 208, 0.15)' : '1px solid transparent',
       transition: 'all 0.3s ease',
       height: '80px',
       display: 'flex',
@@ -100,16 +102,7 @@ export default function Navbar() {
         {/* MERKEZ LOGO */}
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 10px' }}>
           <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', transition: 'transform 0.2s', ...scrolled ? { transform: 'scale(0.95)' } : {} }}>
-            <img 
-              src="/images/teta-logo.jpg" 
-              alt="Teta League Logo" 
-              style={{ 
-                height: '60px', 
-                width: 'auto', 
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 0 15px rgba(217, 119, 95, 0.5))'
-              }} 
-            />
+            <Logo width={60} height={60} />
           </Link>
         </div>
 

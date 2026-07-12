@@ -72,10 +72,10 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="game-panel interactive" style={{ position: 'relative', overflow: 'hidden', padding: '32px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', background: 'linear-gradient(180deg, rgba(20,20,15,0.8) 0%, rgba(5,5,5,0.9) 100%)' }}>
-            <div style={{ position: 'absolute', top: '-50px', left: '-50px', width: '150px', height: '150px', background: 'radial-gradient(circle, rgba(217, 119, 95, 0.2) 0%, transparent 70%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', top: '-50px', left: '-50px', width: '150px', height: '150px', background: 'radial-gradient(circle, rgba(64, 224, 208, 0.2) 0%, transparent 70%)', pointerEvents: 'none' }} />
             
-            <div style={{ fontSize: '3rem', filter: 'drop-shadow(0 0 10px rgba(255,215,0,0.5))', marginBottom: '16px' }}>🏆</div>
-            <h2 className="font-bold" style={{ fontSize: '1.3rem', color: '#ffd700', marginBottom: '8px', textShadow: '0 0 10px rgba(255,215,0,0.3)' }}>
+            <div style={{ fontSize: '3rem', filter: 'drop-shadow(0 0 10px rgba(64, 224, 208, 0.5))', marginBottom: '16px' }}>🏆</div>
+            <h2 className="font-bold" style={{ fontSize: '1.3rem', color: 'var(--brand-main)', marginBottom: '8px', textShadow: '0 0 10px rgba(64, 224, 208, 0.3)' }}>
               EFSANELER ARASINA KATIL
             </h2>
             <p className="text-muted" style={{ fontSize: '0.85rem', lineHeight: 1.6, marginBottom: '24px' }}>
@@ -83,7 +83,7 @@ export default function HomePage() {
             </p>
             
             <Link href="/login" style={{ width: '100%', textDecoration: 'none' }}>
-              <button className="flat-button shimmer-effect interactive" style={{ width: '100%', padding: '14px', background: 'var(--brand-main)', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer', boxShadow: '0 10px 20px rgba(217, 119, 95, 0.3)' }}>
+              <button className="flat-button shimmer-effect interactive" style={{ width: '100%', padding: '14px', background: 'var(--brand-main)', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer', boxShadow: '0 10px 20px rgba(64, 224, 208, 0.3)' }}>
                 KARİYERİNE BAŞLA
               </button>
             </Link>
