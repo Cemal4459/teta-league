@@ -291,7 +291,7 @@ export default function AuthPage() {
                       className="auth-input"
                       value={password}
                       onChange={e => setPassword(e.target.value)}
-                      required={activeTab !== 'forgot_password'}
+                      required
                       minLength={activeTab === 'register' ? 6 : undefined}
                       placeholder="••••••••"
                     />
