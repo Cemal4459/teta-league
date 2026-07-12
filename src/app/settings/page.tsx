@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function SettingsPage() {
   const router = useRouter()
