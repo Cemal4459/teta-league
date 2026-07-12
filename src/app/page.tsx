@@ -1,10 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
 
 export default function HomePage() {
+  const supabase = createClient()
   const [activeStatTab, setActiveStatTab] = useState<'GOL' | 'ASİST' | 'CLEAN SHEET'>('GOL')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsLoggedIn(!!session?.user)
+      setLoading(false)
+    })
+    
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
+      setIsLoggedIn(!!session?.user)
+    })
+    return () => subscription.unsubscribe()
+  }, [supabase])
 
   const matches = [
     { id: 1, home: 'Anadolu FK', away: 'Siber SK', status: 'YAYINDA', score: '2 - 1', views: '1.2K' },
@@ -30,25 +46,49 @@ export default function HomePage() {
       {/* --- TOP SECTION: Profile Widget & Hero Banner --- */}
       <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '32px' }}>
         
-        {/* Profile Widget */}
-        <div className="game-panel interactive" style={{ padding: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--brand-main), var(--brand-dark))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#fff', marginBottom: '16px', boxShadow: '0 0 20px var(--brand-glow)' }}>
-            O
+        {/* Profile Widget or Recruitment Banner */}
+        {loading ? (
+          <div className="game-panel interactive" style={{ padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span className="text-muted">Bağlanıyor...</span>
           </div>
-          <h2 className="font-bold" style={{ fontSize: '1.2rem', margin: '0 0 4px 0' }}>Oyuncu_10</h2>
-          <div className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '16px' }}>Serbest Oyuncu</div>
-          
-          <div style={{ display: 'flex', width: '100%', gap: '8px', marginTop: 'auto' }}>
-            <div style={{ flex: 1, background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '8px', textAlign: 'center' }}>
-              <div className="font-bold" style={{ fontSize: '1.2rem', color: 'var(--brand-light)' }}>0</div>
-              <div className="text-muted" style={{ fontSize: '0.7rem' }}>MAÇ</div>
+        ) : isLoggedIn ? (
+          <div className="game-panel interactive" style={{ padding: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--brand-main), var(--brand-dark))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#fff', marginBottom: '16px', boxShadow: '0 0 20px var(--brand-glow)' }}>
+              O
             </div>
-            <div style={{ flex: 1, background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '8px', textAlign: 'center' }}>
-              <div className="font-bold" style={{ fontSize: '1.2rem', color: 'var(--brand-light)' }}>0.0</div>
-              <div className="text-muted" style={{ fontSize: '0.7rem' }}>RTG</div>
+            <h2 className="font-bold" style={{ fontSize: '1.2rem', margin: '0 0 4px 0' }}>Oyuncu_10</h2>
+            <div className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '16px' }}>Serbest Oyuncu</div>
+            
+            <div style={{ display: 'flex', width: '100%', gap: '8px', marginTop: 'auto' }}>
+              <div style={{ flex: 1, background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '8px', textAlign: 'center' }}>
+                <div className="font-bold" style={{ fontSize: '1.2rem', color: 'var(--brand-light)' }}>0</div>
+                <div className="text-muted" style={{ fontSize: '0.7rem' }}>MAÇ</div>
+              </div>
+              <div style={{ flex: 1, background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '8px', textAlign: 'center' }}>
+                <div className="font-bold" style={{ fontSize: '1.2rem', color: 'var(--brand-light)' }}>0.0</div>
+                <div className="text-muted" style={{ fontSize: '0.7rem' }}>RTG</div>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="game-panel interactive" style={{ position: 'relative', overflow: 'hidden', padding: '32px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', background: 'linear-gradient(180deg, rgba(20,20,15,0.8) 0%, rgba(5,5,5,0.9) 100%)' }}>
+            <div style={{ position: 'absolute', top: '-50px', left: '-50px', width: '150px', height: '150px', background: 'radial-gradient(circle, rgba(217, 119, 95, 0.2) 0%, transparent 70%)', pointerEvents: 'none' }} />
+            
+            <div style={{ fontSize: '3rem', filter: 'drop-shadow(0 0 10px rgba(255,215,0,0.5))', marginBottom: '16px' }}>🏆</div>
+            <h2 className="font-bold" style={{ fontSize: '1.3rem', color: '#ffd700', marginBottom: '8px', textShadow: '0 0 10px rgba(255,215,0,0.3)' }}>
+              EFSANELER ARASINA KATIL
+            </h2>
+            <p className="text-muted" style={{ fontSize: '0.85rem', lineHeight: 1.6, marginBottom: '24px' }}>
+              Türkiye'nin en rekabetçi E-Spor liginde takımını kur veya yıldız ol.
+            </p>
+            
+            <Link href="/login" style={{ width: '100%', textDecoration: 'none' }}>
+              <button className="flat-button shimmer-effect interactive" style={{ width: '100%', padding: '14px', background: 'var(--brand-main)', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer', boxShadow: '0 10px 20px rgba(217, 119, 95, 0.3)' }}>
+                KARİYERİNE BAŞLA
+              </button>
+            </Link>
+          </div>
+        )}
 
         {/* Hero Banner (Dynamic Video Placeholder) */}
         <div className="game-panel interactive" style={{ position: 'relative', height: '400px', backgroundImage: 'linear-gradient(to right, rgba(3,2,2,0.9) 0%, rgba(3,2,2,0.3) 50%, rgba(3,2,2,0.1) 100%), url(https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80)', backgroundSize: 'cover', backgroundPosition: 'center', padding: '40px' }}>
